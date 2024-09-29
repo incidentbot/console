@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=http://0.0.0.0:3000
+        - NODE_ENV=production
+    ports:
+      - target: 80
+        published: 8080
+        protocol: tcp
+        mode: host
+    networks:
+      - inc_bot_console_network
+networks:
+  inc_bot_console_network:
+    driver: bridge

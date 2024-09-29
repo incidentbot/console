@@ -1,0 +1,80 @@
+# Default values for incidentbot-console.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This is to override the chart name.
+nameOverride: ''
+fullnameOverride: ''
+
+affinity: {}
+
+deploymentAnnotations: {}
+
+envFromSecret:
+  enabled: false
+  secretName:
+
+envVars: {}
+
+extraContainers: []
+
+healthCheck:
+  enabled: true
+  path: /
+  scheme: HTTP
+  initialDelaySeconds: 10
+  periodSeconds: 30
+  timeoutSeconds: 1
+
+image:
+  repository:
+  pullPolicy: Always
+  tag:
+
+imagePullSecrets: []
+
+ingress:
+  enabled: false
+  className: ''
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+nodeSelector: {}
+
+podAnnotations: {}
+
+podLabels: {}
+
+podSecurityContext: {}
+
+replicaCount: 1
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512M
+  requests:
+    cpu: 250m
+    memory: 128M
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ''
+
+tolerations: []
+
+volumes: []
+
+volumeMounts: []

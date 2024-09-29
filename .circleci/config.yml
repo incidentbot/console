@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  helm:
+    docker:
+      - image: eb129/docker-kubectl:v1.2.0
+    steps:
+      - checkout
+      - run: scripts/helm.sh
+workflows:
+  version: 2
+  main:
+    jobs:
+      - helm:
+          context: helm-charts-repository

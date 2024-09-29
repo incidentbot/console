@@ -1,0 +1,9 @@
+apiVersion: v2
+name: incidentbot-console
+description: A Helm chart for deploying Incident Bot Console to Kubernetes
+maintainers:
+  - name: Scott Hawkins
+    email: scott@echoboomer.net
+type: application
+version: 0.1.0
+appVersion: '0.1.0'
