@@ -36,9 +36,6 @@ function getIncidentParticipants(slug: string) {
 function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
   const queryClient = useQueryClient()
 
-  const incCreatedAt = format(parseISO(incident?.created_at.toString()), "dd MMMM, yyyy hh:mm z");
-  const incUpdatedAt = format(parseISO(incident?.created_at.toString()), "dd MMMM, yyyy hh:mm z");
-
   const { data: participants } = useQuery({
     ...getIncidentParticipants(incident.slug),
   })
@@ -118,7 +115,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                       <WrapItem>
                         <Box>
                           <Badge ml="1" variant="solid" fontSize="0.8em">
-                            {incCreatedAt}
+                            {format(parseISO(incident?.created_at?.toString()), "dd MMMM, yyyy hh:mm z")}
                           </Badge>
                         </Box>
                       </WrapItem>
@@ -144,7 +141,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                       <WrapItem>
                         <Box>
                           <Badge ml="1" variant="solid" fontSize="0.8em">
-                            {incUpdatedAt}
+                            {format(parseISO(incident?.updated_at?.toString()), "dd MMMM, yyyy hh:mm z")}
                           </Badge>
                         </Box>
                       </WrapItem>

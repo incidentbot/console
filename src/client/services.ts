@@ -185,7 +185,7 @@ export class UsersService {
     const { limit = 100, skip = 0 } = data;
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/users/',
+      url: '/api/v1/users',
       query: {
         skip,
         limit,
@@ -208,7 +208,7 @@ export class UsersService {
     const { requestBody } = data;
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/api/v1/users/',
+      url: '/api/v1/users',
       body: requestBody,
       mediaType: 'application/json',
       errors: {
