@@ -21,6 +21,21 @@ You will need to build your own image using the Dockerfile in this repository, p
 
 Once the image has been built, you can deploy it using the Helm chart.
 
+There is a default base image you may reference that adds the repository contents but does not run `npm run build`, allowing you to reference this base image, provide this argument, and build downsteam without having to clone this repository.
+
+Example:
+
+```dockerfile
+FROM eb129/incidentbot-console:v0.1.0 AS build
+WORKDIR /app
+ARG VITE_API_URL=${VITE_API_URL}
+RUN npm run build
+FROM nginx:1
+COPY --from=build /app/dist/ /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx-backend-not-found.conf /etc/nginx/extra-conf.d/backend-not-found.conf
+```
+
 ## Development
 
 Install the required version of Node.js:

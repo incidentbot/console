@@ -40,11 +40,11 @@ workflows:
   version: 2
   main:
     jobs:
-      - build:
+      - build-base-image:
           filters:
             branches:
               ignore: main
-      - publish:
+      - publish-base-image:
           filters:
             branches:
               only: main
