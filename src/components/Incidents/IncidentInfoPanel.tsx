@@ -19,7 +19,7 @@ import IncidentActionsMenu from "./IncidentActionsMenu"
 import { IncidentsService } from "../../client"
 import { LuTimerOff } from "react-icons/lu";
 import TimeAgo from "react-timeago";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import { toTitleCase } from "../../hooks/titleCase"
 
 interface IncidentInfoPanelProps {
@@ -115,7 +115,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                       <WrapItem>
                         <Box>
                           <Badge ml="1" variant="solid" fontSize="0.8em">
-                            {format(parseISO(incident?.created_at?.toString()), "dd MMMM, yyyy hh:mm z")}
+                            {format(incident?.created_at, "dd MMMM, yyyy hh:mm z")}
                           </Badge>
                         </Box>
                       </WrapItem>
@@ -123,7 +123,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                       <WrapItem>
                         <Box>
                           <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
-                            <TimeAgo date={incident?.created_at} />
+                            <TimeAgo date={incident?.created_at + ' UTC'} />
                           </Badge>
                         </Box>
                       </WrapItem>
@@ -141,7 +141,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                       <WrapItem>
                         <Box>
                           <Badge ml="1" variant="solid" fontSize="0.8em">
-                            {format(parseISO(incident?.updated_at?.toString()), "dd MMMM, yyyy hh:mm z")}
+                            {format(incident?.updated_at, "dd MMMM, yyyy hh:mm z")}
                           </Badge>
                         </Box>
                       </WrapItem>
@@ -149,7 +149,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                       <WrapItem>
                         <Box>
                           <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
-                            <TimeAgo date={incident?.updated_at} />
+                            <TimeAgo date={incident?.updated_at + ' UTC'} />
                           </Badge>
                         </Box>
                       </WrapItem>

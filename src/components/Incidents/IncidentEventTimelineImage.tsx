@@ -50,7 +50,7 @@ function IncidentEventTimelineImage({ log }: IncidentEventTimelineImageProps) {
                 <FaRegClock fontSize={13} />
               </Box>
               <Box>
-                <Text fontSize="sm"><TimeAgo date={log.created_at} /></Text>
+                <Text fontSize="sm"><TimeAgo date={log.created_at + ' UTC'} /></Text>
               </Box>
               <Box>
                 <EventActionsMenu type="IncidentEvent" slug={log.incident_slug} id={log.id} value={log} hasImage />

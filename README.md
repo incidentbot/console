@@ -26,7 +26,7 @@ There is a default base image you may reference that adds the repository content
 Example:
 
 ```dockerfile
-FROM eb129/incidentbot-console:v0.1.0 AS build
+FROM eb129/incidentbot-console:v0.1.1 AS build
 WORKDIR /app
 ARG VITE_API_URL=${VITE_API_URL}
 RUN npm run build

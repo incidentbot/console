@@ -104,12 +104,12 @@ function MaintenanceDisplay() {
                   <Td>{mw.components}</Td>
                   <Td>
                     <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
-                      <TimeAgo date={mw?.start_timestamp} />
+                      <TimeAgo date={mw?.start_timestamp + ' UTC'} />
                     </Badge>
                   </Td>
                   <Td>
                     <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
-                      <TimeAgo date={mw?.end_timestamp} />
+                      <TimeAgo date={mw?.end_timestamp + ' UTC'} />
                     </Badge>
                   </Td>
                   <Td>
