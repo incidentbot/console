@@ -77,7 +77,7 @@ function IncidentListItem({ incident }: IncidentListItemProps) {
                     {incident.severity}
                   </Badge>
                   <Badge px="2" variant="outline" ml={2}>
-                    {format(parseISO(incident.created_at.toString()), "dd MMMM, yyyy")} (<TimeAgo date={incident.created_at} />)
+                    {format(parseISO(incident.created_at.toString()), "dd MMMM, yyyy")} (<TimeAgo date={incident.created_at + ' UTC'} />)
                   </Badge>
                 </Box>
               </Box>

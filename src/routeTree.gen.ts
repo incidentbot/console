@@ -85,46 +85,79 @@ const LayoutIncidentsIdRoute = LayoutIncidentsIdImport.update({
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/_layout': {
+      id: '/_layout'
+      path: ''
+      fullPath: ''
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
     '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
     '/recover-password': {
+      id: '/recover-password'
+      path: '/recover-password'
+      fullPath: '/recover-password'
       preLoaderRoute: typeof RecoverPasswordImport
       parentRoute: typeof rootRoute
     }
     '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordImport
       parentRoute: typeof rootRoute
     }
     '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
     '/_layout/admin': {
+      id: '/_layout/admin'
+      path: '/admin'
+      fullPath: '/admin'
       preLoaderRoute: typeof LayoutAdminImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/maintenance': {
+      id: '/_layout/maintenance'
+      path: '/maintenance'
+      fullPath: '/maintenance'
       preLoaderRoute: typeof LayoutMaintenanceImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/settings': {
+      id: '/_layout/settings'
+      path: '/settings'
+      fullPath: '/settings'
       preLoaderRoute: typeof LayoutSettingsImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/': {
+      id: '/_layout/'
+      path: '/'
+      fullPath: '/'
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/incidents/$id': {
+      id: '/_layout/incidents/$id'
+      path: '/incidents/$id'
+      fullPath: '/incidents/$id'
       preLoaderRoute: typeof LayoutIncidentsIdImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/incidents/': {
+      id: '/_layout/incidents/'
+      path: '/incidents'
+      fullPath: '/incidents'
       preLoaderRoute: typeof LayoutIncidentsIndexImport
       parentRoute: typeof LayoutImport
     }
@@ -133,19 +166,193 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([
-  LayoutRoute.addChildren([
-    LayoutAdminRoute,
-    LayoutMaintenanceRoute,
-    LayoutSettingsRoute,
-    LayoutIndexRoute,
-    LayoutIncidentsIdRoute,
-    LayoutIncidentsIndexRoute,
-  ]),
-  LoginRoute,
-  RecoverPasswordRoute,
-  ResetPasswordRoute,
-  SignupRoute,
-])
+interface LayoutRouteChildren {
+  LayoutAdminRoute: typeof LayoutAdminRoute
+  LayoutMaintenanceRoute: typeof LayoutMaintenanceRoute
+  LayoutSettingsRoute: typeof LayoutSettingsRoute
+  LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutIncidentsIdRoute: typeof LayoutIncidentsIdRoute
+  LayoutIncidentsIndexRoute: typeof LayoutIncidentsIndexRoute
+}
+
+const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutAdminRoute: LayoutAdminRoute,
+  LayoutMaintenanceRoute: LayoutMaintenanceRoute,
+  LayoutSettingsRoute: LayoutSettingsRoute,
+  LayoutIndexRoute: LayoutIndexRoute,
+  LayoutIncidentsIdRoute: LayoutIncidentsIdRoute,
+  LayoutIncidentsIndexRoute: LayoutIncidentsIndexRoute,
+}
+
+const LayoutRouteWithChildren =
+  LayoutRoute._addFileChildren(LayoutRouteChildren)
+
+export interface FileRoutesByFullPath {
+  '': typeof LayoutRouteWithChildren
+  '/login': typeof LoginRoute
+  '/recover-password': typeof RecoverPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/admin': typeof LayoutAdminRoute
+  '/maintenance': typeof LayoutMaintenanceRoute
+  '/settings': typeof LayoutSettingsRoute
+  '/': typeof LayoutIndexRoute
+  '/incidents/$id': typeof LayoutIncidentsIdRoute
+  '/incidents': typeof LayoutIncidentsIndexRoute
+}
+
+export interface FileRoutesByTo {
+  '/login': typeof LoginRoute
+  '/recover-password': typeof RecoverPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/admin': typeof LayoutAdminRoute
+  '/maintenance': typeof LayoutMaintenanceRoute
+  '/settings': typeof LayoutSettingsRoute
+  '/': typeof LayoutIndexRoute
+  '/incidents/$id': typeof LayoutIncidentsIdRoute
+  '/incidents': typeof LayoutIncidentsIndexRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/_layout': typeof LayoutRouteWithChildren
+  '/login': typeof LoginRoute
+  '/recover-password': typeof RecoverPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/_layout/admin': typeof LayoutAdminRoute
+  '/_layout/maintenance': typeof LayoutMaintenanceRoute
+  '/_layout/settings': typeof LayoutSettingsRoute
+  '/_layout/': typeof LayoutIndexRoute
+  '/_layout/incidents/$id': typeof LayoutIncidentsIdRoute
+  '/_layout/incidents/': typeof LayoutIncidentsIndexRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | ''
+    | '/login'
+    | '/recover-password'
+    | '/reset-password'
+    | '/signup'
+    | '/admin'
+    | '/maintenance'
+    | '/settings'
+    | '/'
+    | '/incidents/$id'
+    | '/incidents'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/login'
+    | '/recover-password'
+    | '/reset-password'
+    | '/signup'
+    | '/admin'
+    | '/maintenance'
+    | '/settings'
+    | '/'
+    | '/incidents/$id'
+    | '/incidents'
+  id:
+    | '__root__'
+    | '/_layout'
+    | '/login'
+    | '/recover-password'
+    | '/reset-password'
+    | '/signup'
+    | '/_layout/admin'
+    | '/_layout/maintenance'
+    | '/_layout/settings'
+    | '/_layout/'
+    | '/_layout/incidents/$id'
+    | '/_layout/incidents/'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  LayoutRoute: typeof LayoutRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  RecoverPasswordRoute: typeof RecoverPasswordRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SignupRoute: typeof SignupRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  LayoutRoute: LayoutRouteWithChildren,
+  LoginRoute: LoginRoute,
+  RecoverPasswordRoute: RecoverPasswordRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SignupRoute: SignupRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
+
+/* ROUTE_MANIFEST_START
+{
+  "routes": {
+    "__root__": {
+      "filePath": "__root.tsx",
+      "children": [
+        "/_layout",
+        "/login",
+        "/recover-password",
+        "/reset-password",
+        "/signup"
+      ]
+    },
+    "/_layout": {
+      "filePath": "_layout.tsx",
+      "children": [
+        "/_layout/admin",
+        "/_layout/maintenance",
+        "/_layout/settings",
+        "/_layout/",
+        "/_layout/incidents/$id",
+        "/_layout/incidents/"
+      ]
+    },
+    "/login": {
+      "filePath": "login.tsx"
+    },
+    "/recover-password": {
+      "filePath": "recover-password.tsx"
+    },
+    "/reset-password": {
+      "filePath": "reset-password.tsx"
+    },
+    "/signup": {
+      "filePath": "signup.tsx"
+    },
+    "/_layout/admin": {
+      "filePath": "_layout/admin.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/maintenance": {
+      "filePath": "_layout/maintenance.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/settings": {
+      "filePath": "_layout/settings.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/": {
+      "filePath": "_layout/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/incidents/$id": {
+      "filePath": "_layout/incidents/$id.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/incidents/": {
+      "filePath": "_layout/incidents/index.tsx",
+      "parent": "/_layout"
+    }
+  }
+}
+ROUTE_MANIFEST_END */

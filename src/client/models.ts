@@ -30,7 +30,7 @@ export type Incident = {
   channel_id: string;
   channel_name: string;
   components?: string | null;
-  created_at: Date;
+  created_at: string;
   description: string;
   digest_message_ts?: string | null;
   id: number;
@@ -48,7 +48,7 @@ export type Incident = {
   status: string;
   statuses?: Array<string> | null;
   tags?: Array<string> | null;
-  updated_at?: Date | null;
+  updated_at?: string | null;
 };
 
 export type Incidents = {
@@ -57,7 +57,7 @@ export type Incidents = {
 };
 
 export type IncidentEvent = {
-  created_at: Date;
+  created_at: string;
   id: UUID;
   image?: string | null;
   incident_slug: string;
@@ -65,19 +65,19 @@ export type IncidentEvent = {
   parent: number;
   source: string;
   text?: string | null;
-  timestamp: Date | null;
+  timestamp: string | null;
   title?: string | null;
-  updated_at?: Date | null;
+  updated_at?: string | null;
   user?: string | null;
 };
 
 export type IncidentParticipant = {
-  created_at: Date;
+  created_at: string;
   id: number;
   is_lead: boolean;
   parent: number;
   role: string;
-  updated_at?: Date | null;
+  updated_at?: string | null;
   user_id: string;
   user_name: string;
 };
@@ -99,14 +99,14 @@ export type MaintenanceWindow = {
   channels: Array<Dictionary>;
   components: Array<string>;
   contact: string;
-  created_at: Date;
+  created_at: string;
   description: string;
-  end_timestamp: Date;
+  end_timestamp: string;
   id: UUID;
-  start_timestamp: Date;
+  start_timestamp: string;
   status: string;
   title: string;
-  updated_at?: Date | null;
+  updated_at?: string | null;
 };
 
 export type MaintenanceWindows = {
@@ -159,7 +159,7 @@ export type StatuspageIncident = {
   parent: number;
   shortlink: string;
   status: string;
-  updated_at: Date;
+  updated_at: string;
   updates: Array<Dictionary>;
 };
 
