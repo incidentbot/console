@@ -48,7 +48,7 @@ export type Incident = {
   status: string;
   statuses?: Array<string> | null;
   tags?: Array<string> | null;
-  updated_at?: string | null;
+  updated_at: string;
 };
 
 export type Incidents = {

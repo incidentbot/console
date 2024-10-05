@@ -55,7 +55,7 @@ function IncidentEventTimeline({ data }: IncidentEventTimelineProps) {
                             <FaRegClock fontSize={13} />
                           </Box>
                           <Box>
-                            <Text fontSize="sm"><TimeAgo date={log.created_at + ' UTC'} /></Text>
+                            <Text fontSize="sm"><TimeAgo date={log.created_at} /></Text>
                           </Box>
                           <Box>
                             <EventActionsMenu type="IncidentEvent" slug={log.incident_slug} id={log.id} value={log} />
@@ -90,7 +90,7 @@ function IncidentEventTimeline({ data }: IncidentEventTimelineProps) {
                             <FaRegClock fontSize={13} />
                           </Box>
                           <Box>
-                            <Text fontSize="sm"><TimeAgo date={log.created_at + ' UTC'} /></Text>
+                            <Text fontSize="sm"><TimeAgo date={log.created_at} /></Text>
                           </Box>
                           <Box>
                             <EventActionsMenu type="IncidentEvent" slug={log.incident_slug} id={log.id} value={log} />
@@ -132,7 +132,7 @@ function IncidentEventTimeline({ data }: IncidentEventTimelineProps) {
                             <FaRegClock fontSize={13} />
                           </Box>
                           <Box>
-                            <Text fontSize="sm"><TimeAgo date={log.timestamp + ' UTC'} /></Text>
+                            <Text fontSize="sm"><TimeAgo date={log.timestamp} /></Text>
                           </Box>
                         </Flex>
                       </Box>
