@@ -44,6 +44,9 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
     queryClient.prefetchQuery(getIncidentParticipants(incident.slug))
   }, [queryClient])
 
+  const createdDate = new Date(incident.created_at)
+  const updatedDate = new Date(incident.updated_at)
+
   return (
     <>
       <Card variant="outline">
@@ -115,7 +118,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                       <WrapItem>
                         <Box>
                           <Badge ml="1" variant="solid" fontSize="0.8em">
-                            {format(incident?.created_at, "dd MMMM, yyyy hh:mm z")}
+                            {format(createdDate, "dd MMMM, yyyy hh:mm zzz")}
                           </Badge>
                         </Box>
                       </WrapItem>
@@ -123,7 +126,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                       <WrapItem>
                         <Box>
                           <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
-                            <TimeAgo date={incident?.created_at + ' UTC'} />
+                            <TimeAgo date={incident?.created_at} />
                           </Badge>
                         </Box>
                       </WrapItem>
@@ -141,7 +144,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                       <WrapItem>
                         <Box>
                           <Badge ml="1" variant="solid" fontSize="0.8em">
-                            {format(incident?.updated_at, "dd MMMM, yyyy hh:mm z")}
+                            {format(updatedDate, "dd MMMM, yyyy hh:mm zzz")}
                           </Badge>
                         </Box>
                       </WrapItem>
@@ -149,7 +152,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                       <WrapItem>
                         <Box>
                           <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
-                            <TimeAgo date={incident?.updated_at + ' UTC'} />
+                            <TimeAgo date={incident?.updated_at} />
                           </Badge>
                         </Box>
                       </WrapItem>

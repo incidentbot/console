@@ -11,13 +11,15 @@ import {
 import { BsFire } from "react-icons/bs"
 import type { Incident } from "../../client"
 import TimeAgo from "react-timeago";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 
 interface IncidentListItemProps {
   incident: Incident
 }
 
 function IncidentListItem({ incident }: IncidentListItemProps) {
+  const createdDate = new Date(incident.created_at)
+
   return (
     <LinkBox key={incident.id}>
       <LinkOverlay href={`/incidents/${incident.slug}`}>
@@ -77,7 +79,7 @@ function IncidentListItem({ incident }: IncidentListItemProps) {
                     {incident.severity}
                   </Badge>
                   <Badge px="2" variant="outline" ml={2}>
-                    {format(parseISO(incident.created_at.toString()), "dd MMMM, yyyy")} (<TimeAgo date={incident.created_at + ' UTC'} />)
+                    {format(createdDate, "dd MMMM yyyy")} (<TimeAgo date={incident.created_at} />)
                   </Badge>
                 </Box>
               </Box>

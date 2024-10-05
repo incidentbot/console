@@ -100,16 +100,26 @@ function MaintenanceDisplay() {
                 <Tr key={mw.id} opacity={isPlaceholderData ? 0.5 : 1}>
                   <Td>{mw.title}</Td>
                   <Td>{mw.description}</Td>
-                  <Td>{mw.status}</Td>
-                  <Td>{mw.components}</Td>
+                  <Td>
+                    <Badge ml="1" variant="solid" fontSize="0.8em">
+                      {mw.status}
+                    </Badge>
+                  </Td>
+                  <Td>
+                    {mw.components.map((component) => (
+                      <Badge key={component} ml="1" variant="solid" fontSize="0.8em">
+                        {component}
+                      </Badge>
+                    ))}
+                  </Td>
                   <Td>
                     <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
-                      <TimeAgo date={mw?.start_timestamp + ' UTC'} />
+                      <TimeAgo date={mw?.start_timestamp} />
                     </Badge>
                   </Td>
                   <Td>
                     <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
-                      <TimeAgo date={mw?.end_timestamp + ' UTC'} />
+                      <TimeAgo date={mw?.end_timestamp} />
                     </Badge>
                   </Td>
                   <Td>
@@ -153,7 +163,7 @@ function MaintenanceDisplay() {
 
 function Maintenance() {
   return (
-    <Container maxW="full">
+    <Container maxW="6xl">
       <Heading
         size="lg"
         textAlign={{ base: "center", md: "left" }}
