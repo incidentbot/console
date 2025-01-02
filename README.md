@@ -1,6 +1,6 @@
 # Incident Bot Console
 
-![Incident Bot](https://github.com/incidentbot/incidentbot/blob/main/assets/logo.png)
+<img src="./assets/logo.png" width="250" height="250"/>
 
 A web interface for [Incident Bot](https://github.com/incidentbot/incidentbot).
 
