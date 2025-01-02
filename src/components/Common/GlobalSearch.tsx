@@ -83,7 +83,7 @@ export default function GlobalSearch() {
                 return (
                   <Link
                     key={incident.channel_name!}
-                    to={`/incidents/${incident.slug!}`}
+                    href={`/incidents/${incident.slug!}`}
                   >
                     <CommandBarItem value={incident.channel_name!}>
                       <Flex align="center">
