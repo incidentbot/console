@@ -19,16 +19,16 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useEffect } from "react"
 import { z } from "zod"
 
-import { type UserPublic, UsersService } from "../../client"
-import AddUser from "../../components/Admin/AddUser"
-import ActionsMenu from "../../components/Common/ActionsMenu"
-import Navbar from "../../components/Common/Navbar"
+import { type UserPublic, UsersService } from "../../../client"
+import AddUser from "../../../components/Admin/AddUser"
+import ActionsMenu from "../../../components/Common/ActionsMenu"
+import Navbar from "../../../components/Common/NavbarAddItem"
 
 const usersSearchSchema = z.object({
   page: z.number().catch(1),
 })
 
-export const Route = createFileRoute("/_layout/admin")({
+export const Route = createFileRoute("/_layout/admin/users")({
   component: Admin,
   validateSearch: (search) => usersSearchSchema.parse(search),
 })
@@ -38,7 +38,10 @@ const PER_PAGE = 5
 function getUsersQueryOptions({ page }: { page: number }) {
   return {
     queryFn: () =>
-      UsersService.readUsers({ skip: (page - 1) * PER_PAGE, limit: PER_PAGE }),
+      UsersService.readUsersApiV1UsersGet({
+        skip: (page - 1) * PER_PAGE,
+        limit: PER_PAGE,
+      }),
     queryKey: ["users", { page }],
   }
 }
@@ -71,7 +74,7 @@ function UsersTable() {
 
   return (
     <>
-      <TableContainer>
+      <TableContainer mt={4}>
         <Table size={{ base: "sm", md: "sm" }}>
           <Thead>
             <Tr>
@@ -85,7 +88,7 @@ function UsersTable() {
           {isPending ? (
             <Tbody>
               <Tr>
-                {new Array(4).fill(null).map((_, index) => (
+                {new Array(5).fill(null).map((_, index) => (
                   <Td key={index}>
                     <SkeletonText noOfLines={1} paddingBlock="16px" />
                   </Td>
@@ -130,7 +133,7 @@ function UsersTable() {
                     <ActionsMenu
                       type="User"
                       value={user}
-                      disabled={currentUser?.id === user.id ? true : false}
+                      disabled={currentUser?.id === user.id}
                     />
                   </Td>
                 </Tr>
@@ -161,10 +164,14 @@ function UsersTable() {
 function Admin() {
   return (
     <Container maxW="full">
-      <Heading size="lg" textAlign={{ base: "center", md: "left" }} pt={12}>
+      <Heading
+        size="lg"
+        textAlign={{ base: "center", md: "left" }}
+        mt={4}
+        mb={6}
+      >
         Users Management
       </Heading>
-
       <Navbar type={"User"} addModalAs={AddUser} />
       <UsersTable />
     </Container>

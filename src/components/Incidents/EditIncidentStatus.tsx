@@ -14,13 +14,17 @@ import {
 } from "@chakra-ui/react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { type SubmitHandler, useForm } from "react-hook-form"
-import { type ApiError, type Incident, IncidentsService } from "../../client"
+import {
+  type ApiError,
+  type IncidentRecord,
+  IncidentService,
+} from "../../client"
 import { toTitleCase } from "../../hooks/titleCase"
 import useCustomToast from "../../hooks/useCustomToast"
 import { handleError } from "../../utils"
 
 interface EditIncidentProps {
-  incident: Incident
+  incident: IncidentRecord
   isOpen: boolean
   onClose: () => void
 }
@@ -37,15 +41,18 @@ const EditIncidentStatus = ({
     handleSubmit,
     reset,
     formState: { isSubmitting, errors, isDirty },
-  } = useForm<Incident>({
+  } = useForm<IncidentRecord>({
     mode: "onBlur",
     criteriaMode: "all",
     defaultValues: incident,
   })
 
   const mutation = useMutation({
-    mutationFn: (data: Incident) =>
-      IncidentsService.updateIncident({ field: "status", requestBody: data }),
+    mutationFn: (data: IncidentRecord) =>
+      IncidentService.patchIncidentApiV1IncidentFieldPatch({
+        field: "status",
+        requestBody: data,
+      }),
     onSuccess: () => {
       showToast("Success!", "Incident updated successfully.", "success")
       onClose()
@@ -58,7 +65,7 @@ const EditIncidentStatus = ({
     },
   })
 
-  const onSubmit: SubmitHandler<Incident> = async (data) => {
+  const onSubmit: SubmitHandler<IncidentRecord> = async (data) => {
     mutation.mutate(data)
   }
 

@@ -9,7 +9,8 @@
       "src/client/",
       "src/routeTree.gen.ts",
       "playwright.config.ts",
-      "playwright-report"
+      "playwright-report",
+      "tests"
     ]
   },
   "linter": {

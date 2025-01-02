@@ -1,64 +1,40 @@
-import {
-  Box,
-  Card,
-  CardBody,
-  Container,
-  SimpleGrid,
-  Stat,
-  StatLabel,
-  StatNumber,
-  Text,
-} from "@chakra-ui/react"
+import { Container, Flex, Spinner } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
-import { IncidentsService, MaintenanceWindowService } from "../../client"
-import useAuth from "../../hooks/useAuth"
+import { IncidentService } from "../../client"
+import StyledHeader from "../../components/Common/StyledHeader"
+import IncidentOverview from "../../components/Dashboard/IncidentOverview"
 
 export const Route = createFileRoute("/_layout/")({
   component: Dashboard,
 })
 
-function Dashboard() {
-  const { data: incidents } = useQuery({
+function getIncidentsQueryOptions() {
+  return {
+    queryFn: () => IncidentService.getIncidentsApiV1IncidentGet(),
     queryKey: ["incidents"],
-    queryFn: IncidentsService.readAllIncidents,
+  }
+}
+
+function DashboardDisplay() {
+  // react-query
+  const { data: incidents, isPending } = useQuery({
+    ...getIncidentsQueryOptions(),
+    placeholderData: (prevData) => prevData,
   })
-  const { data: maintenanceWindows } = useQuery({
-    queryKey: ["maintenance_windows"],
-    queryFn: MaintenanceWindowService.readMaintenanceWindows,
-  })
-  const { user: currentUser } = useAuth()
+
   return (
-    <>
-      <Container maxW="full">
-        <Box pt={12} m={4}>
-          <Text fontSize="2xl">
-            Hi, {currentUser?.full_name || currentUser?.email} 👋🏼
-          </Text>
-          <Text>Welcome!</Text>
-        </Box>
-        <SimpleGrid
-          spacing={4}
-          templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-        >
-          <Card variant="elevated" marginTop={4} marginBottom={4}>
-            <CardBody>
-              <Stat>
-                <StatLabel>Incidents</StatLabel>
-                <StatNumber>{incidents?.count}</StatNumber>
-              </Stat>
-            </CardBody>
-          </Card>
-          <Card variant="elevated" marginTop={4} marginBottom={4}>
-            <CardBody>
-              <Stat>
-                <StatLabel>Maintenance Windows</StatLabel>
-                <StatNumber>{maintenanceWindows?.count}</StatNumber>
-              </Stat>
-            </CardBody>
-          </Card>
-        </SimpleGrid>
-      </Container>
-    </>
+    <Flex overflow="auto" minHeight="600px" justifyContent="center">
+      {isPending ? <Spinner /> : <IncidentOverview incidents={incidents!} />}
+    </Flex>
+  )
+}
+
+function Dashboard() {
+  return (
+    <Container maxW="full">
+      <StyledHeader title="Dashboard" />
+      <DashboardDisplay />
+    </Container>
   )
 }

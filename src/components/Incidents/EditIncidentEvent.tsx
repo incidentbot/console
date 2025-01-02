@@ -11,11 +11,16 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Textarea,
 } from "@chakra-ui/react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { type SubmitHandler, useForm } from "react-hook-form"
 
-import { type ApiError, type IncidentEvent, IncidentsService } from "../../client"
+import {
+  type ApiError,
+  type IncidentEvent,
+  IncidentService,
+} from "../../client"
 import useCustomToast from "../../hooks/useCustomToast"
 import { handleError } from "../../utils"
 
@@ -28,8 +33,6 @@ interface EditIncidentEventProps {
 }
 
 const EditIncidentEvent = ({
-  slug,
-  id,
   event,
   isOpen,
   onClose,
@@ -49,7 +52,9 @@ const EditIncidentEvent = ({
 
   const mutation = useMutation({
     mutationFn: (data: IncidentEvent) =>
-      IncidentsService.updateIncidentEvent({ slug: slug, id: id, requestBody: data }),
+      IncidentService.patchIncidentEventApiV1IncidentSlugEventsIdPatch({
+        requestBody: data,
+      }),
     onSuccess: () => {
       showToast("Success!", "Incident updated successfully.", "success")
       onClose()
@@ -76,7 +81,7 @@ const EditIncidentEvent = ({
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={{ base: "sm", md: "md" }}
+        size={{ base: "sm", md: "3xl" }}
         isCentered
       >
         <ModalOverlay />
@@ -86,32 +91,35 @@ const EditIncidentEvent = ({
           <ModalBody pb={6}>
             <FormControl mt={4}>
               <FormLabel htmlFor="event">Event</FormLabel>
-              <Input
+              <Textarea
                 id="text"
                 {...register("text", {
                   required: "Text is required",
                 })}
                 placeholder="Text"
-                type="string"
               />
               {errors.text && (
                 <FormErrorMessage>{errors.text.message}</FormErrorMessage>
               )}
             </FormControl>
-            {event.source === 'user' && <FormControl mt={4}>
-              <FormLabel htmlFor="timestamp">Timestamp</FormLabel>
-              <Input
-                id="timestamp"
-                {...register("timestamp", {
-                  required: "Timestamp is required",
-                })}
-                placeholder="Timestamp"
-                type="datetime-local"
-              />
-              {errors.timestamp && (
-                <FormErrorMessage>{errors.timestamp.message}</FormErrorMessage>
-              )}
-            </FormControl>}
+            {event.source === "user" && (
+              <FormControl mt={4}>
+                <FormLabel htmlFor="timestamp">Timestamp</FormLabel>
+                <Input
+                  id="timestamp"
+                  {...register("timestamp", {
+                    required: "Timestamp is required",
+                  })}
+                  placeholder="Timestamp"
+                  type="datetime-local"
+                />
+                {errors.timestamp && (
+                  <FormErrorMessage>
+                    {errors.timestamp.message}
+                  </FormErrorMessage>
+                )}
+              </FormControl>
+            )}
           </ModalBody>
           <ModalFooter gap={3}>
             <Button

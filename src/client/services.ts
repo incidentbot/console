@@ -3,49 +3,578 @@ import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
 
 import type {
-  Body_login_login_access_token,
-  IncidentCreate,
-  Incident,
-  Incidents,
+  ConfigurationResponse,
   IncidentEvent,
+  IncidentEventBase,
   IncidentParticipant,
-  JiraIssue,
-  MaintenanceWindow,
-  MaintenanceWindows,
-  Message,
-  NewPassword,
+  IncidentRecord,
+  Incidents,
+  JiraIssueRecord,
+  OpsgenieIncidentRecord,
+  PagerDutyIncidentRecord,
+  PostmortemRecord,
+  StatuspageIncidentRecord,
+  SuccessResponse,
+  Body_login_access_token_api_v1_login_access_token_post,
   Token,
+  UserPublic,
+  MaintenanceWindowRecord,
+  MaintenanceWindows,
+  PagerAutoMappingRequest,
+  PagerDataResponse,
+  ApplicationData,
+  Message,
   UpdatePassword,
   UserCreate,
-  UserPublic,
-  UserRegister,
+  UsersPublic,
   UserUpdate,
   UserUpdateMe,
-  UsersPublic,
-  MaintenanceWindowCreate,
-  OpsgenieIncident,
-  PagerDutyIncident,
-  Postmortem,
-  StatuspageIncident,
 } from './models';
 
-export type TDataLoginAccessToken = {
-  formData: Body_login_login_access_token;
+export type HealthData = {};
+
+export type IncidentData = {
+  GetIncidentsApiV1IncidentGet: {
+    filter?: string;
+    limit?: number;
+    skip?: number;
+  };
+  PostIncidentApiV1IncidentPost: {
+    requestBody: IncidentRecord;
+  };
+  GetIncidentApiV1IncidentSlugGet: {
+    slug: string;
+  };
+  GetIncidentJiraIssuesApiV1IncidentSlugJiraGet: {
+    slug: string;
+  };
+  GetIncidentOpsgenieApiV1IncidentSlugOpsgenieGet: {
+    slug: string;
+  };
+  GetIncidentPagerdutyApiV1IncidentSlugPagerdutyGet: {
+    slug: string;
+  };
+  GetIncidentPostmortemsApiV1IncidentSlugPostmortemGet: {
+    slug: string;
+  };
+  GetIncidentStatuspageApiV1IncidentSlugStatuspageGet: {
+    slug: string;
+  };
+  GetIncidentParticipantsApiV1IncidentSlugParticipantsGet: {
+    slug: string;
+  };
+  DeleteIncidentApiV1IncidentIdDelete: {
+    id: string;
+  };
+  PatchIncidentApiV1IncidentFieldPatch: {
+    field: string;
+    requestBody: IncidentRecord;
+  };
+  GetIncidentEventsApiV1IncidentSlugEventsGet: {
+    slug: string;
+  };
+  GetIncidentEventImageApiV1IncidentSlugEventsImageIdGet: {
+    id: string;
+    slug: string;
+  };
+  DeleteIncidentEventApiV1IncidentSlugEventsIdDelete: {
+    id: string;
+  };
+  PatchIncidentEventApiV1IncidentSlugEventsIdPatch: {
+    requestBody: IncidentEvent;
+  };
+  GetIncidentConfigApiV1IncidentConfigParameterGet: {
+    parameter: string;
+  };
 };
-export type TDataRecoverPassword = {
-  email: string;
+
+export type JobData = {
+  RunJobApiV1JobRunJobIdPost: {
+    jobId: unknown;
+  };
+  DeleteJobApiV1JobRunJobIdDelete: {
+    jobId: unknown;
+  };
 };
-export type TDataResetPassword = {
-  requestBody: NewPassword;
+
+export type LoginData = {
+  LoginAccessTokenApiV1LoginAccessTokenPost: {
+    formData: Body_login_access_token_api_v1_login_access_token_post;
+  };
 };
-export type TDataRecoverPasswordHtmlContent = {
-  email: string;
+
+export type MaintenanceWindowData = {
+  GetMaintenanceWindowApiV1MaintenanceWindowIdGet: {
+    id: string;
+  };
+  DeleteMaintenanceWindowApiV1MaintenanceWindowIdDelete: {
+    id: string;
+  };
+  PatchMaintenanceWindowApiV1MaintenanceWindowFieldPatch: {
+    field: string;
+    requestBody: MaintenanceWindowRecord;
+  };
 };
-export type TDataDeleteObject = {
-  slug?: string | null;
-  id?: string | null;
-  requestBody?: Incident | IncidentEvent | MaintenanceWindow | UserPublic;
+
+export type PagerData = {
+  PatchPagerAutomappingApiV1PagerAutoMapStorePatch: {
+    requestBody: PagerAutoMappingRequest;
+  };
 };
+
+export type SettingData = {
+  GetSettingApiV1SettingSettingNameGet: {
+    settingName: string;
+  };
+};
+
+export type UsersData = {
+  ReadUsersApiV1UsersGet: {
+    limit?: number;
+    skip?: number;
+  };
+  CreateUserApiV1UsersPost: {
+    requestBody: UserCreate;
+  };
+  UpdateUserMeApiV1UsersMePatch: {
+    requestBody: UserUpdateMe;
+  };
+  UpdatePasswordMeApiV1UsersMePasswordPatch: {
+    requestBody: UpdatePassword;
+  };
+  ReadUserByIdApiV1UsersUserIdGet: {
+    userId: string;
+  };
+  UpdateUserApiV1UsersUserIdPatch: {
+    requestBody: UserUpdate;
+    userId: string;
+  };
+  DeleteUserApiV1UsersUserIdDelete: {
+    userId: string;
+  };
+};
+
+export class HealthService {
+  /**
+   * Get Health
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getHealthApiV1HealthGet(): CancelablePromise<unknown> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/health',
+    });
+  }
+}
+
+export class IncidentService {
+  /**
+   * Get Incidents
+   * @returns Incidents Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentsApiV1IncidentGet(
+    data: IncidentData['GetIncidentsApiV1IncidentGet'] = {}
+  ): CancelablePromise<Incidents> {
+    const { skip = 0, limit = 100, filter } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident',
+      query: {
+        skip,
+        limit,
+        filter,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Post Incident
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static postIncidentApiV1IncidentPost(
+    data: IncidentData['PostIncidentApiV1IncidentPost']
+  ): CancelablePromise<unknown> {
+    const { requestBody } = data;
+    return __request(OpenAPI, {
+      method: 'POST',
+      url: '/api/v1/incident',
+      body: requestBody,
+      mediaType: 'application/json',
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Incident
+   * @returns IncidentRecord Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentApiV1IncidentSlugGet(
+    data: IncidentData['GetIncidentApiV1IncidentSlugGet']
+  ): CancelablePromise<IncidentRecord> {
+    const { slug } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident/{slug}',
+      path: {
+        slug,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Incident Jira Issues
+   * @returns JiraIssueRecord Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentJiraIssuesApiV1IncidentSlugJiraGet(
+    data: IncidentData['GetIncidentJiraIssuesApiV1IncidentSlugJiraGet']
+  ): CancelablePromise<Array<JiraIssueRecord>> {
+    const { slug } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident/{slug}/jira',
+      path: {
+        slug,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Incident Opsgenie
+   * @returns OpsgenieIncidentRecord Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentOpsgenieApiV1IncidentSlugOpsgenieGet(
+    data: IncidentData['GetIncidentOpsgenieApiV1IncidentSlugOpsgenieGet']
+  ): CancelablePromise<Array<OpsgenieIncidentRecord>> {
+    const { slug } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident/{slug}/opsgenie',
+      path: {
+        slug,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Incident Pagerduty
+   * @returns PagerDutyIncidentRecord Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentPagerdutyApiV1IncidentSlugPagerdutyGet(
+    data: IncidentData['GetIncidentPagerdutyApiV1IncidentSlugPagerdutyGet']
+  ): CancelablePromise<Array<PagerDutyIncidentRecord>> {
+    const { slug } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident/{slug}/pagerduty',
+      path: {
+        slug,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Incident Postmortems
+   * @returns PostmortemRecord Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentPostmortemsApiV1IncidentSlugPostmortemGet(
+    data: IncidentData['GetIncidentPostmortemsApiV1IncidentSlugPostmortemGet']
+  ): CancelablePromise<Array<PostmortemRecord>> {
+    const { slug } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident/{slug}/postmortem',
+      path: {
+        slug,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Incident Statuspage
+   * @returns StatuspageIncidentRecord Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentStatuspageApiV1IncidentSlugStatuspageGet(
+    data: IncidentData['GetIncidentStatuspageApiV1IncidentSlugStatuspageGet']
+  ): CancelablePromise<Array<StatuspageIncidentRecord>> {
+    const { slug } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident/{slug}/statuspage',
+      path: {
+        slug,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Incident Participants
+   * @returns IncidentParticipant Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentParticipantsApiV1IncidentSlugParticipantsGet(
+    data: IncidentData['GetIncidentParticipantsApiV1IncidentSlugParticipantsGet']
+  ): CancelablePromise<Array<IncidentParticipant>> {
+    const { slug } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident/{slug}/participants',
+      path: {
+        slug,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Delete Incident
+   * @returns SuccessResponse Successful Response
+   * @throws ApiError
+   */
+  public static deleteIncidentApiV1IncidentIdDelete(
+    data: IncidentData['DeleteIncidentApiV1IncidentIdDelete']
+  ): CancelablePromise<SuccessResponse> {
+    const { id } = data;
+    return __request(OpenAPI, {
+      method: 'DELETE',
+      url: '/api/v1/incident/{id}',
+      path: {
+        id,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Patch Incident
+   * Field is the value being changed: severity, status
+   * The incident value sent over from the frontend is the IncidentRecord with updated fields
+   * In this case, the API accepts the record and parses whatever field was changed and references
+   * its value to pass to the methods that handle the changes
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static patchIncidentApiV1IncidentFieldPatch(
+    data: IncidentData['PatchIncidentApiV1IncidentFieldPatch']
+  ): CancelablePromise<unknown> {
+    const { field, requestBody } = data;
+    return __request(OpenAPI, {
+      method: 'PATCH',
+      url: '/api/v1/incident/{field}',
+      path: {
+        field,
+      },
+      body: requestBody,
+      mediaType: 'application/json',
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Incident Events
+   * Return events excluding the image field
+   *
+   * If there is an image present, an additional request will have to be made
+   * against the following endpoint to get the iamge specifically
+   * @returns IncidentEventBase Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentEventsApiV1IncidentSlugEventsGet(
+    data: IncidentData['GetIncidentEventsApiV1IncidentSlugEventsGet']
+  ): CancelablePromise<Array<IncidentEventBase>> {
+    const { slug } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident/{slug}/events',
+      path: {
+        slug,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Incident Event Image
+   * Returns only the image content and mimetype when an event contains an image
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentEventImageApiV1IncidentSlugEventsImageIdGet(
+    data: IncidentData['GetIncidentEventImageApiV1IncidentSlugEventsImageIdGet']
+  ): CancelablePromise<unknown> {
+    const { slug, id } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident/{slug}/events/image/{id}',
+      path: {
+        slug,
+        id,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Delete Incident Event
+   * @returns SuccessResponse Successful Response
+   * @throws ApiError
+   */
+  public static deleteIncidentEventApiV1IncidentSlugEventsIdDelete(
+    data: IncidentData['DeleteIncidentEventApiV1IncidentSlugEventsIdDelete']
+  ): CancelablePromise<SuccessResponse> {
+    const { id } = data;
+    return __request(OpenAPI, {
+      method: 'DELETE',
+      url: '/api/v1/incident/{slug}/events/{id}',
+      path: {
+        id,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Patch Incident Event
+   * @returns SuccessResponse Successful Response
+   * @throws ApiError
+   */
+  public static patchIncidentEventApiV1IncidentSlugEventsIdPatch(
+    data: IncidentData['PatchIncidentEventApiV1IncidentSlugEventsIdPatch']
+  ): CancelablePromise<SuccessResponse> {
+    const { requestBody } = data;
+    return __request(OpenAPI, {
+      method: 'PATCH',
+      url: '/api/v1/incident/{slug}/events/{id}',
+      body: requestBody,
+      mediaType: 'application/json',
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Incident Config
+   * @returns ConfigurationResponse Successful Response
+   * @throws ApiError
+   */
+  public static getIncidentConfigApiV1IncidentConfigParameterGet(
+    data: IncidentData['GetIncidentConfigApiV1IncidentConfigParameterGet']
+  ): CancelablePromise<ConfigurationResponse> {
+    const { parameter } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/incident/config/{parameter}',
+      path: {
+        parameter,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+}
+
+export class JobService {
+  /**
+   * Get Jobs
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getJobsApiV1JobGet(): CancelablePromise<
+    Array<Record<string, unknown>>
+  > {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/job',
+    });
+  }
+
+  /**
+   * Run Job
+   * @returns SuccessResponse Successful Response
+   * @throws ApiError
+   */
+  public static runJobApiV1JobRunJobIdPost(
+    data: JobData['RunJobApiV1JobRunJobIdPost']
+  ): CancelablePromise<SuccessResponse> {
+    const { jobId } = data;
+    return __request(OpenAPI, {
+      method: 'POST',
+      url: '/api/v1/job/run/{job_id}',
+      path: {
+        job_id: jobId,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Delete Job
+   * @returns SuccessResponse Successful Response
+   * @throws ApiError
+   */
+  public static deleteJobApiV1JobRunJobIdDelete(
+    data: JobData['DeleteJobApiV1JobRunJobIdDelete']
+  ): CancelablePromise<SuccessResponse> {
+    const { jobId } = data;
+    return __request(OpenAPI, {
+      method: 'DELETE',
+      url: '/api/v1/job/run/{job_id}',
+      path: {
+        job_id: jobId,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+}
 
 export class LoginService {
   /**
@@ -54,8 +583,8 @@ export class LoginService {
    * @returns Token Successful Response
    * @throws ApiError
    */
-  public static loginAccessToken(
-    data: TDataLoginAccessToken
+  public static loginAccessTokenApiV1LoginAccessTokenPost(
+    data: LoginData['LoginAccessTokenApiV1LoginAccessTokenPost']
   ): CancelablePromise<Token> {
     const { formData } = data;
     return __request(OpenAPI, {
@@ -64,7 +593,7 @@ export class LoginService {
       formData: formData,
       mediaType: 'application/x-www-form-urlencoded',
       errors: {
-        422: 'Validation Error',
+        422: `Validation Error`,
       },
     });
   }
@@ -75,102 +604,194 @@ export class LoginService {
    * @returns UserPublic Successful Response
    * @throws ApiError
    */
-  public static testToken(): CancelablePromise<UserPublic> {
+  public static testTokenApiV1LoginTestTokenPost(): CancelablePromise<UserPublic> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/api/v1/login/test-token',
     });
   }
+}
 
+export class MaintenanceWindowService {
   /**
-   * Recover Password
-   * Password Recovery
-   * @returns Message Successful Response
+   * Get Maintenance Windows
+   * @returns MaintenanceWindows Successful Response
    * @throws ApiError
    */
-  public static recoverPassword(
-    data: TDataRecoverPassword
-  ): CancelablePromise<Message> {
-    const { email } = data;
+  public static getMaintenanceWindowsApiV1MaintenanceWindowGet(): CancelablePromise<MaintenanceWindows> {
     return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/v1/password-recovery/{email}',
+      method: 'GET',
+      url: '/api/v1/maintenance_window',
+    });
+  }
+
+  /**
+   * Get Maintenance Window
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getMaintenanceWindowApiV1MaintenanceWindowIdGet(
+    data: MaintenanceWindowData['GetMaintenanceWindowApiV1MaintenanceWindowIdGet']
+  ): CancelablePromise<unknown> {
+    const { id } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/maintenance_window/{id}',
       path: {
-        email,
+        id,
       },
       errors: {
-        422: 'Validation Error',
+        422: `Validation Error`,
       },
     });
   }
 
   /**
-   * Reset Password
-   * Reset password
-   * @returns Message Successful Response
+   * Delete Maintenance Window
+   * @returns unknown Successful Response
    * @throws ApiError
    */
-  public static resetPassword(
-    data: TDataResetPassword
-  ): CancelablePromise<Message> {
-    const { requestBody } = data;
+  public static deleteMaintenanceWindowApiV1MaintenanceWindowIdDelete(
+    data: MaintenanceWindowData['DeleteMaintenanceWindowApiV1MaintenanceWindowIdDelete']
+  ): CancelablePromise<unknown> {
+    const { id } = data;
     return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/v1/reset-password/',
+      method: 'DELETE',
+      url: '/api/v1/maintenance_window/{id}',
+      path: {
+        id,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Patch Maintenance Window
+   * Field is the value being changed:
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static patchMaintenanceWindowApiV1MaintenanceWindowFieldPatch(
+    data: MaintenanceWindowData['PatchMaintenanceWindowApiV1MaintenanceWindowFieldPatch']
+  ): CancelablePromise<unknown> {
+    const { field, requestBody } = data;
+    return __request(OpenAPI, {
+      method: 'PATCH',
+      url: '/api/v1/maintenance_window/{field}',
+      path: {
+        field,
+      },
       body: requestBody,
       mediaType: 'application/json',
       errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Recover Password Html Content
-   * HTML Content for Password Recovery
-   * @returns string Successful Response
-   * @throws ApiError
-   */
-  public static recoverPasswordHtmlContent(
-    data: TDataRecoverPasswordHtmlContent
-  ): CancelablePromise<string> {
-    const { email } = data;
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/v1/password-recovery-html-content/{email}',
-      path: {
-        email,
-      },
-      errors: {
-        422: 'Validation Error',
+        422: `Validation Error`,
       },
     });
   }
 }
 
-export type TDataReadUsers = {
-  limit?: number;
-  skip?: number;
-};
-export type TDataCreateUser = {
-  requestBody: UserCreate;
-};
-export type TDataUpdateUserMe = {
-  requestBody: UserUpdateMe;
-};
-export type TDataUpdatePasswordMe = {
-  requestBody: UpdatePassword;
-};
-export type TDataRegisterUser = {
-  requestBody: UserRegister;
-};
-export type TDataReadUserById = {
-  userId: string;
-};
-export type TDataUpdateUser = {
-  requestBody: UserUpdate;
-  userId: string;
-};
+export class PagerService {
+  /**
+   * Get Pager
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getPagerApiV1PagerGet(): CancelablePromise<
+    PagerDataResponse | SuccessResponse
+  > {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/pager',
+    });
+  }
+
+  /**
+   * Get Pager Automapping
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getPagerAutomappingApiV1PagerAutoMapGet(): CancelablePromise<
+    Record<string, unknown> | SuccessResponse
+  > {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/pager/auto_map',
+    });
+  }
+
+  /**
+   * Get Pager Store Automapping
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getPagerStoreAutomappingApiV1PagerAutoMapStoreGet(): CancelablePromise<
+    Record<string, unknown> | SuccessResponse
+  > {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/pager/auto_map/store',
+    });
+  }
+
+  /**
+   * Patch Pager Automapping
+   * @returns SuccessResponse Successful Response
+   * @throws ApiError
+   */
+  public static patchPagerAutomappingApiV1PagerAutoMapStorePatch(
+    data: PagerData['PatchPagerAutomappingApiV1PagerAutoMapStorePatch']
+  ): CancelablePromise<SuccessResponse> {
+    const { requestBody } = data;
+    return __request(OpenAPI, {
+      method: 'PATCH',
+      url: '/api/v1/pager/auto_map/store',
+      body: requestBody,
+      mediaType: 'application/json',
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+}
+
+export class SettingService {
+  /**
+   * Get Settings
+   * @returns ApplicationData Successful Response
+   * @throws ApiError
+   */
+  public static getSettingsApiV1SettingGet(): CancelablePromise<
+    Array<ApplicationData>
+  > {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/setting',
+    });
+  }
+
+  /**
+   * Get Setting
+   * @returns ApplicationData Successful Response
+   * @throws ApiError
+   */
+  public static getSettingApiV1SettingSettingNameGet(
+    data: SettingData['GetSettingApiV1SettingSettingNameGet']
+  ): CancelablePromise<ApplicationData> {
+    const { settingName } = data;
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/v1/setting/{setting_name}',
+      path: {
+        setting_name: settingName,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+}
 
 export class UsersService {
   /**
@@ -179,10 +800,10 @@ export class UsersService {
    * @returns UsersPublic Successful Response
    * @throws ApiError
    */
-  public static readUsers(
-    data: TDataReadUsers = {}
+  public static readUsersApiV1UsersGet(
+    data: UsersData['ReadUsersApiV1UsersGet'] = {}
   ): CancelablePromise<UsersPublic> {
-    const { limit = 100, skip = 0 } = data;
+    const { skip = 0, limit = 100 } = data;
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/v1/users',
@@ -191,7 +812,7 @@ export class UsersService {
         limit,
       },
       errors: {
-        422: 'Validation Error',
+        422: `Validation Error`,
       },
     });
   }
@@ -202,8 +823,8 @@ export class UsersService {
    * @returns UserPublic Successful Response
    * @throws ApiError
    */
-  public static createUser(
-    data: TDataCreateUser
+  public static createUserApiV1UsersPost(
+    data: UsersData['CreateUserApiV1UsersPost']
   ): CancelablePromise<UserPublic> {
     const { requestBody } = data;
     return __request(OpenAPI, {
@@ -212,7 +833,7 @@ export class UsersService {
       body: requestBody,
       mediaType: 'application/json',
       errors: {
-        422: 'Validation Error',
+        422: `Validation Error`,
       },
     });
   }
@@ -223,7 +844,7 @@ export class UsersService {
    * @returns UserPublic Successful Response
    * @throws ApiError
    */
-  public static readUserMe(): CancelablePromise<UserPublic> {
+  public static readUserMeApiV1UsersMeGet(): CancelablePromise<UserPublic> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/v1/users/me',
@@ -236,7 +857,7 @@ export class UsersService {
    * @returns Message Successful Response
    * @throws ApiError
    */
-  public static deleteUserMe(): CancelablePromise<Message> {
+  public static deleteUserMeApiV1UsersMeDelete(): CancelablePromise<Message> {
     return __request(OpenAPI, {
       method: 'DELETE',
       url: '/api/v1/users/me',
@@ -249,8 +870,8 @@ export class UsersService {
    * @returns UserPublic Successful Response
    * @throws ApiError
    */
-  public static updateUserMe(
-    data: TDataUpdateUserMe
+  public static updateUserMeApiV1UsersMePatch(
+    data: UsersData['UpdateUserMeApiV1UsersMePatch']
   ): CancelablePromise<UserPublic> {
     const { requestBody } = data;
     return __request(OpenAPI, {
@@ -259,7 +880,7 @@ export class UsersService {
       body: requestBody,
       mediaType: 'application/json',
       errors: {
-        422: 'Validation Error',
+        422: `Validation Error`,
       },
     });
   }
@@ -270,8 +891,8 @@ export class UsersService {
    * @returns Message Successful Response
    * @throws ApiError
    */
-  public static updatePasswordMe(
-    data: TDataUpdatePasswordMe
+  public static updatePasswordMeApiV1UsersMePasswordPatch(
+    data: UsersData['UpdatePasswordMeApiV1UsersMePasswordPatch']
   ): CancelablePromise<Message> {
     const { requestBody } = data;
     return __request(OpenAPI, {
@@ -280,28 +901,7 @@ export class UsersService {
       body: requestBody,
       mediaType: 'application/json',
       errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Register User
-   * Create new user without the need to be logged in.
-   * @returns UserPublic Successful Response
-   * @throws ApiError
-   */
-  public static registerUser(
-    data: TDataRegisterUser
-  ): CancelablePromise<UserPublic> {
-    const { requestBody } = data;
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/v1/users/signup',
-      body: requestBody,
-      mediaType: 'application/json',
-      errors: {
-        422: 'Validation Error',
+        422: `Validation Error`,
       },
     });
   }
@@ -312,8 +912,8 @@ export class UsersService {
    * @returns UserPublic Successful Response
    * @throws ApiError
    */
-  public static readUserById(
-    data: TDataReadUserById
+  public static readUserByIdApiV1UsersUserIdGet(
+    data: UsersData['ReadUserByIdApiV1UsersUserIdGet']
   ): CancelablePromise<UserPublic> {
     const { userId } = data;
     return __request(OpenAPI, {
@@ -323,7 +923,7 @@ export class UsersService {
         user_id: userId,
       },
       errors: {
-        422: 'Validation Error',
+        422: `Validation Error`,
       },
     });
   }
@@ -334,10 +934,10 @@ export class UsersService {
    * @returns UserPublic Successful Response
    * @throws ApiError
    */
-  public static updateUser(
-    data: TDataUpdateUser
+  public static updateUserApiV1UsersUserIdPatch(
+    data: UsersData['UpdateUserApiV1UsersUserIdPatch']
   ): CancelablePromise<UserPublic> {
-    const { requestBody, userId } = data;
+    const { userId, requestBody } = data;
     return __request(OpenAPI, {
       method: 'PATCH',
       url: '/api/v1/users/{user_id}',
@@ -347,7 +947,7 @@ export class UsersService {
       body: requestBody,
       mediaType: 'application/json',
       errors: {
-        422: 'Validation Error',
+        422: `Validation Error`,
       },
     });
   }
@@ -358,558 +958,18 @@ export class UsersService {
    * @returns Message Successful Response
    * @throws ApiError
    */
-  public static deleteUser(
-    data: TDataDeleteObject
+  public static deleteUserApiV1UsersUserIdDelete(
+    data: UsersData['DeleteUserApiV1UsersUserIdDelete']
   ): CancelablePromise<Message> {
+    const { userId } = data;
     return __request(OpenAPI, {
       method: 'DELETE',
       url: '/api/v1/users/{user_id}',
       path: {
-        user_id: data.requestBody?.id,
+        user_id: userId,
       },
       errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-}
-
-export type TDataTestEmail = {
-  emailTo: string;
-};
-
-export class UtilsService {
-  /**
-   * Test Email
-   * Test emails.
-   * @returns Message Successful Response
-   * @throws ApiError
-   */
-  public static testEmail(data: TDataTestEmail): CancelablePromise<Message> {
-    const { emailTo } = data;
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/v1/utils/test-email/',
-      query: {
-        email_to: emailTo,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-}
-
-export type TDataCreateIncident = {
-  requestBody: IncidentCreate;
-};
-export type TDataReadIncident = {
-  slug: string;
-};
-export type TDataReadIncidents = {
-  limit?: number;
-  skip?: number;
-};
-export type TDataReadIncidentEvents = {
-  slug: string;
-};
-export type TDataReadIncidentEventImage = {
-  slug: string;
-  id: string;
-};
-export type TDataReadIncidentParticipants = {
-  slug: string;
-};
-export type TDataReadJiraIssues = {
-  slug: string;
-};
-export type TDataReadOpsgenieIncidents = {
-  slug: string;
-};
-export type TDataReadPagerDutyIncidents = {
-  slug: string;
-};
-export type TDataReadPostmortems = {
-  slug: string;
-};
-export type TDataReadStatuspageIncidents = {
-  slug: string;
-};
-export type TDataUpdateIncident = {
-  field: string;
-  requestBody: Incident;
-};
-export type TDataUpdateIncidentEvent = {
-  id: string;
-  slug: string;
-  requestBody: IncidentEvent;
-};
-
-export class IncidentsService {
-  /**
-   * Create Incident
-   * Create new incident.
-   * @returns Incident Successful Response
-   * @throws ApiError
-   */
-  public static createIncident(
-    data: TDataCreateIncident
-  ): CancelablePromise<Incident> {
-    const { requestBody } = data;
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/v1/incident',
-      body: requestBody,
-      mediaType: 'application/json',
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Delete Incident
-   * Delete an incident.
-   * @returns Message Successful Response
-   * @throws ApiError
-   */
-  public static deleteIncident(
-    data: TDataDeleteObject
-  ): CancelablePromise<Message> {
-    return __request(OpenAPI, {
-      method: 'DELETE',
-      url: '/api/v1/incident',
-      body: data.requestBody,
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Delete Incident Event
-   * Delete an incident event.
-   * @returns Message Successful Response
-   * @throws ApiError
-   */
-  public static deleteIncidentEvent(
-    data: TDataDeleteObject
-  ): CancelablePromise<Message> {
-    const { slug, id } = data;
-    return __request(OpenAPI, {
-      method: 'DELETE',
-      url: '/api/v1/incident/{slug}/events/{id}',
-      path: {
-        slug,
-        id,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Incident
-   * Get incident by ID.
-   * @returns Incident Successful Response
-   * @throws ApiError
-   */
-  public static readIncident(
-    data: TDataReadIncident
-  ): CancelablePromise<Incident> {
-    const { slug } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident/{slug}',
-      path: {
-        slug,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Incidents
-   * Retrieve Incidents.
-   * @returns Incidents Successful Response
-   * @throws ApiError
-   */
-  public static readIncidents(
-    data: TDataReadIncidents = {}
-  ): CancelablePromise<Incidents> {
-    const { limit = 100, skip = 0 } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident',
-      query: {
-        skip,
-        limit,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read All Incidents
-   * Retrieve All Incidents.
-   * @returns Incidents Successful Response
-   * @throws ApiError
-   */
-  public static readAllIncidents(): CancelablePromise<Incidents> {
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident',
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Incident Events
-   * Get incident events by incident slug.
-   * @returns IncidentEvents Successful Response
-   * @throws ApiError
-   */
-  public static readIncidentEvents(
-    data: TDataReadIncidentEvents
-  ): CancelablePromise<Array<IncidentEvent>> {
-    const { slug } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident/{slug}/events',
-      path: {
-        slug,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Incident Event Image
-   * Get incident event image by incident slug and event id.
-   * @returns IncidentEvents Successful Response
-   * @throws ApiError
-   */
-  public static readIncidentEventImage(
-    data: TDataReadIncidentEventImage
-  ): CancelablePromise<ArrayBuffer> {
-    const { slug, id } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident/{slug}/events/image/{id}',
-      path: {
-        slug,
-        id,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Incident Participants
-   * Get incident participants by incident slug.
-   * @returns IncidentParticipants Successful Response
-   * @throws ApiError
-   */
-  public static readIncidentParticipants(
-    data: TDataReadIncidentParticipants
-  ): CancelablePromise<Array<IncidentParticipant>> {
-    const { slug } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident/{slug}/participants',
-      path: {
-        slug,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Incident Jira Issues
-   * Get Jira issues associated with an incident.
-   * @returns JiraIssues Successful Response
-   * @throws ApiError
-   */
-  public static readIncidentJiraIssues(
-    data: TDataReadJiraIssues
-  ): CancelablePromise<Array<JiraIssue>> {
-    const { slug } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident/{slug}/jira',
-      path: {
-        slug,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Incident Opsgenie Incidents
-   * Get Opsgenie incidents associated with an incident.
-   * @returns OpsgenieIncidents Successful Response
-   * @throws ApiError
-   */
-  public static readIncidentOpsgenieIncidents(
-    data: TDataReadOpsgenieIncidents
-  ): CancelablePromise<Array<OpsgenieIncident>> {
-    const { slug } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident/{slug}/opsgenie',
-      path: {
-        slug,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Incident PagerDuty Incidents
-   * Get PagerDuty incidents associated with an incident.
-   * @returns PagerDutyIncidents Successful Response
-   * @throws ApiError
-   */
-  public static readIncidentPagerDutyIncidents(
-    data: TDataReadPagerDutyIncidents
-  ): CancelablePromise<Array<PagerDutyIncident>> {
-    const { slug } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident/{slug}/pagerduty',
-      path: {
-        slug,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Incident Postmortems
-   * Get postmortems associated with an incident.
-   * @returns Postmortems Successful Response
-   * @throws ApiError
-   */
-  public static readIncidentPostmortems(
-    data: TDataReadPostmortems
-  ): CancelablePromise<Array<Postmortem>> {
-    const { slug } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident/{slug}/postmortem',
-      path: {
-        slug,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Incident Statuspage Incidents
-   * Get Statuspage incidents associated with an incident.
-   * @returns StatuspageIncident Successful Response
-   * @throws ApiError
-   */
-  public static readIncidentStatuspageIncidents(
-    data: TDataReadStatuspageIncidents
-  ): CancelablePromise<Array<StatuspageIncident>> {
-    const { slug } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/incident/{slug}/statuspage',
-      path: {
-        slug,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Update Incident
-   * Update an incident.
-   * @returns Incident Successful Response
-   * @throws ApiError
-   */
-  public static updateIncident(
-    data: TDataUpdateIncident
-  ): CancelablePromise<Incident> {
-    const { field, requestBody } = data;
-    return __request(OpenAPI, {
-      method: 'PATCH',
-      url: '/api/v1/incident/{field}',
-      path: {
-        field,
-      },
-      body: requestBody,
-      mediaType: 'application/json',
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Update Incident Event
-   * Update an incident event.
-   * @returns Message Successful Response
-   * @throws ApiError
-   */
-  public static updateIncidentEvent(
-    data: TDataUpdateIncidentEvent
-  ): CancelablePromise<Message> {
-    const { slug, id, requestBody } = data;
-    return __request(OpenAPI, {
-      method: 'PATCH',
-      url: '/api/v1/incident/{slug}/events/{id}',
-      path: {
-        slug,
-        id,
-      },
-      body: requestBody,
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-}
-
-export type TDataCreateMaintenanceWindow = {
-  requestBody: MaintenanceWindowCreate;
-};
-export type TDataReadMaintenanceWindow = {
-  id: string;
-};
-export type TDataReadMaintenanceWindows = {
-  limit?: number;
-  skip?: number;
-};
-export type TDataUpdateMaintenanceWindow = {
-  field: string;
-  requestBody: MaintenanceWindowCreate;
-};
-
-export class MaintenanceWindowService {
-  /**
-   * Create Maintenance Window
-   * Create new maintenance window.
-   * @returns MaintenanceWindow Successful Response
-   * @throws ApiError
-   */
-  public static createMaintenanceWindow(
-    data: TDataCreateMaintenanceWindow
-  ): CancelablePromise<MaintenanceWindow> {
-    const { requestBody } = data;
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/v1/maintenance_window',
-      body: requestBody,
-      mediaType: 'application/json',
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Delete Maintenance Window
-   * Delete a maintenance window.
-   * @returns Message Successful Response
-   * @throws ApiError
-   */
-  public static deleteMaintenceWindow(
-    data: TDataDeleteObject
-  ): CancelablePromise<MaintenanceWindow> {
-    return __request(OpenAPI, {
-      method: 'DELETE',
-      url: '/api/v1/maintenance_window',
-      body: data.requestBody,
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Maintenance Window
-   * Get maintenance window by ID.
-   * @returns MaintenanceWindow Successful Response
-   * @throws ApiError
-   */
-  public static readMaintenanceWindow(
-    data: TDataReadMaintenanceWindow
-  ): CancelablePromise<MaintenanceWindow> {
-    const { id } = data;
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/maintenance_window/{id}',
-      path: {
-        id,
-      },
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Read Maintenance Windows
-   * Retrieve maintenance windows.
-   * @returns MaintenanceWindows Successful Response
-   * @throws ApiError
-   */
-  public static readMaintenanceWindows(): CancelablePromise<MaintenanceWindows> {
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/v1/maintenance_window',
-      errors: {
-        422: 'Validation Error',
-      },
-    });
-  }
-
-  /**
-   * Update Maintenance Window
-   * Update a maintenance window.
-   * @returns MaintenanceWindow Successful Response
-   * @throws ApiError
-   */
-  public static updateMaintenanceWindow(
-    data: TDataUpdateMaintenanceWindow
-  ): CancelablePromise<MaintenanceWindow> {
-    const { field, requestBody } = data;
-    return __request(OpenAPI, {
-      method: 'PATCH',
-      url: '/api/v1/maintenance_window/{field}',
-      path: {
-        field,
-      },
-      body: requestBody,
-      mediaType: 'application/json',
-      errors: {
-        422: 'Validation Error',
+        422: `Validation Error`,
       },
     });
   }

@@ -5,7 +5,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,16 +12,21 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Textarea,
 } from "@chakra-ui/react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { type SubmitHandler, useForm } from "react-hook-form"
 
-import { type ApiError, type Incident, IncidentsService } from "../../client"
+import {
+  type ApiError,
+  type IncidentRecord,
+  IncidentService,
+} from "../../client"
 import useCustomToast from "../../hooks/useCustomToast"
 import { handleError } from "../../utils"
 
 interface EditIncidentProps {
-  incident: Incident
+  incident: IncidentRecord
   isOpen: boolean
   onClose: () => void
 }
@@ -39,15 +43,18 @@ const EditIncidentDescription = ({
     handleSubmit,
     reset,
     formState: { isSubmitting, errors, isDirty },
-  } = useForm<Incident>({
+  } = useForm<IncidentRecord>({
     mode: "onBlur",
     criteriaMode: "all",
     defaultValues: incident,
   })
 
   const mutation = useMutation({
-    mutationFn: (data: Incident) =>
-      IncidentsService.updateIncident({ field: "description", requestBody: data }),
+    mutationFn: (data: IncidentRecord) =>
+      IncidentService.patchIncidentApiV1IncidentFieldPatch({
+        field: "description",
+        requestBody: data,
+      }),
     onSuccess: () => {
       showToast("Success!", "Incident updated successfully.", "success")
       onClose()
@@ -60,7 +67,7 @@ const EditIncidentDescription = ({
     },
   })
 
-  const onSubmit: SubmitHandler<Incident> = async (data) => {
+  const onSubmit: SubmitHandler<IncidentRecord> = async (data) => {
     mutation.mutate(data)
   }
 
@@ -74,7 +81,7 @@ const EditIncidentDescription = ({
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={{ base: "sm", md: "md" }}
+        size={{ base: "sm", md: "3xl" }}
         isCentered
       >
         <ModalOverlay />
@@ -82,22 +89,23 @@ const EditIncidentDescription = ({
           <ModalHeader>Edit Incident Description</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Alert status='info'>
+            <Alert status="info">
               <AlertIcon />
               This will also change the Slack channel name.
             </Alert>
             <FormControl mt={4}>
               <FormLabel htmlFor="description">Description</FormLabel>
-              <Input
+              <Textarea
                 id="description"
                 {...register("description", {
                   required: "Description is required",
                 })}
                 placeholder="Description"
-                type="description"
               />
               {errors.description && (
-                <FormErrorMessage>{errors.description.message}</FormErrorMessage>
+                <FormErrorMessage>
+                  {errors.description.message}
+                </FormErrorMessage>
               )}
             </FormControl>
           </ModalBody>

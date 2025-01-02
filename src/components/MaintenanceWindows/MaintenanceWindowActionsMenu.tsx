@@ -9,12 +9,12 @@ import {
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { FiTrash } from "react-icons/fi"
 
-import type { MaintenanceWindow } from "../../client"
+import type { MaintenanceWindowRecord } from "../../client"
 import Delete from "../Common/DeleteAlert"
 
 interface MaintenanceWindowActionsMenuProps {
   type: string
-  value: MaintenanceWindow
+  value: MaintenanceWindowRecord
   disabled?: boolean
 }
 
@@ -45,7 +45,7 @@ const MaintenanceWindowActionsMenu = ({
         </MenuList>
         <Delete
           type={type}
-          value={value as MaintenanceWindow}
+          id={value.id!}
           isOpen={deleteMaintenanceWindowModal.isOpen}
           onClose={deleteMaintenanceWindowModal.onClose}
         />
