@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   Badge,
   Flex,
@@ -13,18 +11,28 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react"
-import { EmptyStateContainer, EmptyStateDescription, EmptyStateIcon, EmptyStateTitle } from "@saas-ui/react"
-import { IncidentsService } from '../../../client'
-import type { Incident } from '../../../client'
+import {
+  EmptyStateContainer,
+  EmptyStateDescription,
+  EmptyStateIcon,
+  EmptyStateTitle,
+} from "@saas-ui/react"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useEffect } from "react"
 import { SiStatuspage } from "react-icons/si"
+import { IncidentService } from "../../../client"
+import type { IncidentRecord } from "../../../client"
 
 interface StatuspageIncidentsProps {
-  incident: Incident
+  incident: IncidentRecord
 }
 
 function getIncidentStatuspageIncidents(slug: string) {
   return {
-    queryFn: () => IncidentsService.readIncidentStatuspageIncidents({ slug: slug }),
+    queryFn: () =>
+      IncidentService.getIncidentStatuspageApiV1IncidentSlugStatuspageGet({
+        slug: slug,
+      }),
     queryKey: ["spincidents", slug],
   }
 }
@@ -33,11 +41,11 @@ function StatuspageIncidents({ incident }: StatuspageIncidentsProps) {
   const queryClient = useQueryClient()
 
   const { data: spincidents } = useQuery({
-    ...getIncidentStatuspageIncidents(incident.slug),
+    ...getIncidentStatuspageIncidents(incident.slug!),
   })
 
   useEffect(() => {
-    queryClient.fetchQuery(getIncidentStatuspageIncidents(incident.slug))
+    queryClient.fetchQuery(getIncidentStatuspageIncidents(incident.slug!))
   }, [queryClient, incident])
 
   return spincidents?.length ? (
@@ -55,16 +63,14 @@ function StatuspageIncidents({ incident }: StatuspageIncidentsProps) {
           <Tbody>
             {spincidents?.map((incident) => (
               <Tr key={incident.id}>
+                <Td>{incident.name}</Td>
                 <Td>
-                  {incident.name}
+                  <Badge>{incident.status}</Badge>
                 </Td>
                 <Td>
-                  <Badge>
-                    {incident.status}
-                  </Badge>
-                </Td>
-                <Td>
-                  <Link href={`${incident.shortlink}`} isExternal>{incident.shortlink}</Link>
+                  <Link href={`${incident.shortlink}`} isExternal>
+                    {incident.shortlink}
+                  </Link>
                 </Td>
               </Tr>
             ))}
@@ -77,7 +83,9 @@ function StatuspageIncidents({ incident }: StatuspageIncidentsProps) {
       <EmptyStateContainer colorScheme="blue">
         <EmptyStateIcon as={SiStatuspage} />
         <EmptyStateTitle>No Statuspage incidents.</EmptyStateTitle>
-        <EmptyStateDescription>There are no Statuspage incidents associated with this incident.</EmptyStateDescription>
+        <EmptyStateDescription>
+          There are no Statuspage incidents associated with this incident.
+        </EmptyStateDescription>
       </EmptyStateContainer>
     </Flex>
   )

@@ -7,7 +7,7 @@ import {
   MenuList,
 } from "@chakra-ui/react"
 import { Link } from "@tanstack/react-router"
-import { FaUserInjured } from "react-icons/fa"
+import { FaUser } from "react-icons/fa"
 import { FiLogOut, FiUser } from "react-icons/fi"
 
 import useAuth from "../../hooks/useAuth"
@@ -22,23 +22,22 @@ const UserMenu = () => {
   return (
     <>
       {/* Desktop */}
-      <Box
-        display={{ base: "none", md: "block" }}
-        position="fixed"
-        top={4}
-        right={4}
-      >
+      <Box>
         <Menu>
           <MenuButton
             as={IconButton}
+            size="md"
+            fontSize="lg"
             aria-label="Options"
-            icon={<FaUserInjured color="white" fontSize="18px" />}
-            bg="ui.main"
-            isRound
-            data-testid="user-menu"
+            variant="ghost"
+            icon={<FaUser color="white" fontSize="18px" />}
           />
           <MenuList>
-            <MenuItem icon={<FiUser fontSize="18px" />} as={Link} to="settings">
+            <MenuItem
+              icon={<FiUser fontSize="18px" />}
+              as={Link}
+              to="/settings"
+            >
               My profile
             </MenuItem>
             <MenuItem

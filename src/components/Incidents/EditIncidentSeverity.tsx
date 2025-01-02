@@ -15,12 +15,16 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { type SubmitHandler, useForm } from "react-hook-form"
 
-import { type ApiError, type Incident, IncidentsService } from "../../client"
+import {
+  type ApiError,
+  type IncidentRecord,
+  IncidentService,
+} from "../../client"
 import useCustomToast from "../../hooks/useCustomToast"
 import { handleError } from "../../utils"
 
 interface EditIncidentProps {
-  incident: Incident
+  incident: IncidentRecord
   isOpen: boolean
   onClose: () => void
 }
@@ -37,15 +41,18 @@ const EditIncidentSeverity = ({
     handleSubmit,
     reset,
     formState: { isSubmitting, errors, isDirty },
-  } = useForm<Incident>({
+  } = useForm<IncidentRecord>({
     mode: "onBlur",
     criteriaMode: "all",
     defaultValues: incident,
   })
 
   const mutation = useMutation({
-    mutationFn: (data: Incident) =>
-      IncidentsService.updateIncident({ field: "severity", requestBody: data }),
+    mutationFn: (data: IncidentRecord) =>
+      IncidentService.patchIncidentApiV1IncidentFieldPatch({
+        field: "severity",
+        requestBody: data,
+      }),
     onSuccess: () => {
       showToast("Success!", "Incident updated successfully.", "success")
       onClose()
@@ -58,7 +65,7 @@ const EditIncidentSeverity = ({
     },
   })
 
-  const onSubmit: SubmitHandler<Incident> = async (data) => {
+  const onSubmit: SubmitHandler<IncidentRecord> = async (data) => {
     mutation.mutate(data)
   }
 

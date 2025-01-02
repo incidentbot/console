@@ -1,21 +1,36 @@
-import { useCallback, useEffect, useState } from 'react'
+import {
+  Box,
+  Card,
+  CardBody,
+  Flex,
+  HStack,
+  Spacer,
+  Tag,
+  Text,
+} from "@chakra-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Box, Card, CardBody, Flex, Spacer, Text } from "@chakra-ui/react"
-import { IncidentsService } from "../../client";
-import type { IncidentEvent } from '../../client';
-import EventActionsMenu from './EventActionsMenu';
-import TimeAgo from "react-timeago";
-import { Controlled as ControlledZoom } from 'react-medium-image-zoom'
-import './timeline-image.css'
-import { FaRegClock } from "react-icons/fa";
+import { useCallback, useEffect, useState } from "react"
+import { Controlled as ControlledZoom } from "react-medium-image-zoom"
+import TimeAgo from "react-timeago"
+import { IncidentService } from "../../client"
+import type { IncidentEvent, IncidentEventBase } from "../../client"
+import { convertSlackTimestamp } from "../../hooks/convertSlackTimestamp"
+import EventActionsMenu from "./EventActionsMenu"
+import "./timeline-image.css"
+
+import { formatTimestamp } from "../../hooks/formatTimestamp"
 
 interface IncidentEventTimelineImageProps {
-  log: IncidentEvent
+  log: IncidentEvent | IncidentEventBase
 }
 
 function getIncidentEventImage(slug: string, id: string) {
   return {
-    queryFn: () => IncidentsService.readIncidentEventImage({ slug: slug, id: id }),
+    queryFn: () =>
+      IncidentService.getIncidentEventImageApiV1IncidentSlugEventsImageIdGet({
+        slug: slug,
+        id: id,
+      }),
     queryKey: ["imageData", id],
   }
 }
@@ -29,41 +44,58 @@ function IncidentEventTimelineImage({ log }: IncidentEventTimelineImageProps) {
   }, [])
 
   const { data: imageData } = useQuery({
-    ...getIncidentEventImage(log?.incident_slug, log?.id),
+    ...getIncidentEventImage(log?.incident_slug!, log?.id!),
   })
 
   useEffect(() => {
-    queryClient.fetchQuery(getIncidentEventImage(log?.incident_slug, log?.id))
+    queryClient.fetchQuery(getIncidentEventImage(log?.incident_slug!, log?.id!))
   }, [queryClient, log?.incident_slug, log?.id])
 
   if (imageData !== undefined) {
     return (
       <>
-        <Flex mt={4}>
+        <Flex mt={8}>
           <Box>
-            <Text fontSize="md">An image sent to the channel by {log?.user} was pinned to the timeline</Text>
+            <Text fontSize="md">
+              An image sent to the channel by {log?.user} was pinned to the
+              timeline
+            </Text>
+            <HStack>
+              <Tag size="sm">
+                <Text fontSize="sm">
+                  <TimeAgo date={convertSlackTimestamp(log.message_ts!)} />
+                </Text>
+              </Tag>
+              <Tag size="sm">
+                <Text fontSize="sm">
+                  {String(
+                    formatTimestamp(log.message_ts!, true).toLocaleString(),
+                  )}
+                </Text>
+              </Tag>
+            </HStack>
           </Box>
           <Spacer />
-          <Box>
-            <Flex alignItems="center" justifyContent="center">
-              <Box mr={2}>
-                <FaRegClock fontSize={13} />
-              </Box>
-              <Box>
-                <Text fontSize="sm"><TimeAgo date={log.created_at} /></Text>
-              </Box>
-              <Box>
-                <EventActionsMenu type="IncidentEvent" slug={log.incident_slug} id={log.id} value={log} hasImage />
-              </Box>
-            </Flex>
-          </Box>
+          <EventActionsMenu
+            type="IncidentEvent"
+            slug={log.incident_slug!}
+            id={log.id!}
+            value={log}
+            hasImage
+          />
         </Flex>
         <Box>
-          <Card size="sm">
+          <Card size="sm" mt={2}>
             <CardBody>
               <Box maxWidth="200px">
-                <ControlledZoom isZoomed={isZoomed} onZoomChange={handleZoomChange}>
-                  <img src={`data:${log?.mimetype};base64,${imageData}`} />
+                <ControlledZoom
+                  isZoomed={isZoomed}
+                  onZoomChange={handleZoomChange}
+                >
+                  <img
+                    alt="timeline"
+                    src={`data:${log?.mimetype};base64,${imageData}`}
+                  />
                 </ControlledZoom>
               </Box>
             </CardBody>

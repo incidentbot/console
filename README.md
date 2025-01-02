@@ -1,5 +1,7 @@
 # Incident Bot Console
 
+<img src="./assets/logo.png" width="250" height="250"/>
+
 A web interface for [Incident Bot](https://github.com/incidentbot/incidentbot).
 
 Built with [Vite](https://vitejs.dev/), [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/), [TanStack Query](https://tanstack.com/query), [TanStack Router](https://tanstack.com/router) and [Chakra UI](https://chakra-ui.com/).
@@ -26,7 +28,7 @@ There is a default base image you may reference that adds the repository content
 Example:
 
 ```dockerfile
-FROM eb129/incidentbot-console:v0.1.1 AS build
+FROM eb129/incidentbot-console:v0.1.2 AS build
 WORKDIR /app
 ARG VITE_API_URL=${VITE_API_URL}
 RUN npm run build

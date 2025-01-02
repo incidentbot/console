@@ -1,183 +1,164 @@
 import {
   Badge,
-  Box,
   Card,
   CardBody,
-  CardHeader,
-  Flex,
-  Heading,
-  Spacer,
+  Divider,
+  HStack,
+  Icon,
   Text,
-  Wrap,
-  WrapItem,
+  Tooltip,
+  chakra,
 } from "@chakra-ui/react"
-import { useEffect } from "react"
-import { Property, PropertyList } from "@saas-ui/react"
-import type { Incident } from "../../client"
+import {
+  Property,
+  PropertyLabel,
+  PropertyList,
+  PropertyValue,
+} from "@saas-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import IncidentActionsMenu from "./IncidentActionsMenu"
-import { IncidentsService } from "../../client"
-import { LuTimerOff } from "react-icons/lu";
-import TimeAgo from "react-timeago";
-import { format } from "date-fns";
+import { format } from "date-fns"
+import { useEffect } from "react"
+
+import type { IncidentRecord } from "../../client"
+import { IncidentService } from "../../client"
 import { toTitleCase } from "../../hooks/titleCase"
 
+import { FaInfoCircle } from "react-icons/fa"
+import { GiDivingHelmet } from "react-icons/gi"
+import { LuTimerOff } from "react-icons/lu"
+
 interface IncidentInfoPanelProps {
-  incident: Incident
+  incident: IncidentRecord
 }
 
 function getIncidentParticipants(slug: string) {
   return {
-    queryFn: () => IncidentsService.readIncidentParticipants({ slug: slug }),
+    queryFn: () =>
+      IncidentService.getIncidentParticipantsApiV1IncidentSlugParticipantsGet({
+        slug: slug,
+      }),
     queryKey: ["participants"],
   }
+}
+
+function components(incident: IncidentRecord) {
+  return (
+    <HStack>
+      {incident?.components?.split(",").map((component) => {
+        return (
+          <Badge key={component} variant="subtle" fontSize="0.8em">
+            {component}
+          </Badge>
+        )
+      })}
+    </HStack>
+  )
 }
 
 function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
   const queryClient = useQueryClient()
 
   const { data: participants } = useQuery({
-    ...getIncidentParticipants(incident.slug),
+    ...getIncidentParticipants(incident.slug!),
   })
 
   useEffect(() => {
-    queryClient.prefetchQuery(getIncidentParticipants(incident.slug))
-  }, [queryClient])
+    queryClient.prefetchQuery(getIncidentParticipants(incident.slug!))
+  }, [queryClient, incident.slug])
 
   const createdDate = new Date(incident.created_at)
-  const updatedDate = new Date(incident.updated_at)
+  const updatedDate = new Date(incident.updated_at!)
 
   return (
-    <>
-      <Card variant="outline">
-        <CardHeader display="flex" flexDirection="row">
-          <Heading size="lg">Details</Heading>
-          <Spacer />
-          <IncidentActionsMenu type="Incident" value={incident} />
-        </CardHeader>
-        <CardBody>
-          <PropertyList>
-            <Property label="Description" value={<Text as='kbd'>{incident?.description}</Text>} />
-            <Property label="Impact" value={<Text as='kbd'>{incident?.impact}</Text>} />
-            <Property
-              label="Components"
-              value={
-                <Badge ml="1" variant="solid" fontSize="0.8em">
-                  {incident?.components}
-                </Badge>
-              }
-            />
-            <Property
-              label="Severity"
-              value={
-                <Flex gap={2}>
-                  <Badge
-                    ml="1"
-                    variant="solid"
-                    fontSize="0.8em"
-                    colorScheme={
-                      incident?.severity.includes("0")
-                        ? "red"
-                        : incident?.severity.includes("1")
-                          ? "orange"
-                          : incident?.severity.includes("2")
-                            ? "yellow"
-                            : "green"
-                    }
-                  >
-                    {incident?.severity}
-                  </Badge>
-                </Flex>
-              }
-            />
-            <Property
-              label="Status"
-              value={
-                <Flex gap={2}>
-                  <Badge
-                    ml="1"
-                    variant="solid"
-                    fontSize="0.8em"
-                    colorScheme={
-                      incident?.status.includes("resolved")
-                        ? "green"
-                        : "yellow"
-                    }
-                  >
-                    {incident?.status}
-                  </Badge>
-                </Flex>
-              }
-            />
-            <Property
-              label="Created"
-              value={incident?.created_at ?
-                <>
-                  <Flex>
-                    <Wrap>
-                      <WrapItem>
-                        <Box>
-                          <Badge ml="1" variant="solid" fontSize="0.8em">
-                            {format(createdDate, "dd MMMM, yyyy hh:mm zzz")}
-                          </Badge>
-                        </Box>
-                      </WrapItem>
-                      <Spacer />
-                      <WrapItem>
-                        <Box>
-                          <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
-                            <TimeAgo date={incident?.created_at} />
-                          </Badge>
-                        </Box>
-                      </WrapItem>
-                    </Wrap>
-                  </Flex>
-                </> : <LuTimerOff />
-              }
-            />
-            <Property
-              label="Updated"
-              value={incident?.updated_at ?
-                <>
-                  <Flex>
-                    <Wrap>
-                      <WrapItem>
-                        <Box>
-                          <Badge ml="1" variant="solid" fontSize="0.8em">
-                            {format(updatedDate, "dd MMMM, yyyy hh:mm zzz")}
-                          </Badge>
-                        </Box>
-                      </WrapItem>
-                      <Spacer />
-                      <WrapItem>
-                        <Box>
-                          <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
-                            <TimeAgo date={incident?.updated_at} />
-                          </Badge>
-                        </Box>
-                      </WrapItem>
-                    </Wrap>
-                  </Flex>
-                </> : <LuTimerOff />
-              }
-            />
-          </PropertyList>
-        </CardBody>
-      </Card>
-      <Card variant="outline" mt={2}>
-        <CardHeader display="flex" flexDirection="row">
-          <Heading size="lg">People</Heading>
-        </CardHeader>
-        <CardBody>
-          {participants?.length ? participants?.map((person, idx) => (
-            <Property key={idx} label={
-              toTitleCase(person.role.replace(/_/g, " "))
+    <Card variant="unstyled">
+      <CardBody>
+        <chakra.h2
+          fontSize={{
+            base: "2xl",
+            md: "3xl",
+          }}
+          lineHeight="shorter"
+          mt={1}
+        >
+          <Icon as={FaInfoCircle} fontSize={20} mr={2} />
+          Details
+        </chakra.h2>
+        <PropertyList>
+          <Property
+            label="Impact"
+            value={
+              <Tooltip label={incident?.impact}>
+                <Text
+                  as="kbd"
+                  isTruncated
+                  maxWidth={{ base: "200px", md: "200px" }}
+                >
+                  {incident?.impact}
+                </Text>
+              </Tooltip>
             }
-              value={<Text as='kbd'>{person.user_name}</Text>} />
-          )) : <h1>No roles have been claimed yet.</h1>}
-        </CardBody>
-      </Card>
-    </>
+          />
+          <Property label="Components" value={components(incident)} />
+          <Property
+            label="Created"
+            value={
+              incident?.created_at ? (
+                <>
+                  <HStack wrap="wrap" mt={2}>
+                    <Badge variant="subtle" fontSize="0.8em">
+                      {format(createdDate, "dd MMMM, yyyy hh:mm zzz")}
+                    </Badge>
+                  </HStack>
+                </>
+              ) : (
+                <LuTimerOff />
+              )
+            }
+          />
+          <Property
+            label="Updated"
+            value={
+              incident?.updated_at ? (
+                <>
+                  <HStack wrap="wrap" mt={2}>
+                    <Badge variant="subtle" fontSize="0.8em">
+                      {format(updatedDate, "dd MMMM, yyyy hh:mm zzz")}
+                    </Badge>
+                  </HStack>
+                </>
+              ) : (
+                <LuTimerOff />
+              )
+            }
+          />
+          <Divider my={4} />
+          <chakra.h2
+            fontSize={{
+              base: "2xl",
+              md: "3xl",
+            }}
+            lineHeight="shorter"
+          >
+            <Icon as={GiDivingHelmet} fontSize={20} mr={2} />
+            People
+          </chakra.h2>
+          {participants?.length ? (
+            participants?.map((person, idx) => (
+              <Property key={idx}>
+                <PropertyLabel width="200px">
+                  {toTitleCase(person.role.replace(/_/g, " "))}
+                </PropertyLabel>
+                <PropertyValue>
+                  <Text as="kbd">{person.user_name}</Text>
+                </PropertyValue>
+              </Property>
+            ))
+          ) : (
+            <Text fontSize={14}>No roles have been claimed yet.</Text>
+          )}
+        </PropertyList>
+      </CardBody>
+    </Card>
   )
 }
 

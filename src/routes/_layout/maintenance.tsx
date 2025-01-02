@@ -3,25 +3,32 @@ import {
   Button,
   Container,
   Flex,
-  Heading,
   SkeletonText,
   Table,
   TableContainer,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
 } from "@chakra-ui/react"
-import { EmptyStateContainer, EmptyStateDescription, EmptyStateIcon, EmptyStateTitle } from "@saas-ui/react"
+import {
+  EmptyStateContainer,
+  EmptyStateDescription,
+  EmptyStateIcon,
+  EmptyStateTitle,
+} from "@saas-ui/react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useEffect } from "react"
 import { LuConstruction } from "react-icons/lu"
+import TimeAgo from "react-timeago"
 import { z } from "zod"
 import { MaintenanceWindowService } from "../../client"
+import StyledHeader from "../../components/Common/StyledHeader"
 import MaintenanceWindowActionMenu from "../../components/MaintenanceWindows/MaintenanceWindowActionsMenu"
-import TimeAgo from "react-timeago";
 
 const maintenanceWindowsSearchSchema = z.object({
   page: z.number().catch(1),
@@ -36,7 +43,8 @@ const PER_PAGE = 5
 
 function getMaintenanceWindowsQueryOptions({ page }: { page: number }) {
   return {
-    queryFn: () => MaintenanceWindowService.readMaintenanceWindows(),
+    queryFn: () =>
+      MaintenanceWindowService.getMaintenanceWindowsApiV1MaintenanceWindowGet(),
     queryKey: ["maintenance_windows", { page }],
   }
 }
@@ -71,7 +79,7 @@ function MaintenanceDisplay() {
 
   return maintenance_windows?.data.length ? (
     <>
-      <TableContainer>
+      <TableContainer mt={4}>
         <Table size={{ base: "sm", md: "sm" }}>
           <Thead>
             <Tr>
@@ -99,26 +107,51 @@ function MaintenanceDisplay() {
               {maintenance_windows?.data.map((mw) => (
                 <Tr key={mw.id} opacity={isPlaceholderData ? 0.5 : 1}>
                   <Td>{mw.title}</Td>
-                  <Td>{mw.description}</Td>
+                  <Td>
+                    <Tooltip label={mw.description}>
+                      <Text
+                        size="md"
+                        isTruncated
+                        maxWidth={{ base: "300px", md: "300px" }}
+                      >
+                        {mw.description}
+                      </Text>
+                    </Tooltip>
+                  </Td>
                   <Td>
                     <Badge ml="1" variant="solid" fontSize="0.8em">
                       {mw.status}
                     </Badge>
                   </Td>
                   <Td>
-                    {mw.components.map((component) => (
-                      <Badge key={component} ml="1" variant="solid" fontSize="0.8em">
+                    {mw.components?.map((component) => (
+                      <Badge
+                        key={component}
+                        ml="1"
+                        variant="solid"
+                        fontSize="0.8em"
+                      >
                         {component}
                       </Badge>
                     ))}
                   </Td>
                   <Td>
-                    <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
+                    <Badge
+                      ml="1"
+                      variant="solid"
+                      fontSize="0.8em"
+                      colorScheme="yellow"
+                    >
                       <TimeAgo date={mw?.start_timestamp} />
                     </Badge>
                   </Td>
                   <Td>
-                    <Badge ml="1" variant="solid" fontSize="0.8em" colorScheme="yellow">
+                    <Badge
+                      ml="1"
+                      variant="solid"
+                      fontSize="0.8em"
+                      colorScheme="yellow"
+                    >
                       <TimeAgo date={mw?.end_timestamp} />
                     </Badge>
                   </Td>
@@ -155,7 +188,9 @@ function MaintenanceDisplay() {
       <EmptyStateContainer colorScheme="red">
         <EmptyStateIcon as={LuConstruction} />
         <EmptyStateTitle>No scheduled maintenance</EmptyStateTitle>
-        <EmptyStateDescription>There are currently no scheduled maintenance windows.</EmptyStateDescription>
+        <EmptyStateDescription>
+          There are currently no scheduled maintenance windows.
+        </EmptyStateDescription>
       </EmptyStateContainer>
     </Flex>
   )
@@ -163,15 +198,8 @@ function MaintenanceDisplay() {
 
 function Maintenance() {
   return (
-    <Container maxW="6xl">
-      <Heading
-        size="lg"
-        textAlign={{ base: "center", md: "left" }}
-        pt={12}
-        mb={4}
-      >
-        Maintenance Windows
-      </Heading>
+    <Container maxW="full">
+      <StyledHeader title="Maintenance Windows" icon={LuConstruction} />
       <MaintenanceDisplay />
     </Container>
   )

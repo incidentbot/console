@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   Badge,
   Flex,
@@ -13,18 +11,28 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react"
-import { EmptyStateContainer, EmptyStateDescription, EmptyStateIcon, EmptyStateTitle } from "@saas-ui/react"
-import { IncidentsService } from '../../../client'
-import type { Incident } from '../../../client'
+import {
+  EmptyStateContainer,
+  EmptyStateDescription,
+  EmptyStateIcon,
+  EmptyStateTitle,
+} from "@saas-ui/react"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useEffect } from "react"
 import { SiJira } from "react-icons/si"
+import { IncidentService } from "../../../client"
+import type { IncidentRecord } from "../../../client"
 
 interface JiraIssuesProps {
-  incident: Incident
+  incident: IncidentRecord
 }
 
 function getIncidentJiraIssues(slug: string) {
   return {
-    queryFn: () => IncidentsService.readIncidentJiraIssues({ slug: slug }),
+    queryFn: () =>
+      IncidentService.getIncidentJiraIssuesApiV1IncidentSlugJiraGet({
+        slug: slug,
+      }),
     queryKey: ["issues", slug],
   }
 }
@@ -33,11 +41,11 @@ function JiraIssues({ incident }: JiraIssuesProps) {
   const queryClient = useQueryClient()
 
   const { data: issues } = useQuery({
-    ...getIncidentJiraIssues(incident.slug),
+    ...getIncidentJiraIssues(incident.slug!),
   })
 
   useEffect(() => {
-    queryClient.fetchQuery(getIncidentJiraIssues(incident.slug))
+    queryClient.fetchQuery(getIncidentJiraIssues(incident.slug!))
   }, [queryClient, incident])
 
   return issues?.length ? (
@@ -57,18 +65,16 @@ function JiraIssues({ incident }: JiraIssuesProps) {
             {issues?.map((issue) => (
               <Tr key={issue.key}>
                 <Td>
-                  <Badge>
-                    {issue.key}
-                  </Badge>
+                  <Badge>{issue.key}</Badge>
                 </Td>
                 <Td>
-                  <Badge>
-                    {issue.status}
-                  </Badge>
+                  <Badge>{issue.status}</Badge>
                 </Td>
                 <Td>{issue.team}</Td>
                 <Td>
-                  <Link href={`${issue.url}`} isExternal>{issue.url}</Link>
+                  <Link href={`${issue.url}`} isExternal>
+                    {issue.url}
+                  </Link>
                 </Td>
               </Tr>
             ))}
@@ -81,7 +87,9 @@ function JiraIssues({ incident }: JiraIssuesProps) {
       <EmptyStateContainer colorScheme="blue">
         <EmptyStateIcon as={SiJira} />
         <EmptyStateTitle>No Jira issues</EmptyStateTitle>
-        <EmptyStateDescription>There are no Jira issues associated with this incident.</EmptyStateDescription>
+        <EmptyStateDescription>
+          There are no Jira issues associated with this incident.
+        </EmptyStateDescription>
       </EmptyStateContainer>
     </Flex>
   )

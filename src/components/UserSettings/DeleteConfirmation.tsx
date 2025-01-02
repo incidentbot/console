@@ -32,7 +32,7 @@ const DeleteConfirmation = ({ isOpen, onClose }: DeleteProps) => {
   const { logout } = useAuth()
 
   const mutation = useMutation({
-    mutationFn: () => UsersService.deleteUserMe(),
+    mutationFn: () => UsersService.deleteUserMeApiV1UsersMeDelete(),
     onSuccess: () => {
       showToast(
         "Success",

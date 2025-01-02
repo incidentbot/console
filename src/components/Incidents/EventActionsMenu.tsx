@@ -9,7 +9,7 @@ import {
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { FiEdit, FiTrash } from "react-icons/fi"
 
-import type { IncidentEvent } from "../../client"
+import type { IncidentEvent, IncidentEventBase } from "../../client"
 import Delete from "../Common/DeleteAlert"
 import EditIncidentEvent from "./EditIncidentEvent"
 
@@ -17,12 +17,19 @@ interface EventActionsMenuProps {
   type: string
   slug: string
   id: string
-  value: IncidentEvent
+  value: IncidentEvent | IncidentEventBase
   disabled?: boolean
   hasImage?: boolean
 }
 
-const EventActionsMenu = ({ type, slug, id, value, disabled, hasImage }: EventActionsMenuProps) => {
+const EventActionsMenu = ({
+  type,
+  slug,
+  id,
+  value,
+  disabled,
+  hasImage,
+}: EventActionsMenuProps) => {
   const editModal = useDisclosure()
   const deleteModal = useDisclosure()
 
@@ -61,7 +68,6 @@ const EventActionsMenu = ({ type, slug, id, value, disabled, hasImage }: EventAc
         <Delete
           type={type}
           id={id}
-          value={value as IncidentEvent}
           isOpen={deleteModal.isOpen}
           onClose={deleteModal.onClose}
         />

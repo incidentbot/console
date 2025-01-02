@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   Flex,
   Heading,
@@ -11,18 +9,28 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react"
-import { EmptyStateContainer, EmptyStateDescription, EmptyStateIcon, EmptyStateTitle } from "@saas-ui/react"
-import { IncidentsService } from '../../../client'
-import type { Incident } from '../../../client'
+import {
+  EmptyStateContainer,
+  EmptyStateDescription,
+  EmptyStateIcon,
+  EmptyStateTitle,
+} from "@saas-ui/react"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useEffect } from "react"
 import { SiPagerduty } from "react-icons/si"
+import { IncidentService } from "../../../client"
+import type { IncidentRecord } from "../../../client"
 
 interface PagerDutyIncidentsProps {
-  incident: Incident
+  incident: IncidentRecord
 }
 
 function getIncidentPagerDutyIncidents(slug: string) {
   return {
-    queryFn: () => IncidentsService.readIncidentPagerDutyIncidents({ slug: slug }),
+    queryFn: () =>
+      IncidentService.getIncidentPagerdutyApiV1IncidentSlugPagerdutyGet({
+        slug: slug,
+      }),
     queryKey: ["pdincidents", slug],
   }
 }
@@ -31,11 +39,11 @@ function PagerDutyIncidents({ incident }: PagerDutyIncidentsProps) {
   const queryClient = useQueryClient()
 
   const { data: pdincidents } = useQuery({
-    ...getIncidentPagerDutyIncidents(incident.slug),
+    ...getIncidentPagerDutyIncidents(incident.slug!),
   })
 
   useEffect(() => {
-    queryClient.fetchQuery(getIncidentPagerDutyIncidents(incident.slug))
+    queryClient.fetchQuery(getIncidentPagerDutyIncidents(incident.slug!))
   }, [queryClient, incident])
 
   return pdincidents?.length ? (
@@ -66,7 +74,9 @@ function PagerDutyIncidents({ incident }: PagerDutyIncidentsProps) {
       <EmptyStateContainer colorScheme="green">
         <EmptyStateIcon as={SiPagerduty} />
         <EmptyStateTitle>No PagerDuty incidents</EmptyStateTitle>
-        <EmptyStateDescription>There are no PagerDuty incidents associated with this incident.</EmptyStateDescription>
+        <EmptyStateDescription>
+          There are no PagerDuty incidents associated with this incident.
+        </EmptyStateDescription>
       </EmptyStateContainer>
     </Flex>
   )

@@ -12,28 +12,20 @@ import React from "react"
 import { useForm } from "react-hook-form"
 
 import {
-  IncidentsService,
+  IncidentService,
   MaintenanceWindowService,
   UsersService,
 } from "../../client"
-import type {
-  Incident,
-  IncidentEvent,
-  MaintenanceWindow,
-  UserPublic,
-} from "../../client/models"
 import useCustomToast from "../../hooks/useCustomToast"
 
 interface DeleteProps {
   type: string
-  slug?: string | null
-  id?: string | null
-  value: Incident | IncidentEvent | MaintenanceWindow | UserPublic
+  id: string
   isOpen: boolean
   onClose: () => void
 }
 
-const Delete = ({ type, slug, id, value, isOpen, onClose }: DeleteProps) => {
+const Delete = ({ type, id, isOpen, onClose }: DeleteProps) => {
   const queryClient = useQueryClient()
   const showToast = useCustomToast()
   const cancelRef = React.useRef<HTMLButtonElement | null>(null)
@@ -42,20 +34,21 @@ const Delete = ({ type, slug, id, value, isOpen, onClose }: DeleteProps) => {
     formState: { isSubmitting },
   } = useForm()
 
-  const deleteEntity = async (
-    value: Incident | IncidentEvent | MaintenanceWindow | UserPublic,
-  ) => {
+  const deleteEntity = async (id?: string) => {
     if (type === "Incident") {
-      await IncidentsService.deleteIncident({ requestBody: value })
+      await IncidentService.deleteIncidentApiV1IncidentIdDelete({ id: id! })
     } else if (type === "IncidentEvent") {
-      await IncidentsService.deleteIncidentEvent({ slug: slug, id: id })
-    } else if (type === "MaintenanceWindow") {
-      await MaintenanceWindowService.deleteMaintenceWindow({
-        id: id,
-        requestBody: value,
+      await IncidentService.deleteIncidentEventApiV1IncidentSlugEventsIdDelete({
+        id: id!,
       })
+    } else if (type === "MaintenanceWindow") {
+      await MaintenanceWindowService.deleteMaintenanceWindowApiV1MaintenanceWindowIdDelete(
+        {
+          id: id!,
+        },
+      )
     } else if (type === "User") {
-      await UsersService.deleteUser({ requestBody: value })
+      await UsersService.deleteUserApiV1UsersUserIdDelete({ userId: id! })
     } else {
       throw new Error(`Unexpected type: ${type}`)
     }
@@ -81,11 +74,11 @@ const Delete = ({ type, slug, id, value, isOpen, onClose }: DeleteProps) => {
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: [
-          type === "Incident"
+          type === "IncidentRecord"
             ? "incident"
             : type === "IncidentEvent"
               ? "events"
-              : type === "MaintenanceWindow"
+              : type === "MaintenanceWindowRecord"
                 ? "maintenance_windows"
                 : "users",
         ],
@@ -94,7 +87,7 @@ const Delete = ({ type, slug, id, value, isOpen, onClose }: DeleteProps) => {
   })
 
   const onSubmit = async () => {
-    mutation.mutate(value)
+    mutation.mutate(String(id))
   }
 
   return (

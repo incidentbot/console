@@ -1,5 +1,6 @@
 import { extendTheme } from "@chakra-ui/react"
 import { theme as baseTheme } from "@saas-ui/react"
+import { drawerTheme } from "./components/Theme/DrawerTheme"
 
 const disabledStyles = {
   _disabled: {
@@ -9,15 +10,19 @@ const disabledStyles = {
 
 const theme = extendTheme(
   {
+    initialColorMode: "dark",
+    useSystemColorMode: false,
     colors: {
       ui: {
         main: "#006c96",
-        secondary: "#EDF2F7",
+        mainLite: "#7FB5CA",
+        secondary: "#b8c5d4",
         success: "#48BB78",
         danger: "#E53E3E",
         light: "#FAFAFA",
         dark: "#1A202C",
         darkSlate: "#252D3D",
+        darkSlateLite: "#3a4250",
         dim: "#A0AEC0",
       },
     },
@@ -28,7 +33,7 @@ const theme = extendTheme(
             backgroundColor: "ui.main",
             color: "ui.light",
             _hover: {
-              backgroundColor: "#0290b8",
+              backgroundColor: "ui.mainLite",
             },
             _disabled: {
               ...disabledStyles,
@@ -46,6 +51,7 @@ const theme = extendTheme(
           },
         },
       },
+      Drawer: drawerTheme,
       Tabs: {
         variants: {
           enclosed: {

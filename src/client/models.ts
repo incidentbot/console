@@ -1,6 +1,15 @@
-import { UUID } from 'crypto';
+export type ApplicationData = {
+  created_at: string;
+  data?: string | null;
+  deletable?: boolean | null;
+  description?: string | null;
+  id?: string;
+  json_data?: Record<string, unknown> | null;
+  name: string;
+  updated_at: string | null;
+};
 
-export type Body_login_login_access_token = {
+export type Body_login_access_token_api_v1_login_access_token_post = {
   grant_type?: string | null;
   username: string;
   password: string;
@@ -9,65 +18,44 @@ export type Body_login_login_access_token = {
   client_secret?: string | null;
 };
 
+export type ConfigurationResponse = {
+  data: Array<unknown>;
+};
+
 export type HTTPValidationError = {
   detail?: Array<ValidationError>;
 };
 
-export type Dictionary = {
-  [key: string]: string;
-};
-
-export type IncidentCreate = {
-  title: string;
-  description?: string | null;
-};
-
-export type Incident = {
-  additional_comms_channel?: boolean | null;
-  additional_comms_channel_id?: string | null;
-  additional_comms_channel_link?: string | null;
-  boilerplate_message_ts?: string | null;
-  channel_id: string;
-  channel_name: string;
-  components?: string | null;
-  created_at: string;
-  description: string;
-  digest_message_ts?: string | null;
-  id: number;
-  impact?: string | null;
-  is_security_incident?: boolean | null;
-  last_update_sent?: string | null;
-  link: string;
-  meeting_link?: string | null;
-  postmortem?: string | null;
-  roles?: Dictionary | null;
-  roles_all?: Array<string> | null;
-  severity: string;
-  severities?: Array<string> | null;
-  slug: string;
-  status: string;
-  statuses?: Array<string> | null;
-  tags?: Array<string> | null;
-  updated_at: string;
-};
-
-export type Incidents = {
-  data: Array<Incident>;
-  count: number;
-};
-
 export type IncidentEvent = {
   created_at: string;
-  id: UUID;
-  image?: string | null;
-  incident_slug: string;
+  id?: string;
+  image: Blob | File | null;
+  incident_slug?: string | null;
+  message_ts?: string | null;
   mimetype?: string | null;
   parent: number;
   source: string;
   text?: string | null;
   timestamp: string | null;
   title?: string | null;
-  updated_at?: string | null;
+  updated_at: string | null;
+  user?: string | null;
+};
+
+/**
+ * IncidentEvent base class, excludes image
+ */
+export type IncidentEventBase = {
+  created_at: string;
+  id: string;
+  incident_slug: string;
+  message_ts?: string | null;
+  mimetype?: string | null;
+  source: string;
+  text?: string | null;
+  timestamp: string | null;
+  title?: string | null;
+  updated_at: string | null;
   user?: string | null;
 };
 
@@ -75,42 +63,69 @@ export type IncidentParticipant = {
   created_at: string;
   id: number;
   is_lead: boolean;
-  parent: number;
   role: string;
-  updated_at?: string | null;
+  updated_at: string | null;
   user_id: string;
   user_name: string;
 };
 
-export type JiraIssue = {
-  key: string;
-  parent: number;
+export type IncidentRecord = {
+  additional_comms_channel?: boolean | null;
+  additional_comms_channel_id?: string | null;
+  additional_comms_channel_link?: string | null;
+  boilerplate_message_ts?: string | null;
+  channel_id?: string | null;
+  channel_name?: string | null;
+  components?: string | null;
+  created_at: string;
+  description?: string | null;
+  digest_message_ts?: string | null;
+  has_private_channel?: boolean | null;
+  id: number;
+  impact?: string | null;
+  is_security_incident?: boolean | null;
+  last_update_sent: string | null;
+  link?: string | null;
+  meeting_link?: string | null;
+  roles?: Record<string, unknown> | null;
+  roles_all?: Array<string> | null;
+  severity?: string | null;
+  severities?: Array<string> | null;
+  slug?: string | null;
+  status?: string | null;
+  statuses?: Array<string> | null;
+  tags?: Array<string> | null;
+  updated_at: string | null;
+};
+
+export type Incidents = {
+  data: Array<IncidentRecord>;
+  count: number;
+};
+
+export type JiraIssueRecord = {
+  key?: string;
   status?: string | null;
   team?: string | null;
   url?: string | null;
 };
 
-export type MaintenanceWindowCreate = {
-  title: string;
-  description?: string | null;
-};
-
-export type MaintenanceWindow = {
-  channels: Array<Dictionary>;
-  components: Array<string>;
-  contact: string;
+export type MaintenanceWindowRecord = {
+  channels?: Array<string>;
+  components?: Array<string>;
+  contact?: string | null;
   created_at: string;
   description: string;
   end_timestamp: string;
-  id: UUID;
+  id?: string;
   start_timestamp: string;
   status: string;
   title: string;
-  updated_at?: string | null;
+  updated_at: string | null;
 };
 
 export type MaintenanceWindows = {
-  data: Array<MaintenanceWindow>;
+  data: Array<MaintenanceWindowRecord>;
   count: number;
 };
 
@@ -118,49 +133,53 @@ export type Message = {
   message: string;
 };
 
-export type NewPassword = {
-  token: string;
-  new_password: string;
+export type OpsgenieIncidentRecord = {
+  id?: string;
 };
 
-export type OpsgenieIncident = {
-  id: string;
-  parent: number;
+export type PagerAutoMappingRequest = {
+  value: string;
 };
 
-export type PagerDutyIncident = {
-  id: string;
-  parent: number;
+/**
+ * Pager data response
+ */
+export type PagerDataResponse = {
+  platform: string;
+  data: Array<unknown> | Record<string, unknown>;
+  ts: string;
 };
 
-export type Postmortem = {
-  id: string;
-  parent: number;
-  participants?: Array<string> | null;
+export type PagerDutyIncidentRecord = {
+  created_at: string;
+  id?: string;
+  updated_at: string | null;
   url?: string | null;
 };
 
-export type SlackUser = {
+export type PostmortemRecord = {
+  id?: string;
+  url?: string | null;
+};
+
+export type StatuspageIncidentRecord = {
+  channel_id?: string | null;
+  id?: string;
+  message_ts?: string | null;
   name?: string | null;
-  real_name?: string | null;
-  email?: string | null;
-  id?: string | null;
+  shortlink?: string | null;
+  status?: string | null;
+  updated_at: string | null;
+  updates?: Array<unknown> | null;
+  upstream_id: string;
 };
 
-export type SlackUsers = {
-  data?: Array<SlackUser>;
-};
-
-export type StatuspageIncident = {
-  channel_id: string;
-  id: string;
-  message_ts: string;
-  name: string;
-  parent: number;
-  shortlink: string;
-  status: string;
-  updated_at: string;
-  updates: Array<Dictionary>;
+/**
+ * Generic success response
+ */
+export type SuccessResponse = {
+  result: string;
+  message: string;
 };
 
 export type Token = {
@@ -187,12 +206,6 @@ export type UserPublic = {
   is_superuser?: boolean;
   full_name?: string | null;
   id: string;
-};
-
-export type UserRegister = {
-  email: string;
-  password: string;
-  full_name?: string | null;
 };
 
 export type UserUpdate = {

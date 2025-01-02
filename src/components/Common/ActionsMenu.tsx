@@ -9,13 +9,18 @@ import {
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { FiEdit, FiTrash } from "react-icons/fi"
 
-import type { UserPublic } from "../../client"
+import type {
+  IncidentEvent,
+  IncidentRecord,
+  MaintenanceWindowRecord,
+  UserPublic,
+} from "../../client"
 import EditUser from "../Admin/EditUser"
 import Delete from "./DeleteAlert"
 
 interface ActionsMenuProps {
   type: string
-  value: UserPublic
+  value: IncidentRecord | IncidentEvent | MaintenanceWindowRecord | UserPublic
   disabled?: boolean
 }
 
@@ -54,7 +59,7 @@ const ActionsMenu = ({ type, value, disabled }: ActionsMenuProps) => {
         />
         <Delete
           type={type}
-          value={value as UserPublic}
+          id={String(value.id)}
           isOpen={deleteModal.isOpen}
           onClose={deleteModal.onClose}
         />
