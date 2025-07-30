@@ -1,18 +1,18 @@
-import { Container, Flex, Spinner } from "@chakra-ui/react"
-import { useQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import { IncidentService } from "../../client"
-import StyledHeader from "../../components/Common/StyledHeader"
-import IncidentOverview from "../../components/Dashboard/IncidentOverview"
+import { Container, Flex, Spinner } from '@chakra-ui/react'
+import { useQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import { IncidentService } from '../../client'
+import StyledHeader from '../../components/Common/StyledHeader'
+import IncidentOverview from '../../components/Dashboard/IncidentOverview'
 
-export const Route = createFileRoute("/_layout/")({
+export const Route = createFileRoute('/_layout/')({
   component: Dashboard,
 })
 
 function getIncidentsQueryOptions() {
   return {
     queryFn: () => IncidentService.getIncidentsApiV1IncidentGet(),
-    queryKey: ["incidents"],
+    queryKey: ['incidents'],
   }
 }
 

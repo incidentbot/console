@@ -11,11 +11,11 @@ import {
   Spinner,
   Tag,
   Text,
-} from "@chakra-ui/react"
-import { useNavigate } from "@tanstack/react-router"
-import type { IncidentRecord, Incidents } from "../../client"
+} from '@chakra-ui/react'
+import { useNavigate } from '@tanstack/react-router'
+import type { IncidentRecord, Incidents } from '../../client'
 
-import { MdOutlineOpenInNew } from "react-icons/md"
+import { MdOutlineOpenInNew } from 'react-icons/md'
 
 interface IncidentOverviewProps {
   incidents: Incidents
@@ -24,7 +24,7 @@ interface IncidentOverviewProps {
 function components(incident: IncidentRecord) {
   return (
     <HStack>
-      {incident?.components?.split(",").map((component) => {
+      {incident?.components?.split(',').map((component) => {
         return (
           <Badge key={component} variant="subtle" fontSize="0.8em">
             {component}
@@ -53,9 +53,9 @@ function incidentsDisplayColumn(incidents: Array<IncidentRecord>) {
               minWidth="260px"
               onClick={() => handleRowClick(incident.slug!)}
               _hover={{
-                cursor: "pointer",
-                transform: "scale(1.05)",
-                transition: ".25s ease-in-out",
+                cursor: 'pointer',
+                transform: 'scale(1.05)',
+                transition: '.25s ease-in-out',
               }}
             >
               <CardHeader
@@ -77,9 +77,9 @@ function incidentsDisplayColumn(incidents: Array<IncidentRecord>) {
                       size="md"
                       mr={1}
                       colorScheme={
-                        incident?.status?.includes("resolved")
-                          ? "green"
-                          : "yellow"
+                        incident?.status?.includes('resolved')
+                          ? 'green'
+                          : 'yellow'
                       }
                     >
                       {incident?.status?.toUpperCase()}
@@ -89,14 +89,14 @@ function incidentsDisplayColumn(incidents: Array<IncidentRecord>) {
                       size="md"
                       mr={1}
                       colorScheme={
-                        incident?.severity?.includes("0") ||
-                        incident?.severity?.includes("1")
-                          ? "red"
-                          : incident?.severity?.includes("2")
-                            ? "orange"
-                            : incident?.severity?.includes("3")
-                              ? "yellow"
-                              : "green"
+                        incident?.severity?.includes('0') ||
+                        incident?.severity?.includes('1')
+                          ? 'red'
+                          : incident?.severity?.includes('2')
+                            ? 'orange'
+                            : incident?.severity?.includes('3')
+                              ? 'yellow'
+                              : 'green'
                       }
                     >
                       {incident?.severity?.toUpperCase()}
@@ -141,21 +141,21 @@ export default function IncidentOverview({ incidents }: IncidentOverviewProps) {
       <Spinner />
     </Flex>
   ) : (
-    <Flex direction={{ base: "column", md: "row" }} mt={4}>
+    <Flex direction={{ base: 'column', md: 'row' }} mt={4}>
       <Flex direction="column" mx={4}>
         <Heading as="h4" fontWeight="medium" size="md" mb={2}>
           Critical
         </Heading>
         <Divider my={2} />
         {incidentsDisplayColumn(
-          incidents.data.filter((incident) => incident.severity === "sev1"),
+          incidents.data.filter((incident) => incident.severity === 'sev1'),
         )}
       </Flex>
-      <Divider orientation="vertical" display={{ base: "none", md: "flex" }} />
+      <Divider orientation="vertical" display={{ base: 'none', md: 'flex' }} />
       <Divider
         orientation="horizontal"
         my={4}
-        display={{ base: "flex", md: "none" }}
+        display={{ base: 'flex', md: 'none' }}
       />
       <Flex direction="column" mx={4}>
         <Heading as="h4" fontWeight="medium" size="md" mb={2}>
@@ -164,15 +164,15 @@ export default function IncidentOverview({ incidents }: IncidentOverviewProps) {
         <Divider my={2} />
         {incidentsDisplayColumn(
           incidents.data.filter(
-            (incident) => incident.status === "investigating",
+            (incident) => incident.status === 'investigating',
           ),
         )}
       </Flex>
-      <Divider orientation="vertical" display={{ base: "none", md: "flex" }} />
+      <Divider orientation="vertical" display={{ base: 'none', md: 'flex' }} />
       <Divider
         orientation="horizontal"
         my={4}
-        display={{ base: "flex", md: "none" }}
+        display={{ base: 'flex', md: 'none' }}
       />
       <Flex direction="column" mx={4}>
         <Heading as="h4" fontWeight="medium" size="md" mb={2}>
@@ -180,14 +180,14 @@ export default function IncidentOverview({ incidents }: IncidentOverviewProps) {
         </Heading>
         <Divider my={2} />
         {incidentsDisplayColumn(
-          incidents.data.filter((incident) => incident.status === "identified"),
+          incidents.data.filter((incident) => incident.status === 'identified'),
         )}
       </Flex>
-      <Divider orientation="vertical" display={{ base: "none", md: "flex" }} />
+      <Divider orientation="vertical" display={{ base: 'none', md: 'flex' }} />
       <Divider
         orientation="horizontal"
         my={4}
-        display={{ base: "flex", md: "none" }}
+        display={{ base: 'flex', md: 'none' }}
       />
       <Flex direction="column" mx={4}>
         <Heading as="h4" fontWeight="medium" size="md" mb={2}>
@@ -195,7 +195,7 @@ export default function IncidentOverview({ incidents }: IncidentOverviewProps) {
         </Heading>
         <Divider my={2} />
         {incidentsDisplayColumn(
-          incidents.data.filter((incident) => incident.status === "monitoring"),
+          incidents.data.filter((incident) => incident.status === 'monitoring'),
         )}
       </Flex>
     </Flex>

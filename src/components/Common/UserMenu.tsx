@@ -5,12 +5,12 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-} from "@chakra-ui/react"
-import { Link } from "@tanstack/react-router"
-import { FaUser } from "react-icons/fa"
-import { FiLogOut, FiUser } from "react-icons/fi"
+} from '@chakra-ui/react'
+import { Link } from '@tanstack/react-router'
+import { FaUser } from 'react-icons/fa'
+import { FiLogOut, FiUser } from 'react-icons/fi'
 
-import useAuth from "../../hooks/useAuth"
+import useAuth from '../../hooks/useAuth'
 
 const UserMenu = () => {
   const { logout } = useAuth()

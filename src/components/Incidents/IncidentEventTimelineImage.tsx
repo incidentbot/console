@@ -7,18 +7,18 @@ import {
   Spacer,
   Tag,
   Text,
-} from "@chakra-ui/react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { useCallback, useEffect, useState } from "react"
-import { Controlled as ControlledZoom } from "react-medium-image-zoom"
-import TimeAgo from "react-timeago"
-import { IncidentService } from "../../client"
-import type { IncidentEvent, IncidentEventBase } from "../../client"
-import { convertSlackTimestamp } from "../../hooks/convertSlackTimestamp"
-import EventActionsMenu from "./EventActionsMenu"
-import "./timeline-image.css"
+} from '@chakra-ui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useCallback, useEffect, useState } from 'react'
+import { Controlled as ControlledZoom } from 'react-medium-image-zoom'
+import TimeAgo from 'react-timeago'
+import { IncidentService } from '../../client'
+import type { IncidentEvent, IncidentEventBase } from '../../client'
+import { convertSlackTimestamp } from '../../hooks/convertSlackTimestamp'
+import EventActionsMenu from './EventActionsMenu'
+import './timeline-image.css'
 
-import { formatTimestamp } from "../../hooks/formatTimestamp"
+import { formatTimestamp } from '../../hooks/formatTimestamp'
 
 interface IncidentEventTimelineImageProps {
   log: IncidentEvent | IncidentEventBase
@@ -31,7 +31,7 @@ function getIncidentEventImage(slug: string, id: string) {
         slug: slug,
         id: id,
       }),
-    queryKey: ["imageData", id],
+    queryKey: ['imageData', id],
   }
 }
 

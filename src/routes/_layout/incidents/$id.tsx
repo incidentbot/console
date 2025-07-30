@@ -14,22 +14,22 @@ import {
   Tabs,
   Tag,
   Text,
-} from "@chakra-ui/react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Link, createFileRoute } from "@tanstack/react-router"
-import { useEffect } from "react"
-import { IncidentService } from "../../../client"
+} from '@chakra-ui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { Link, createFileRoute } from '@tanstack/react-router'
+import { useEffect } from 'react'
+import { IncidentService } from '../../../client'
 
-import StyledHeader from "../../../components/Common/StyledHeader"
-import IncidentActionsMenu from "../../../components/Incidents/IncidentActionsMenu"
-import IncidentArtifacts from "../../../components/Incidents/IncidentArtifacts"
-import IncidentEventTimeline from "../../../components/Incidents/IncidentEventTimeline"
-import IncidentInfoPanel from "../../../components/Incidents/IncidentInfoPanel"
+import StyledHeader from '../../../components/Common/StyledHeader'
+import IncidentActionsMenu from '../../../components/Incidents/IncidentActionsMenu'
+import IncidentArtifacts from '../../../components/Incidents/IncidentArtifacts'
+import IncidentEventTimeline from '../../../components/Incidents/IncidentEventTimeline'
+import IncidentInfoPanel from '../../../components/Incidents/IncidentInfoPanel'
 
-import { BsFire } from "react-icons/bs"
-import { FaSlack } from "react-icons/fa"
+import { BsFire } from 'react-icons/bs'
+import { FaSlack } from 'react-icons/fa'
 
-export const Route = createFileRoute("/_layout/incidents/$id")({
+export const Route = createFileRoute('/_layout/incidents/$id')({
   component: Incident,
 })
 
@@ -37,7 +37,7 @@ function getIncident(slug: string) {
   return {
     queryFn: () =>
       IncidentService.getIncidentApiV1IncidentSlugGet({ slug: slug }),
-    queryKey: ["incident", { slug }],
+    queryKey: ['incident', { slug }],
   }
 }
 
@@ -47,7 +47,7 @@ function getIncidentEvents(slug: string) {
       IncidentService.getIncidentEventsApiV1IncidentSlugEventsGet({
         slug: slug,
       }),
-    queryKey: ["events", { slug }],
+    queryKey: ['events', { slug }],
   }
 }
 
@@ -119,14 +119,14 @@ function Incident() {
               size="lg"
               mr={1}
               colorScheme={
-                incident?.severity?.includes("0") ||
-                incident?.severity?.includes("1")
-                  ? "red"
-                  : incident?.severity?.includes("2")
-                    ? "orange"
-                    : incident?.severity?.includes("3")
-                      ? "yellow"
-                      : "green"
+                incident?.severity?.includes('0') ||
+                incident?.severity?.includes('1')
+                  ? 'red'
+                  : incident?.severity?.includes('2')
+                    ? 'orange'
+                    : incident?.severity?.includes('3')
+                      ? 'yellow'
+                      : 'green'
               }
             >
               {incident?.severity?.toUpperCase()}
@@ -136,7 +136,7 @@ function Incident() {
               size="lg"
               mr={1}
               colorScheme={
-                incident?.status?.includes("resolved") ? "green" : "yellow"
+                incident?.status?.includes('resolved') ? 'green' : 'yellow'
               }
             >
               {incident?.status?.toUpperCase()}
@@ -156,7 +156,7 @@ function Incident() {
           </Flex>
           <Divider my={2} />
           <Flex
-            direction={{ base: "column", md: "row" }}
+            direction={{ base: 'column', md: 'row' }}
             justify="space-between"
           >
             <Box minWidth="350px">
@@ -165,12 +165,12 @@ function Incident() {
             <Divider
               orientation="vertical"
               ml={4}
-              display={{ base: "none", md: "flex" }}
+              display={{ base: 'none', md: 'flex' }}
             />
             <Divider
               orientation="horizontal"
               my={2}
-              display={{ base: "flex", md: "none" }}
+              display={{ base: 'flex', md: 'none' }}
             />
             <Box w="100%" ml={4} height="100%">
               <Tabs position="relative" variant="unstyled">

@@ -1,7 +1,7 @@
-import type { ComponentType, ElementType } from "react"
+import type { ComponentType, ElementType } from 'react'
 
-import { Button, Flex, Icon, useDisclosure } from "@chakra-ui/react"
-import { FaPlus } from "react-icons/fa"
+import { Button, Flex, Icon, useDisclosure } from '@chakra-ui/react'
+import { FaPlus } from 'react-icons/fa'
 
 interface NavbarProps {
   type: string
@@ -25,7 +25,7 @@ const Navbar = ({ type, addModalAs }: NavbarProps) => {
         <Button
           variant="primary"
           gap={1}
-          fontSize={{ base: "sm", md: "inherit" }}
+          fontSize={{ base: 'sm', md: 'inherit' }}
           onClick={addModal.onOpen}
         >
           <Icon as={FaPlus} /> Add {type}

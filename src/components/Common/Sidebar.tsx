@@ -10,22 +10,22 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
-} from "@chakra-ui/react"
-import { useQueryClient } from "@tanstack/react-query"
-import { FiLogOut, FiMenu } from "react-icons/fi"
+} from '@chakra-ui/react'
+import { useQueryClient } from '@tanstack/react-query'
+import { FiLogOut, FiMenu } from 'react-icons/fi'
 
-import type { UserPublic } from "../../client"
-import useAuth from "../../hooks/useAuth"
-import LogoBox from "./LogoBox"
-import SidebarItems from "./SidebarItems"
+import type { UserPublic } from '../../client'
+import useAuth from '../../hooks/useAuth'
+import LogoBox from './LogoBox'
+import SidebarItems from './SidebarItems'
 
 const Sidebar = () => {
   const queryClient = useQueryClient()
 
   // theme
-  const textColor = useColorModeValue("ui.light", "ui.light")
+  const textColor = useColorModeValue('ui.light', 'ui.light')
 
-  const currentUser = queryClient.getQueryData<UserPublic>(["currentUser"])
+  const currentUser = queryClient.getQueryData<UserPublic>(['currentUser'])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { logout } = useAuth()
 

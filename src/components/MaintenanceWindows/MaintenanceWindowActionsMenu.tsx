@@ -5,12 +5,12 @@ import {
   MenuItem,
   MenuList,
   useDisclosure,
-} from "@chakra-ui/react"
-import { BsThreeDotsVertical } from "react-icons/bs"
-import { FiTrash } from "react-icons/fi"
+} from '@chakra-ui/react'
+import { BsThreeDotsVertical } from 'react-icons/bs'
+import { FiTrash } from 'react-icons/fi'
 
-import type { MaintenanceWindowRecord } from "../../client"
-import Delete from "../Common/DeleteAlert"
+import type { MaintenanceWindowRecord } from '../../client'
+import Delete from '../Common/DeleteAlert'
 
 interface MaintenanceWindowActionsMenuProps {
   type: string

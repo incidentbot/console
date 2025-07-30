@@ -1,4 +1,4 @@
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import {
   Button,
   Container,
@@ -9,20 +9,20 @@ import {
   InputGroup,
   InputRightElement,
   useBoolean,
-} from "@chakra-ui/react"
-import { createFileRoute, redirect } from "@tanstack/react-router"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import type { Body_login_access_token_api_v1_login_access_token_post as AccessToken } from "../client"
-import LogoBox from "../components/Common/LogoBox"
-import useAuth, { isLoggedIn } from "../hooks/useAuth"
-import { emailPattern } from "../utils"
+} from '@chakra-ui/react'
+import { createFileRoute, redirect } from '@tanstack/react-router'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import type { Body_login_access_token_api_v1_login_access_token_post as AccessToken } from '../client'
+import LogoBox from '../components/Common/LogoBox'
+import useAuth, { isLoggedIn } from '../hooks/useAuth'
+import { emailPattern } from '../utils'
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute('/login')({
   component: Login,
   beforeLoad: async () => {
     if (isLoggedIn()) {
       throw redirect({
-        to: "/",
+        to: '/',
       })
     }
   },
@@ -36,11 +36,11 @@ function Login() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<AccessToken>({
-    mode: "onBlur",
-    criteriaMode: "all",
+    mode: 'onBlur',
+    criteriaMode: 'all',
     defaultValues: {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
     },
   })
 
@@ -72,8 +72,8 @@ function Login() {
         <FormControl id="username" isInvalid={!!errors.username || !!error}>
           <Input
             id="username"
-            {...register("username", {
-              required: "Username is required",
+            {...register('username', {
+              required: 'Username is required',
               pattern: emailPattern,
             })}
             placeholder="Email"
@@ -87,23 +87,23 @@ function Login() {
         <FormControl id="password" isInvalid={!!error}>
           <InputGroup>
             <Input
-              {...register("password", {
-                required: "Password is required",
+              {...register('password', {
+                required: 'Password is required',
               })}
-              type={show ? "text" : "password"}
+              type={show ? 'text' : 'password'}
               placeholder="Password"
               required
             />
             <InputRightElement
               color="ui.dim"
               _hover={{
-                cursor: "pointer",
+                cursor: 'pointer',
               }}
             >
               <Icon
                 as={show ? ViewOffIcon : ViewIcon}
                 onClick={setShow.toggle}
-                aria-label={show ? "Hide password" : "Show password"}
+                aria-label={show ? 'Hide password' : 'Show password'}
               >
                 {show ? <ViewOffIcon /> : <ViewIcon />}
               </Icon>

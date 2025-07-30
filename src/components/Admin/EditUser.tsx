@@ -13,18 +13,18 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from "@chakra-ui/react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { type SubmitHandler, useForm } from "react-hook-form"
+} from '@chakra-ui/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   type ApiError,
   type UserPublic,
   type UserUpdate,
   UsersService,
-} from "../../client"
-import useCustomToast from "../../hooks/useCustomToast"
-import { emailPattern, handleError } from "../../utils"
+} from '../../client'
+import useCustomToast from '../../hooks/useCustomToast'
+import { emailPattern, handleError } from '../../utils'
 
 interface EditUserProps {
   user: UserPublic
@@ -47,8 +47,8 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
     getValues,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<UserUpdateForm>({
-    mode: "onBlur",
-    criteriaMode: "all",
+    mode: 'onBlur',
+    criteriaMode: 'all',
     defaultValues: user,
   })
 
@@ -59,21 +59,21 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
         requestBody: data,
       }),
     onSuccess: () => {
-      showToast("Success!", "User updated successfully.", "success")
+      showToast('Success!', 'User updated successfully.', 'success')
       onClose()
     },
     onError: (err: ApiError) => {
       handleError(err, showToast)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] })
+      queryClient.invalidateQueries({ queryKey: ['users'] })
     },
   })
 
   const onSubmit: SubmitHandler<UserUpdateForm> = async (
     data: UserUpdateForm,
   ) => {
-    if (data.password === "") {
+    if (data.password === '') {
       data.password = undefined
     }
     mutation.mutate(data)
@@ -89,7 +89,7 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={{ base: "sm", md: "md" }}
+        size={{ base: 'sm', md: 'md' }}
         isCentered
       >
         <ModalOverlay />
@@ -101,8 +101,8 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
               <FormLabel htmlFor="email">Email</FormLabel>
               <Input
                 id="email"
-                {...register("email", {
-                  required: "Email is required",
+                {...register('email', {
+                  required: 'Email is required',
                   pattern: emailPattern,
                 })}
                 placeholder="Email"
@@ -114,16 +114,16 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
             </FormControl>
             <FormControl mt={4}>
               <FormLabel htmlFor="name">Full name</FormLabel>
-              <Input id="name" {...register("full_name")} type="text" />
+              <Input id="name" {...register('full_name')} type="text" />
             </FormControl>
             <FormControl mt={4} isInvalid={!!errors.password}>
               <FormLabel htmlFor="password">Set Password</FormLabel>
               <Input
                 id="password"
-                {...register("password", {
+                {...register('password', {
                   minLength: {
                     value: 8,
-                    message: "Password must be at least 8 characters",
+                    message: 'Password must be at least 8 characters',
                   },
                 })}
                 placeholder="Password"
@@ -137,10 +137,10 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
               <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
               <Input
                 id="confirm_password"
-                {...register("confirm_password", {
+                {...register('confirm_password', {
                   validate: (value) =>
                     value === getValues().password ||
-                    "The passwords do not match",
+                    'The passwords do not match',
                 })}
                 placeholder="Password"
                 type="password"
@@ -153,12 +153,12 @@ const EditUser = ({ user, isOpen, onClose }: EditUserProps) => {
             </FormControl>
             <Flex>
               <FormControl mt={4}>
-                <Checkbox {...register("is_superuser")} colorScheme="cyan">
+                <Checkbox {...register('is_superuser')} colorScheme="cyan">
                   Is superuser?
                 </Checkbox>
               </FormControl>
               <FormControl mt={4}>
-                <Checkbox {...register("is_active")} colorScheme="cyan">
+                <Checkbox {...register('is_active')} colorScheme="cyan">
                   Is active?
                 </Checkbox>
               </FormControl>

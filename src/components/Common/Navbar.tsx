@@ -1,5 +1,5 @@
-import { Flex, Heading, Spacer } from "@chakra-ui/react"
-import Search from "./Search"
+import { Flex, Heading, Spacer } from '@chakra-ui/react'
+import Search from './Search'
 
 interface NavBarProps {
   header?: string
@@ -18,7 +18,7 @@ const NavBar = ({
     <>
       <Flex alignItems="center" alignContent="center" mt={marginTop} mb={2}>
         {header && (
-          <Heading size="lg" textAlign={{ base: "left", md: "left" }}>
+          <Heading size="lg" textAlign={{ base: 'left', md: 'left' }}>
             {header}
           </Heading>
         )}

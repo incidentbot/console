@@ -13,28 +13,28 @@ import {
   Thead,
   Tooltip,
   Tr,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react'
 import {
   EmptyStateContainer,
   EmptyStateDescription,
   EmptyStateIcon,
   EmptyStateTitle,
-} from "@saas-ui/react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { useEffect } from "react"
-import { LuConstruction } from "react-icons/lu"
-import TimeAgo from "react-timeago"
-import { z } from "zod"
-import { MaintenanceWindowService } from "../../client"
-import StyledHeader from "../../components/Common/StyledHeader"
-import MaintenanceWindowActionMenu from "../../components/MaintenanceWindows/MaintenanceWindowActionsMenu"
+} from '@saas-ui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useEffect } from 'react'
+import { LuConstruction } from 'react-icons/lu'
+import TimeAgo from 'react-timeago'
+import { z } from 'zod'
+import { MaintenanceWindowService } from '../../client'
+import StyledHeader from '../../components/Common/StyledHeader'
+import MaintenanceWindowActionMenu from '../../components/MaintenanceWindows/MaintenanceWindowActionsMenu'
 
 const maintenanceWindowsSearchSchema = z.object({
   page: z.number().catch(1),
 })
 
-export const Route = createFileRoute("/_layout/maintenance")({
+export const Route = createFileRoute('/_layout/maintenance')({
   component: Maintenance,
   validateSearch: (search) => maintenanceWindowsSearchSchema.parse(search),
 })
@@ -45,7 +45,7 @@ function getMaintenanceWindowsQueryOptions({ page }: { page: number }) {
   return {
     queryFn: () =>
       MaintenanceWindowService.getMaintenanceWindowsApiV1MaintenanceWindowGet(),
-    queryKey: ["maintenance_windows", { page }],
+    queryKey: ['maintenance_windows', { page }],
   }
 }
 
@@ -80,7 +80,7 @@ function MaintenanceDisplay() {
   return maintenance_windows?.data.length ? (
     <>
       <TableContainer mt={4}>
-        <Table size={{ base: "sm", md: "sm" }}>
+        <Table size={{ base: 'sm', md: 'sm' }}>
           <Thead>
             <Tr>
               <Th>Title</Th>
@@ -112,7 +112,7 @@ function MaintenanceDisplay() {
                       <Text
                         size="md"
                         isTruncated
-                        maxWidth={{ base: "300px", md: "300px" }}
+                        maxWidth={{ base: '300px', md: '300px' }}
                       >
                         {mw.description}
                       </Text>
@@ -157,7 +157,7 @@ function MaintenanceDisplay() {
                   </Td>
                   <Td>
                     <MaintenanceWindowActionMenu
-                      type={"MaintenanceWindow"}
+                      type={'MaintenanceWindow'}
                       value={mw}
                     />
                   </Td>

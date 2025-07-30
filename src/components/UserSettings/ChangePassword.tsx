@@ -8,20 +8,20 @@ import {
   Heading,
   Input,
   useColorModeValue,
-} from "@chakra-ui/react"
-import { useMutation } from "@tanstack/react-query"
-import { type SubmitHandler, useForm } from "react-hook-form"
+} from '@chakra-ui/react'
+import { useMutation } from '@tanstack/react-query'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
-import { type ApiError, type UpdatePassword, UsersService } from "../../client"
-import useCustomToast from "../../hooks/useCustomToast"
-import { confirmPasswordRules, handleError, passwordRules } from "../../utils"
+import { type ApiError, type UpdatePassword, UsersService } from '../../client'
+import useCustomToast from '../../hooks/useCustomToast'
+import { confirmPasswordRules, handleError, passwordRules } from '../../utils'
 
 interface UpdatePasswordForm extends UpdatePassword {
   confirm_password: string
 }
 
 const ChangePassword = () => {
-  const color = useColorModeValue("inherit", "ui.light")
+  const color = useColorModeValue('inherit', 'ui.light')
   const showToast = useCustomToast()
   const {
     register,
@@ -30,8 +30,8 @@ const ChangePassword = () => {
     getValues,
     formState: { errors, isSubmitting },
   } = useForm<UpdatePasswordForm>({
-    mode: "onBlur",
-    criteriaMode: "all",
+    mode: 'onBlur',
+    criteriaMode: 'all',
   })
 
   const mutation = useMutation({
@@ -40,7 +40,7 @@ const ChangePassword = () => {
         requestBody: data,
       }),
     onSuccess: () => {
-      showToast("Success!", "Password updated successfully.", "success")
+      showToast('Success!', 'Password updated successfully.', 'success')
       reset()
     },
     onError: (err: ApiError) => {
@@ -59,7 +59,7 @@ const ChangePassword = () => {
           Change Password
         </Heading>
         <Box
-          w={{ sm: "full", md: "50%" }}
+          w={{ sm: 'full', md: '50%' }}
           as="form"
           onSubmit={handleSubmit(onSubmit)}
         >
@@ -69,7 +69,7 @@ const ChangePassword = () => {
             </FormLabel>
             <Input
               id="current_password"
-              {...register("current_password")}
+              {...register('current_password')}
               placeholder="Password"
               type="password"
               w="auto"
@@ -84,7 +84,7 @@ const ChangePassword = () => {
             <FormLabel htmlFor="password">Set Password</FormLabel>
             <Input
               id="password"
-              {...register("new_password", passwordRules())}
+              {...register('new_password', passwordRules())}
               placeholder="Password"
               type="password"
               w="auto"
@@ -97,7 +97,7 @@ const ChangePassword = () => {
             <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
             <Input
               id="confirm_password"
-              {...register("confirm_password", confirmPasswordRules(getValues))}
+              {...register('confirm_password', confirmPasswordRules(getValues))}
               placeholder="Password"
               type="password"
               w="auto"

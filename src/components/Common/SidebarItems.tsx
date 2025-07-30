@@ -6,26 +6,26 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
-} from "@chakra-ui/react"
-import { useQueryClient } from "@tanstack/react-query"
-import { Link } from "@tanstack/react-router"
-import type { UserPublic } from "../../client"
+} from '@chakra-ui/react'
+import { useQueryClient } from '@tanstack/react-query'
+import { Link } from '@tanstack/react-router'
+import type { UserPublic } from '../../client'
 
-import { BsFire } from "react-icons/bs"
-import { FiHome, FiSettings, FiUsers } from "react-icons/fi"
-import { LuConstruction } from "react-icons/lu"
-import { MdKeyboardArrowRight } from "react-icons/md"
-import { RiAdminFill } from "react-icons/ri"
+import { BsFire } from 'react-icons/bs'
+import { FiHome, FiSettings, FiUsers } from 'react-icons/fi'
+import { LuConstruction } from 'react-icons/lu'
+import { MdKeyboardArrowRight } from 'react-icons/md'
+import { RiAdminFill } from 'react-icons/ri'
 
 // Generic list items
 const items = [
-  { icon: BsFire, title: "Incidents", path: "/incidents" },
-  { icon: LuConstruction, title: "Maintenance", path: "/maintenance" },
-  { icon: FiSettings, title: "Settings", path: "/settings" },
+  { icon: BsFire, title: 'Incidents', path: '/incidents' },
+  { icon: LuConstruction, title: 'Maintenance', path: '/maintenance' },
+  { icon: FiSettings, title: 'Settings', path: '/settings' },
 ]
 
 // Administration list items
-const adminItems = [{ icon: FiUsers, title: "Users", path: "/admin/users" }]
+const adminItems = [{ icon: FiUsers, title: 'Users', path: '/admin/users' }]
 
 interface SidebarItemsProps {
   onClose?: () => void
@@ -34,13 +34,13 @@ interface SidebarItemsProps {
 const SidebarItems = ({ onClose }: SidebarItemsProps) => {
   const queryClient = useQueryClient()
   const adminOptions = useDisclosure({ defaultIsOpen: true })
-  const currentUser = queryClient.getQueryData<UserPublic>(["currentUser"])
+  const currentUser = queryClient.getQueryData<UserPublic>(['currentUser'])
 
   // theme
-  const textColor = useColorModeValue("ui.light", "ui.light")
-  const bgActive = useColorModeValue("#4A5568", "#4A5568")
-  const bgHover = useColorModeValue("#6e7686", "#6e7686")
-  const navFontSize = "md"
+  const textColor = useColorModeValue('ui.light', 'ui.light')
+  const bgActive = useColorModeValue('#4A5568', '#4A5568')
+  const bgHover = useColorModeValue('#6e7686', '#6e7686')
+  const navFontSize = 'md'
 
   // Generic list items
   const listItems = items.map(({ icon, title, path }) => (
@@ -53,13 +53,13 @@ const SidebarItems = ({ onClose }: SidebarItemsProps) => {
       activeProps={{
         style: {
           background: bgActive,
-          borderRadius: "12px",
+          borderRadius: '12px',
         },
       }}
       _hover={{
         bg: bgHover,
-        cursor: "pointer",
-        borderRadius: "12px",
+        cursor: 'pointer',
+        borderRadius: '12px',
       }}
       color={textColor}
       onClick={onClose}
@@ -83,13 +83,13 @@ const SidebarItems = ({ onClose }: SidebarItemsProps) => {
       activeProps={{
         style: {
           background: bgActive,
-          borderRadius: "12px",
+          borderRadius: '12px',
         },
       }}
       _hover={{
         bg: bgHover,
-        cursor: "pointer",
-        borderRadius: "12px",
+        cursor: 'pointer',
+        borderRadius: '12px',
       }}
       color={textColor}
       onClick={onClose}
@@ -108,20 +108,20 @@ const SidebarItems = ({ onClose }: SidebarItemsProps) => {
       {/* Dashboard */}
       <Flex
         as={Link}
-        to={"/"}
+        to={'/'}
         w="100%"
         p={2}
-        key={"Dashboard"}
+        key={'Dashboard'}
         activeProps={{
           style: {
             background: bgActive,
-            borderRadius: "12px",
+            borderRadius: '12px',
           },
         }}
         _hover={{
           bg: bgHover,
-          cursor: "pointer",
-          borderRadius: "12px",
+          cursor: 'pointer',
+          borderRadius: '12px',
         }}
         color={textColor}
         onClick={onClose}
@@ -145,8 +145,8 @@ const SidebarItems = ({ onClose }: SidebarItemsProps) => {
             onClick={adminOptions.onToggle}
             _hover={{
               bg: bgHover,
-              cursor: "pointer",
-              borderRadius: "12px",
+              cursor: 'pointer',
+              borderRadius: '12px',
             }}
           >
             <Icon as={RiAdminFill} alignSelf="center" />
@@ -159,7 +159,7 @@ const SidebarItems = ({ onClose }: SidebarItemsProps) => {
               alignSelf="center"
               // @ts-ignore
               // Due to type incompatibility vvvvv
-              transform={adminOptions.isOpen && "rotate(90deg)"}
+              transform={adminOptions.isOpen && 'rotate(90deg)'}
             />
           </Flex>
           <Collapse in={adminOptions.isOpen}>{adminListItems}</Collapse>

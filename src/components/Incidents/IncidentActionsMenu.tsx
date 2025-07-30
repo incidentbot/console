@@ -1,18 +1,18 @@
-import { ChevronDownIcon } from "@chakra-ui/icons"
+import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   useDisclosure,
-} from "@chakra-ui/react"
-import { FiEdit, FiTrash } from "react-icons/fi"
+} from '@chakra-ui/react'
+import { FiEdit, FiTrash } from 'react-icons/fi'
 
-import type { IncidentRecord } from "../../client"
-import Delete from "../Common/DeleteAlert"
-import EditIncidentDescription from "./EditIncidentDescription"
-import EditIncidentSeverity from "./EditIncidentSeverity"
-import EditIncidentStatus from "./EditIncidentStatus"
+import type { IncidentRecord } from '../../client'
+import Delete from '../Common/DeleteAlert'
+import EditIncidentDescription from './EditIncidentDescription'
+import EditIncidentSeverity from './EditIncidentSeverity'
+import EditIncidentStatus from './EditIncidentStatus'
 
 interface IncidentActionsMenuProps {
   type: string
@@ -34,9 +34,9 @@ const IncidentActionsMenu = ({ type, value }: IncidentActionsMenuProps) => {
           transition="all 0.2s"
           borderRadius="md"
           borderWidth="1px"
-          _hover={{ bg: "gray.400" }}
-          _expanded={{ bg: "blue.400" }}
-          _focus={{ boxShadow: "outline" }}
+          _hover={{ bg: 'gray.400' }}
+          _expanded={{ bg: 'blue.400' }}
+          _focus={{ boxShadow: 'outline' }}
         >
           Edit Incident <ChevronDownIcon />
         </MenuButton>

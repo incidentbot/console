@@ -9,18 +9,18 @@ import {
   Th,
   Thead,
   Tr,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react'
 import {
   EmptyStateContainer,
   EmptyStateDescription,
   EmptyStateIcon,
   EmptyStateTitle,
-} from "@saas-ui/react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { useEffect } from "react"
-import { SiConfluence } from "react-icons/si"
-import { IncidentService } from "../../../client"
-import type { IncidentRecord } from "../../../client"
+} from '@saas-ui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { SiConfluence } from 'react-icons/si'
+import { IncidentService } from '../../../client'
+import type { IncidentRecord } from '../../../client'
 
 interface PostmortemsProps {
   incident: IncidentRecord
@@ -32,7 +32,7 @@ function getIncidentPostmortems(slug: string) {
       IncidentService.getIncidentPostmortemsApiV1IncidentSlugPostmortemGet({
         slug: slug,
       }),
-    queryKey: ["postmortems", slug],
+    queryKey: ['postmortems', slug],
   }
 }
 
@@ -51,7 +51,7 @@ function Postmortems({ incident }: PostmortemsProps) {
     <>
       <TableContainer>
         <Heading size="md">Postmortems</Heading>
-        <Table size={{ base: "sm", md: "md" }}>
+        <Table size={{ base: 'sm', md: 'md' }}>
           <Thead>
             <Tr>
               <Th>URL</Th>

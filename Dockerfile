@@ -1,4 +1,4 @@
-FROM node:20 AS build
+FROM node:24.4.1-alpine3.22 AS build
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ ARG VITE_API_URL=${VITE_API_URL}
 
 RUN npm run build
 
-FROM nginx:1
+FROM nginx:1.29-alpine3.22
 
 COPY --from=build /app/dist/ /usr/share/nginx/html
 

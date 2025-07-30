@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react"
+import { Flex } from '@chakra-ui/react'
 import {
   EmptyStateContainer,
   EmptyStateDescription,
@@ -6,8 +6,8 @@ import {
   EmptyStateTitle,
   StructuredListCell,
   StructuredListItem,
-} from "@saas-ui/react"
-import type { IconType } from "react-icons/lib"
+} from '@saas-ui/react'
+import type { IconType } from 'react-icons/lib'
 
 interface EmptyProps {
   icon: IconType

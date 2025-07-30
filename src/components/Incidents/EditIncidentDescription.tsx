@@ -13,17 +13,17 @@ import {
   ModalHeader,
   ModalOverlay,
   Textarea,
-} from "@chakra-ui/react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { type SubmitHandler, useForm } from "react-hook-form"
+} from '@chakra-ui/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   type ApiError,
   type IncidentRecord,
   IncidentService,
-} from "../../client"
-import useCustomToast from "../../hooks/useCustomToast"
-import { handleError } from "../../utils"
+} from '../../client'
+import useCustomToast from '../../hooks/useCustomToast'
+import { handleError } from '../../utils'
 
 interface EditIncidentProps {
   incident: IncidentRecord
@@ -44,26 +44,26 @@ const EditIncidentDescription = ({
     reset,
     formState: { isSubmitting, errors, isDirty },
   } = useForm<IncidentRecord>({
-    mode: "onBlur",
-    criteriaMode: "all",
+    mode: 'onBlur',
+    criteriaMode: 'all',
     defaultValues: incident,
   })
 
   const mutation = useMutation({
     mutationFn: (data: IncidentRecord) =>
       IncidentService.patchIncidentApiV1IncidentFieldPatch({
-        field: "description",
+        field: 'description',
         requestBody: data,
       }),
     onSuccess: () => {
-      showToast("Success!", "Incident updated successfully.", "success")
+      showToast('Success!', 'Incident updated successfully.', 'success')
       onClose()
     },
     onError: (err: ApiError) => {
       handleError(err, showToast)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["incident"] })
+      queryClient.invalidateQueries({ queryKey: ['incident'] })
     },
   })
 
@@ -81,7 +81,7 @@ const EditIncidentDescription = ({
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={{ base: "sm", md: "3xl" }}
+        size={{ base: 'sm', md: '3xl' }}
         isCentered
       >
         <ModalOverlay />
@@ -97,8 +97,8 @@ const EditIncidentDescription = ({
               <FormLabel htmlFor="description">Description</FormLabel>
               <Textarea
                 id="description"
-                {...register("description", {
-                  required: "Description is required",
+                {...register('description', {
+                  required: 'Description is required',
                 })}
                 placeholder="Description"
               />

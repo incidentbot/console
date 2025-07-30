@@ -1,9 +1,9 @@
-import { Box, Flex } from "@chakra-ui/react"
-import type { IncidentRecord } from "../../client"
+import { Box, Flex } from '@chakra-ui/react'
+import type { IncidentRecord } from '../../client'
 
-import JiraIssues from "./Artifacts/JiraIssues"
-import Postmortems from "./Artifacts/Postmortems"
-import StatuspageIncidents from "./Artifacts/StatuspageIncidents"
+import JiraIssues from './Artifacts/JiraIssues'
+import Postmortems from './Artifacts/Postmortems'
+import StatuspageIncidents from './Artifacts/StatuspageIncidents'
 
 interface IncidentArtifactsProps {
   data: IncidentRecord

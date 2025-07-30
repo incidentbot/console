@@ -12,17 +12,17 @@ import {
   ModalHeader,
   ModalOverlay,
   Textarea,
-} from "@chakra-ui/react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { type SubmitHandler, useForm } from "react-hook-form"
+} from '@chakra-ui/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   type ApiError,
   type IncidentEvent,
   IncidentService,
-} from "../../client"
-import useCustomToast from "../../hooks/useCustomToast"
-import { handleError } from "../../utils"
+} from '../../client'
+import useCustomToast from '../../hooks/useCustomToast'
+import { handleError } from '../../utils'
 
 interface EditIncidentEventProps {
   slug: string
@@ -45,8 +45,8 @@ const EditIncidentEvent = ({
     reset,
     formState: { isSubmitting, errors, isDirty },
   } = useForm<IncidentEvent>({
-    mode: "onBlur",
-    criteriaMode: "all",
+    mode: 'onBlur',
+    criteriaMode: 'all',
     defaultValues: event,
   })
 
@@ -56,14 +56,14 @@ const EditIncidentEvent = ({
         requestBody: data,
       }),
     onSuccess: () => {
-      showToast("Success!", "Incident updated successfully.", "success")
+      showToast('Success!', 'Incident updated successfully.', 'success')
       onClose()
     },
     onError: (err: ApiError) => {
       handleError(err, showToast)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["events"] })
+      queryClient.invalidateQueries({ queryKey: ['events'] })
     },
   })
 
@@ -81,7 +81,7 @@ const EditIncidentEvent = ({
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={{ base: "sm", md: "3xl" }}
+        size={{ base: 'sm', md: '3xl' }}
         isCentered
       >
         <ModalOverlay />
@@ -93,8 +93,8 @@ const EditIncidentEvent = ({
               <FormLabel htmlFor="event">Event</FormLabel>
               <Textarea
                 id="text"
-                {...register("text", {
-                  required: "Text is required",
+                {...register('text', {
+                  required: 'Text is required',
                 })}
                 placeholder="Text"
               />
@@ -102,13 +102,13 @@ const EditIncidentEvent = ({
                 <FormErrorMessage>{errors.text.message}</FormErrorMessage>
               )}
             </FormControl>
-            {event.source === "user" && (
+            {event.source === 'user' && (
               <FormControl mt={4}>
                 <FormLabel htmlFor="timestamp">Timestamp</FormLabel>
                 <Input
                   id="timestamp"
-                  {...register("timestamp", {
-                    required: "Timestamp is required",
+                  {...register('timestamp', {
+                    required: 'Timestamp is required',
                   })}
                   placeholder="Timestamp"
                   type="datetime-local"

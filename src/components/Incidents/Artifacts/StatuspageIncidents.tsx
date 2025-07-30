@@ -10,18 +10,18 @@ import {
   Th,
   Thead,
   Tr,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react'
 import {
   EmptyStateContainer,
   EmptyStateDescription,
   EmptyStateIcon,
   EmptyStateTitle,
-} from "@saas-ui/react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { useEffect } from "react"
-import { SiStatuspage } from "react-icons/si"
-import { IncidentService } from "../../../client"
-import type { IncidentRecord } from "../../../client"
+} from '@saas-ui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { SiStatuspage } from 'react-icons/si'
+import { IncidentService } from '../../../client'
+import type { IncidentRecord } from '../../../client'
 
 interface StatuspageIncidentsProps {
   incident: IncidentRecord
@@ -33,7 +33,7 @@ function getIncidentStatuspageIncidents(slug: string) {
       IncidentService.getIncidentStatuspageApiV1IncidentSlugStatuspageGet({
         slug: slug,
       }),
-    queryKey: ["spincidents", slug],
+    queryKey: ['spincidents', slug],
   }
 }
 
@@ -52,7 +52,7 @@ function StatuspageIncidents({ incident }: StatuspageIncidentsProps) {
     <>
       <TableContainer>
         <Heading size="md">Statuspage Incidents</Heading>
-        <Table size={{ base: "sm", md: "md" }}>
+        <Table size={{ base: 'sm', md: 'md' }}>
           <Thead>
             <Tr>
               <Th>Name</Th>
