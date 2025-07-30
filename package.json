@@ -11,7 +11,7 @@
     "generate-client": "openapi-ts --input ./openapi.json --output ./src/client --client axios --exportSchemas true && biome format --write ./src/client"
   },
   "dependencies": {
-    "@chakra-ui/icons": "2.1.1",
+    "@chakra-ui/icons": "2.2.4",
     "@chakra-ui/react": "^2.10.9",
     "@choc-ui/paginator": "^3.4.0",
     "@emotion/react": "^11.14.0",
