@@ -5,10 +5,11 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Link,
   Text,
   useColorModeValue,
   useDisclosure,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react';
 import {
   CommandBar,
   CommandBarContent,
@@ -18,41 +19,40 @@ import {
   CommandBarItem,
   CommandBarList,
   CommandBarLoading,
-} from "@saas-ui/command-bar"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Link } from "@tanstack/react-router"
-import { useEffect } from "react"
-import { IncidentService } from "../../client"
+} from '@saas-ui/command-bar';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { IncidentService } from '../../client';
 
-import { FaSearch } from "react-icons/fa"
-import { GrServices } from "react-icons/gr"
+import { FaSearch } from 'react-icons/fa';
+import { GrServices } from 'react-icons/gr';
 
 function getIncidentsQueryOptions() {
   return {
     queryFn: () => IncidentService.getIncidentsApiV1IncidentGet({}),
-    queryKey: ["incidents"],
-  }
+    queryKey: ['incidents'],
+  };
 }
 
 export default function GlobalSearch() {
-  const bg = useColorModeValue("ui.light", "ui.darkSlate")
+  const bg = useColorModeValue('ui.light', 'ui.darkSlate');
 
   // react-query
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const { data: incidents, isPending } = useQuery({
     ...getIncidentsQueryOptions(),
     placeholderData: (prevData) => prevData,
-  })
+  });
 
-  const { isOpen, onClose, onToggle } = useDisclosure()
+  const { isOpen, onClose, onToggle } = useDisclosure();
 
   useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ["incident"] })
-  }, [queryClient])
+    queryClient.invalidateQueries({ queryKey: ['incident'] });
+  }, [queryClient]);
 
   return (
     <>
-      <InputGroup w={{ base: "100%", md: "100%" }}>
+      <InputGroup w={{ base: '100%', md: '100%' }}>
         <InputLeftElement pointerEvents="none">
           <Icon as={FaSearch} color="ui.dim" />
         </InputLeftElement>
@@ -60,7 +60,7 @@ export default function GlobalSearch() {
           bg={bg}
           borderRadius="8px"
           focusBorderColor="ui.main"
-          fontSize={{ base: "sm", md: "inherit" }}
+          fontSize={{ base: 'sm', md: 'inherit' }}
           isReadOnly
           onClick={onToggle}
           placeholder="Search"
@@ -71,7 +71,7 @@ export default function GlobalSearch() {
         isOpen={isOpen}
         onClose={onClose}
         closeOnSelect
-        size={{ base: "sm", md: "3xl" }}
+        size={{ base: 'sm', md: '3xl' }}
       >
         <CommandBarDialog>
           <CommandBarContent>
@@ -93,7 +93,7 @@ export default function GlobalSearch() {
                         <Text
                           size="md"
                           isTruncated
-                          maxWidth={{ base: "300px", md: "600px" }}
+                          maxWidth={{ base: '300px', md: '600px' }}
                         >
                           {incident.slug}
                         </Text>
@@ -101,18 +101,18 @@ export default function GlobalSearch() {
                       <Text
                         size="md"
                         isTruncated
-                        maxWidth={{ base: "300px", md: "600px" }}
+                        maxWidth={{ base: '300px', md: '600px' }}
                       >
                         {incident.description}
                       </Text>
                     </CommandBarItem>
                   </Link>
-                )
+                );
               })}
             </CommandBarList>
           </CommandBarContent>
         </CommandBarDialog>
       </CommandBar>
     </>
-  )
+  );
 }
