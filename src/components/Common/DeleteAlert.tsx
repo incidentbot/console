@@ -6,17 +6,17 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   Button,
-} from "@chakra-ui/react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import React from "react"
-import { useForm } from "react-hook-form"
+} from '@chakra-ui/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import React from 'react'
+import { useForm } from 'react-hook-form'
 
 import {
   IncidentService,
   MaintenanceWindowService,
   UsersService,
-} from "../../client"
-import useCustomToast from "../../hooks/useCustomToast"
+} from '../../client'
+import useCustomToast from '../../hooks/useCustomToast'
 
 interface DeleteProps {
   type: string
@@ -35,19 +35,19 @@ const Delete = ({ type, id, isOpen, onClose }: DeleteProps) => {
   } = useForm()
 
   const deleteEntity = async (id?: string) => {
-    if (type === "Incident") {
+    if (type === 'Incident') {
       await IncidentService.deleteIncidentApiV1IncidentIdDelete({ id: id! })
-    } else if (type === "IncidentEvent") {
+    } else if (type === 'IncidentEvent') {
       await IncidentService.deleteIncidentEventApiV1IncidentSlugEventsIdDelete({
         id: id!,
       })
-    } else if (type === "MaintenanceWindow") {
+    } else if (type === 'MaintenanceWindow') {
       await MaintenanceWindowService.deleteMaintenanceWindowApiV1MaintenanceWindowIdDelete(
         {
           id: id!,
         },
       )
-    } else if (type === "User") {
+    } else if (type === 'User') {
       await UsersService.deleteUserApiV1UsersUserIdDelete({ userId: id! })
     } else {
       throw new Error(`Unexpected type: ${type}`)
@@ -58,29 +58,29 @@ const Delete = ({ type, id, isOpen, onClose }: DeleteProps) => {
     mutationFn: deleteEntity,
     onSuccess: () => {
       showToast(
-        "Success",
+        'Success',
         `The ${type.toLowerCase()} was deleted successfully.`,
-        "success",
+        'success',
       )
       onClose()
     },
     onError: () => {
       showToast(
-        "An error occurred.",
+        'An error occurred.',
         `An error occurred while deleting the ${type.toLowerCase()}.`,
-        "error",
+        'error',
       )
     },
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: [
-          type === "IncidentRecord"
-            ? "incident"
-            : type === "IncidentEvent"
-              ? "events"
-              : type === "MaintenanceWindowRecord"
-                ? "maintenance_windows"
-                : "users",
+          type === 'IncidentRecord'
+            ? 'incident'
+            : type === 'IncidentEvent'
+              ? 'events'
+              : type === 'MaintenanceWindowRecord'
+                ? 'maintenance_windows'
+                : 'users',
         ],
       })
     },
@@ -96,23 +96,23 @@ const Delete = ({ type, id, isOpen, onClose }: DeleteProps) => {
         isOpen={isOpen}
         onClose={onClose}
         leastDestructiveRef={cancelRef}
-        size={{ base: "sm", md: "md" }}
+        size={{ base: 'sm', md: 'md' }}
         isCentered
       >
         <AlertDialogOverlay>
           <AlertDialogContent as="form" onSubmit={handleSubmit(onSubmit)}>
             <AlertDialogHeader>Delete {type}</AlertDialogHeader>
             <AlertDialogBody>
-              {type === "Incident" && (
+              {type === 'Incident' && (
                 <span>
-                  The incident will be removed from the database{" "}
+                  The incident will be removed from the database{' '}
                   <strong>permanently.</strong> You will be responsible for
-                  cleaning up Slack artifacts.{" "}
+                  cleaning up Slack artifacts.{' '}
                 </span>
               )}
-              {type === "User" && (
+              {type === 'User' && (
                 <span>
-                  All items associated with this user will also be{" "}
+                  All items associated with this user will also be{' '}
                   <strong>permantly deleted. </strong>
                 </span>
               )}

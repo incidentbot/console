@@ -8,24 +8,24 @@ import {
   Text,
   Tooltip,
   chakra,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react'
 import {
   Property,
   PropertyLabel,
   PropertyList,
   PropertyValue,
-} from "@saas-ui/react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { format } from "date-fns"
-import { useEffect } from "react"
+} from '@saas-ui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { format } from 'date-fns'
+import { useEffect } from 'react'
 
-import type { IncidentRecord } from "../../client"
-import { IncidentService } from "../../client"
-import { toTitleCase } from "../../hooks/titleCase"
+import type { IncidentRecord } from '../../client'
+import { IncidentService } from '../../client'
+import { toTitleCase } from '../../hooks/titleCase'
 
-import { FaInfoCircle } from "react-icons/fa"
-import { GiDivingHelmet } from "react-icons/gi"
-import { LuTimerOff } from "react-icons/lu"
+import { FaInfoCircle } from 'react-icons/fa'
+import { GiDivingHelmet } from 'react-icons/gi'
+import { LuTimerOff } from 'react-icons/lu'
 
 interface IncidentInfoPanelProps {
   incident: IncidentRecord
@@ -37,14 +37,14 @@ function getIncidentParticipants(slug: string) {
       IncidentService.getIncidentParticipantsApiV1IncidentSlugParticipantsGet({
         slug: slug,
       }),
-    queryKey: ["participants"],
+    queryKey: ['participants'],
   }
 }
 
 function components(incident: IncidentRecord) {
   return (
     <HStack>
-      {incident?.components?.split(",").map((component) => {
+      {incident?.components?.split(',').map((component) => {
         return (
           <Badge key={component} variant="subtle" fontSize="0.8em">
             {component}
@@ -74,8 +74,8 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
       <CardBody>
         <chakra.h2
           fontSize={{
-            base: "2xl",
-            md: "3xl",
+            base: '2xl',
+            md: '3xl',
           }}
           lineHeight="shorter"
           mt={1}
@@ -91,7 +91,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                 <Text
                   as="kbd"
                   isTruncated
-                  maxWidth={{ base: "200px", md: "200px" }}
+                  maxWidth={{ base: '200px', md: '200px' }}
                 >
                   {incident?.impact}
                 </Text>
@@ -106,7 +106,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                 <>
                   <HStack wrap="wrap" mt={2}>
                     <Badge variant="subtle" fontSize="0.8em">
-                      {format(createdDate, "dd MMMM, yyyy hh:mm zzz")}
+                      {format(createdDate, 'dd MMMM, yyyy hh:mm zzz')}
                     </Badge>
                   </HStack>
                 </>
@@ -122,7 +122,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
                 <>
                   <HStack wrap="wrap" mt={2}>
                     <Badge variant="subtle" fontSize="0.8em">
-                      {format(updatedDate, "dd MMMM, yyyy hh:mm zzz")}
+                      {format(updatedDate, 'dd MMMM, yyyy hh:mm zzz')}
                     </Badge>
                   </HStack>
                 </>
@@ -134,8 +134,8 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
           <Divider my={4} />
           <chakra.h2
             fontSize={{
-              base: "2xl",
-              md: "3xl",
+              base: '2xl',
+              md: '3xl',
             }}
             lineHeight="shorter"
           >
@@ -146,7 +146,7 @@ function IncidentInfoPanel({ incident }: IncidentInfoPanelProps) {
             participants?.map((person, idx) => (
               <Property key={idx}>
                 <PropertyLabel width="200px">
-                  {toTitleCase(person.role.replace(/_/g, " "))}
+                  {toTitleCase(person.role.replace(/_/g, ' '))}
                 </PropertyLabel>
                 <PropertyValue>
                   <Text as="kbd">{person.user_name}</Text>

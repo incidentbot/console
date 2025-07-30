@@ -6,30 +6,30 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-} from "@chakra-ui/react"
-import { useQueryClient } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
+} from '@chakra-ui/react'
+import { useQueryClient } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
 
-import type { UserPublic } from "../../client"
-import Appearance from "../../components/UserSettings/Appearance"
-import ChangePassword from "../../components/UserSettings/ChangePassword"
-import DeleteAccount from "../../components/UserSettings/DeleteAccount"
-import UserInformation from "../../components/UserSettings/UserInformation"
+import type { UserPublic } from '../../client'
+import Appearance from '../../components/UserSettings/Appearance'
+import ChangePassword from '../../components/UserSettings/ChangePassword'
+import DeleteAccount from '../../components/UserSettings/DeleteAccount'
+import UserInformation from '../../components/UserSettings/UserInformation'
 
 const tabsConfig = [
-  { title: "My Profile", component: UserInformation },
-  { title: "Password", component: ChangePassword },
-  { title: "Appearance", component: Appearance },
-  { title: "Danger Zone", component: DeleteAccount },
+  { title: 'My Profile', component: UserInformation },
+  { title: 'Password', component: ChangePassword },
+  { title: 'Appearance', component: Appearance },
+  { title: 'Danger Zone', component: DeleteAccount },
 ]
 
-export const Route = createFileRoute("/_layout/settings")({
+export const Route = createFileRoute('/_layout/settings')({
   component: UserSettings,
 })
 
 function UserSettings() {
   const queryClient = useQueryClient()
-  const currentUser = queryClient.getQueryData<UserPublic>(["currentUser"])
+  const currentUser = queryClient.getQueryData<UserPublic>(['currentUser'])
   const finalTabs = currentUser?.is_superuser
     ? tabsConfig.slice(0, 3)
     : tabsConfig
@@ -38,7 +38,7 @@ function UserSettings() {
     <Container maxW="full">
       <Heading
         size="lg"
-        textAlign={{ base: "center", md: "left" }}
+        textAlign={{ base: 'center', md: 'left' }}
         mt={4}
         mb={6}
       >

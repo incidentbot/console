@@ -10,24 +10,24 @@ import {
   Input,
   Text,
   useColorModeValue,
-} from "@chakra-ui/react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useState } from "react"
-import { type SubmitHandler, useForm } from "react-hook-form"
+} from '@chakra-ui/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   type ApiError,
   type UserPublic,
   type UserUpdateMe,
   UsersService,
-} from "../../client"
-import useAuth from "../../hooks/useAuth"
-import useCustomToast from "../../hooks/useCustomToast"
-import { emailPattern, handleError } from "../../utils"
+} from '../../client'
+import useAuth from '../../hooks/useAuth'
+import useCustomToast from '../../hooks/useCustomToast'
+import { emailPattern, handleError } from '../../utils'
 
 const UserInformation = () => {
   const queryClient = useQueryClient()
-  const color = useColorModeValue("inherit", "ui.light")
+  const color = useColorModeValue('inherit', 'ui.light')
   const showToast = useCustomToast()
   const [editMode, setEditMode] = useState(false)
   const { user: currentUser } = useAuth()
@@ -38,8 +38,8 @@ const UserInformation = () => {
     getValues,
     formState: { isSubmitting, errors, isDirty },
   } = useForm<UserPublic>({
-    mode: "onBlur",
-    criteriaMode: "all",
+    mode: 'onBlur',
+    criteriaMode: 'all',
     defaultValues: {
       full_name: currentUser?.full_name,
       email: currentUser?.email,
@@ -54,7 +54,7 @@ const UserInformation = () => {
     mutationFn: (data: UserUpdateMe) =>
       UsersService.updateUserMeApiV1UsersMePatch({ requestBody: data }),
     onSuccess: () => {
-      showToast("Success!", "User updated successfully.", "success")
+      showToast('Success!', 'User updated successfully.', 'success')
     },
     onError: (err: ApiError) => {
       handleError(err, showToast)
@@ -80,7 +80,7 @@ const UserInformation = () => {
           User Information
         </Heading>
         <Box
-          w={{ sm: "full", md: "50%" }}
+          w={{ sm: 'full', md: '50%' }}
           as="form"
           onSubmit={handleSubmit(onSubmit)}
         >
@@ -91,7 +91,7 @@ const UserInformation = () => {
             {editMode ? (
               <Input
                 id="name"
-                {...register("full_name", { maxLength: 30 })}
+                {...register('full_name', { maxLength: 30 })}
                 type="text"
                 size="md"
                 w="auto"
@@ -100,11 +100,11 @@ const UserInformation = () => {
               <Text
                 size="md"
                 py={2}
-                color={!currentUser?.full_name ? "ui.dim" : "inherit"}
+                color={!currentUser?.full_name ? 'ui.dim' : 'inherit'}
                 isTruncated
                 maxWidth="250px"
               >
-                {currentUser?.full_name || "N/A"}
+                {currentUser?.full_name || 'N/A'}
               </Text>
             )}
           </FormControl>
@@ -115,8 +115,8 @@ const UserInformation = () => {
             {editMode ? (
               <Input
                 id="email"
-                {...register("email", {
-                  required: "Email is required",
+                {...register('email', {
+                  required: 'Email is required',
                   pattern: emailPattern,
                 })}
                 type="email"
@@ -136,11 +136,11 @@ const UserInformation = () => {
             <Button
               variant="primary"
               onClick={toggleEditMode}
-              type={editMode ? "button" : "submit"}
+              type={editMode ? 'button' : 'submit'}
               isLoading={editMode ? isSubmitting : false}
-              isDisabled={editMode ? !isDirty || !getValues("email") : false}
+              isDisabled={editMode ? !isDirty || !getValues('email') : false}
             >
-              {editMode ? "Save" : "Edit"}
+              {editMode ? 'Save' : 'Edit'}
             </Button>
             {editMode && (
               <Button onClick={onCancel} isDisabled={isSubmitting}>

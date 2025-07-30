@@ -8,18 +8,18 @@ import {
   Th,
   Thead,
   Tr,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react'
 import {
   EmptyStateContainer,
   EmptyStateDescription,
   EmptyStateIcon,
   EmptyStateTitle,
-} from "@saas-ui/react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { useEffect } from "react"
-import { SiOpsgenie } from "react-icons/si"
-import { IncidentService } from "../../../client"
-import type { IncidentRecord } from "../../../client"
+} from '@saas-ui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { SiOpsgenie } from 'react-icons/si'
+import { IncidentService } from '../../../client'
+import type { IncidentRecord } from '../../../client'
 
 interface OpsgenieIncidentsProps {
   incident: IncidentRecord
@@ -31,7 +31,7 @@ function getIncidentOpsgenieIncidents(slug: string) {
       IncidentService.getIncidentOpsgenieApiV1IncidentSlugOpsgenieGet({
         slug: slug,
       }),
-    queryKey: ["opsgenieincidents", slug],
+    queryKey: ['opsgenieincidents', slug],
   }
 }
 
@@ -50,7 +50,7 @@ function OpsgenieIncidents({ incident }: OpsgenieIncidentsProps) {
     <>
       <TableContainer>
         <Heading size="md">Opsgenie Incidents</Heading>
-        <Table size={{ base: "sm", md: "md" }}>
+        <Table size={{ base: 'sm', md: 'md' }}>
           <Thead>
             <Tr>
               <Th>Key</Th>

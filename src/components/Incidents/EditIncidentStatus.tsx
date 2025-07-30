@@ -11,17 +11,17 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
-} from "@chakra-ui/react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { type SubmitHandler, useForm } from "react-hook-form"
+} from '@chakra-ui/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import {
   type ApiError,
   type IncidentRecord,
   IncidentService,
-} from "../../client"
-import { toTitleCase } from "../../hooks/titleCase"
-import useCustomToast from "../../hooks/useCustomToast"
-import { handleError } from "../../utils"
+} from '../../client'
+import { toTitleCase } from '../../hooks/titleCase'
+import useCustomToast from '../../hooks/useCustomToast'
+import { handleError } from '../../utils'
 
 interface EditIncidentProps {
   incident: IncidentRecord
@@ -42,26 +42,26 @@ const EditIncidentStatus = ({
     reset,
     formState: { isSubmitting, errors, isDirty },
   } = useForm<IncidentRecord>({
-    mode: "onBlur",
-    criteriaMode: "all",
+    mode: 'onBlur',
+    criteriaMode: 'all',
     defaultValues: incident,
   })
 
   const mutation = useMutation({
     mutationFn: (data: IncidentRecord) =>
       IncidentService.patchIncidentApiV1IncidentFieldPatch({
-        field: "status",
+        field: 'status',
         requestBody: data,
       }),
     onSuccess: () => {
-      showToast("Success!", "Incident updated successfully.", "success")
+      showToast('Success!', 'Incident updated successfully.', 'success')
       onClose()
     },
     onError: (err: ApiError) => {
       handleError(err, showToast)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["incident"] })
+      queryClient.invalidateQueries({ queryKey: ['incident'] })
     },
   })
 
@@ -79,7 +79,7 @@ const EditIncidentStatus = ({
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={{ base: "sm", md: "md" }}
+        size={{ base: 'sm', md: 'md' }}
         isCentered
       >
         <ModalOverlay />
@@ -91,8 +91,8 @@ const EditIncidentStatus = ({
               <FormLabel htmlFor="status">Status</FormLabel>
               <Select
                 id="status"
-                {...register("status", {
-                  required: "Status is required",
+                {...register('status', {
+                  required: 'Status is required',
                 })}
               >
                 {incident.statuses?.map((status, index) => (

@@ -8,7 +8,7 @@ import {
   Tag,
   Text,
   Textarea,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react'
 import {
   IconBadge,
   Timeline,
@@ -16,16 +16,16 @@ import {
   TimelineItem,
   TimelineSeparator,
   TimelineTrack,
-} from "@saas-ui/react"
-import TimeAgo from "react-timeago"
-import type { IncidentEvent, IncidentEventBase } from "../../client"
-import { convertSlackTimestamp } from "../../hooks/convertSlackTimestamp"
-import { formatTimestamp } from "../../hooks/formatTimestamp"
-import EventActionsMenu from "./EventActionsMenu"
-import IncidentEventTimelineImage from "./IncidentEventTimelineImage"
+} from '@saas-ui/react'
+import TimeAgo from 'react-timeago'
+import type { IncidentEvent, IncidentEventBase } from '../../client'
+import { convertSlackTimestamp } from '../../hooks/convertSlackTimestamp'
+import { formatTimestamp } from '../../hooks/formatTimestamp'
+import EventActionsMenu from './EventActionsMenu'
+import IncidentEventTimelineImage from './IncidentEventTimelineImage'
 
-import { RiPushpinFill } from "react-icons/ri"
-import { RiRobot2Line } from "react-icons/ri"
+import { RiPushpinFill } from 'react-icons/ri'
+import { RiRobot2Line } from 'react-icons/ri'
 
 interface IncidentEventTimelineProps {
   data?: Array<IncidentEvent | IncidentEventBase>
@@ -41,7 +41,7 @@ function IncidentEventTimeline({ data }: IncidentEventTimelineProps) {
       <Timeline variant="outline">
         {data?.map((log, index) => (
           <TimelineItem key={index}>
-            {log?.source === "system" && (
+            {log?.source === 'system' && (
               <>
                 <TimelineSeparator>
                   {index !== 0 && <TimelineTrack />}
@@ -85,7 +85,7 @@ function IncidentEventTimeline({ data }: IncidentEventTimelineProps) {
                 </TimelineContent>
               </>
             )}
-            {log?.source === "pin" && log?.text !== null && (
+            {log?.source === 'pin' && log?.text !== null && (
               <>
                 <TimelineSeparator>
                   {index !== 0 && <TimelineTrack />}
@@ -136,7 +136,7 @@ function IncidentEventTimeline({ data }: IncidentEventTimelineProps) {
                     <CardBody>
                       <Text
                         fontSize="md"
-                        style={{ overflowWrap: "break-word" }}
+                        style={{ overflowWrap: 'break-word' }}
                       >
                         {log.text}
                       </Text>
@@ -145,7 +145,7 @@ function IncidentEventTimeline({ data }: IncidentEventTimelineProps) {
                 </TimelineContent>
               </>
             )}
-            {log?.source === "user" &&
+            {log?.source === 'user' &&
               log?.text !== null &&
               log?.timestamp !== null && (
                 <>
@@ -163,7 +163,7 @@ function IncidentEventTimeline({ data }: IncidentEventTimelineProps) {
                     <Flex mt={8}>
                       <Box>
                         <Text fontSize="md">
-                          A message was added to the timeline manually by{" "}
+                          A message was added to the timeline manually by{' '}
                           {log?.user}
                         </Text>
                         <HStack>
@@ -198,7 +198,7 @@ function IncidentEventTimeline({ data }: IncidentEventTimelineProps) {
                   </TimelineContent>
                 </>
               )}
-            {log?.source === "pin" && log.mimetype != null && (
+            {log?.source === 'pin' && log.mimetype != null && (
               <>
                 <TimelineSeparator>
                   {index !== 0 && <TimelineTrack />}

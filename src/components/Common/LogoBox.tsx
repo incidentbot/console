@@ -1,7 +1,7 @@
-import { Flex, Image, useColorModeValue } from "@chakra-ui/react"
-import LogoDark from "/assets/images/logo-font-dark.png"
-import LogoLight from "/assets/images/logo-font-light.png"
-import Logo from "/assets/images/logo.png"
+import { Flex, Image, useColorModeValue } from '@chakra-ui/react'
+import LogoDark from '/assets/images/logo-font-dark.png'
+import LogoLight from '/assets/images/logo-font-light.png'
+import Logo from '/assets/images/logo.png'
 
 interface LogoBoxProps {
   imageSize?: string
@@ -20,7 +20,7 @@ const LogoBox = ({ imageSize, showText, sidebar }: LogoBoxProps) => {
         src={showText ? logoMatchColorMode : Logo}
         alignSelf="center"
         alt="logo"
-        boxSize={imageSize ? imageSize : "80px"}
+        boxSize={imageSize ? imageSize : '80px'}
         height="auto"
         objectFit="contain"
       />

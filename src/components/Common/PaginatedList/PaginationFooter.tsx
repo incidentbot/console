@@ -1,6 +1,6 @@
-import { Flex, useColorModeValue } from "@chakra-ui/react"
-import Pagination from "@choc-ui/paginator"
-import type { Incidents } from "../../../client"
+import { Flex, useColorModeValue } from '@chakra-ui/react'
+import Pagination from '@choc-ui/paginator'
+import type { Incidents } from '../../../client'
 
 interface PaginationFooterProps {
   resources: Incidents
@@ -13,7 +13,7 @@ function PaginationFooter({
   perPage,
   setPage,
 }: PaginationFooterProps) {
-  const paginationBgColor = useColorModeValue("gray.200", "gray.700")
+  const paginationBgColor = useColorModeValue('gray.200', 'gray.700')
 
   return (
     <Flex
@@ -31,7 +31,7 @@ function PaginationFooter({
         }}
         hideOnSinglePage={false}
         paginationProps={{
-          display: "flex",
+          display: 'flex',
         }}
         focusRing
         activeStyles={{

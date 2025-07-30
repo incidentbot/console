@@ -13,14 +13,14 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from "@chakra-ui/react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { type SubmitHandler, useForm } from "react-hook-form"
+} from '@chakra-ui/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
-import { type UserCreate, UsersService } from "../../client"
-import type { ApiError } from "../../client/core/ApiError"
-import useCustomToast from "../../hooks/useCustomToast"
-import { emailPattern, handleError } from "../../utils"
+import { type UserCreate, UsersService } from '../../client'
+import type { ApiError } from '../../client/core/ApiError'
+import useCustomToast from '../../hooks/useCustomToast'
+import { emailPattern, handleError } from '../../utils'
 
 interface AddUserProps {
   isOpen: boolean
@@ -41,13 +41,13 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
     getValues,
     formState: { errors, isSubmitting },
   } = useForm<UserCreateForm>({
-    mode: "onBlur",
-    criteriaMode: "all",
+    mode: 'onBlur',
+    criteriaMode: 'all',
     defaultValues: {
-      email: "",
-      full_name: "",
-      password: "",
-      confirm_password: "",
+      email: '',
+      full_name: '',
+      password: '',
+      confirm_password: '',
       is_superuser: false,
       is_active: false,
     },
@@ -57,7 +57,7 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
     mutationFn: (data: UserCreate) =>
       UsersService.createUserApiV1UsersPost({ requestBody: data }),
     onSuccess: () => {
-      showToast("Success!", "User created successfully.", "success")
+      showToast('Success!', 'User created successfully.', 'success')
       reset()
       onClose()
     },
@@ -65,7 +65,7 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
       handleError(err, showToast)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] })
+      queryClient.invalidateQueries({ queryKey: ['users'] })
     },
   })
 
@@ -78,7 +78,7 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={{ base: "sm", md: "md" }}
+        size={{ base: 'sm', md: 'md' }}
         isCentered
       >
         <ModalOverlay />
@@ -90,8 +90,8 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
               <FormLabel htmlFor="email">Email</FormLabel>
               <Input
                 id="email"
-                {...register("email", {
-                  required: "Email is required",
+                {...register('email', {
+                  required: 'Email is required',
                   pattern: emailPattern,
                 })}
                 placeholder="Email"
@@ -105,7 +105,7 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
               <FormLabel htmlFor="name">Full name</FormLabel>
               <Input
                 id="name"
-                {...register("full_name")}
+                {...register('full_name')}
                 placeholder="Full name"
                 type="text"
               />
@@ -117,11 +117,11 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
               <FormLabel htmlFor="password">Set Password</FormLabel>
               <Input
                 id="password"
-                {...register("password", {
-                  required: "Password is required",
+                {...register('password', {
+                  required: 'Password is required',
                   minLength: {
                     value: 8,
-                    message: "Password must be at least 8 characters",
+                    message: 'Password must be at least 8 characters',
                   },
                 })}
                 placeholder="Password"
@@ -139,11 +139,11 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
               <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
               <Input
                 id="confirm_password"
-                {...register("confirm_password", {
-                  required: "Please confirm your password",
+                {...register('confirm_password', {
+                  required: 'Please confirm your password',
                   validate: (value) =>
                     value === getValues().password ||
-                    "The passwords do not match",
+                    'The passwords do not match',
                 })}
                 placeholder="Password"
                 type="password"
@@ -156,12 +156,12 @@ const AddUser = ({ isOpen, onClose }: AddUserProps) => {
             </FormControl>
             <Flex mt={4}>
               <FormControl>
-                <Checkbox {...register("is_superuser")} colorScheme="cyan">
+                <Checkbox {...register('is_superuser')} colorScheme="cyan">
                   Is superuser?
                 </Checkbox>
               </FormControl>
               <FormControl>
-                <Checkbox {...register("is_active")} colorScheme="cyan">
+                <Checkbox {...register('is_active')} colorScheme="cyan">
                   Is active?
                 </Checkbox>
               </FormControl>

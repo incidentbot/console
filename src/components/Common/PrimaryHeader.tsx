@@ -8,19 +8,19 @@ import {
   chakra,
   useColorMode,
   useColorModeValue,
-} from "@chakra-ui/react"
-import React from "react"
+} from '@chakra-ui/react'
+import React from 'react'
 
-import LogoBox from "./LogoBox"
-import Sidebar from "./Sidebar"
-import UserMenu from "./UserMenu"
+import LogoBox from './LogoBox'
+import Sidebar from './Sidebar'
+import UserMenu from './UserMenu'
 
-import { FaMoon, FaSun } from "react-icons/fa"
+import { FaMoon, FaSun } from 'react-icons/fa'
 
 export default function PrimaryHeader() {
-  const bg = useColorModeValue("ui.main", "ui.main")
-  const headerBorderColor = useColorModeValue("ui.mainLite", "ui.mainLite")
-  const text = useColorModeValue("ui.light", "ui.light")
+  const bg = useColorModeValue('ui.main', 'ui.main')
+  const headerBorderColor = useColorModeValue('ui.mainLite', 'ui.mainLite')
+  const text = useColorModeValue('ui.light', 'ui.light')
 
   const ref = React.useRef(null)
   const { toggleColorMode: toggleMode } = useColorMode()
@@ -30,7 +30,7 @@ export default function PrimaryHeader() {
     <Box pos="relative">
       <chakra.header
         ref={ref}
-        shadow={"sm"}
+        shadow={'sm'}
         transition="box-shadow 0.2s"
         bg={bg}
         borderTop="3px solid"
@@ -54,8 +54,8 @@ export default function PrimaryHeader() {
               variant="ghost"
               color={text}
               ml={{
-                base: "0",
-                md: "3",
+                base: '0',
+                md: '3',
               }}
               onClick={toggleMode}
               icon={<SwitchIcon />}

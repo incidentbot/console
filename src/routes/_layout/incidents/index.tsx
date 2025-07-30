@@ -6,27 +6,27 @@ import {
   HStack,
   Spinner,
   Text,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react'
 import {
   StructuredList,
   StructuredListCell,
   StructuredListItem,
-} from "@saas-ui/react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { format } from "date-fns"
-import React, { useEffect, useState } from "react"
-import { useDebounce } from "use-debounce"
-import { z } from "zod"
-import { IncidentService } from "../../../client"
+} from '@saas-ui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { format } from 'date-fns'
+import React, { useEffect, useState } from 'react'
+import { useDebounce } from 'use-debounce'
+import { z } from 'zod'
+import { IncidentService } from '../../../client'
 
-import TimeAgo from "react-timeago"
-import NavBar from "../../../components/Common/Navbar"
-import Empty from "../../../components/Common/PaginatedList/Empty"
-import PaginationFooter from "../../../components/Common/PaginatedList/PaginationFooter"
-import StyledHeader from "../../../components/Common/StyledHeader"
+import TimeAgo from 'react-timeago'
+import NavBar from '../../../components/Common/Navbar'
+import Empty from '../../../components/Common/PaginatedList/Empty'
+import PaginationFooter from '../../../components/Common/PaginatedList/PaginationFooter'
+import StyledHeader from '../../../components/Common/StyledHeader'
 
-import { BsFire } from "react-icons/bs"
+import { BsFire } from 'react-icons/bs'
 
 const IncidentsPerPage = 10
 
@@ -34,7 +34,7 @@ const incidentsSearchSchema = z.object({
   page: z.number().catch(1),
 })
 
-export const Route = createFileRoute("/_layout/incidents/")({
+export const Route = createFileRoute('/_layout/incidents/')({
   component: Incidents,
   validateSearch: (search) => incidentsSearchSchema.parse(search),
 })
@@ -53,7 +53,7 @@ function getIncidentsQueryOptions({
         limit: IncidentsPerPage,
         filter: searchTermDebounced,
       }),
-    queryKey: ["incidents", { page, searchTermDebounced }],
+    queryKey: ['incidents', { page, searchTermDebounced }],
   }
 }
 
@@ -62,7 +62,7 @@ function formatDate(timestamp: string) {
 }
 function IncidentsTable() {
   // Search
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState('')
   const [searchTermDebounced] = useDebounce(searchTerm, 500)
 
   // react-query
@@ -77,7 +77,7 @@ function IncidentsTable() {
   })
 
   useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ["incident"] })
+    queryClient.invalidateQueries({ queryKey: ['incident'] })
   }, [queryClient])
 
   const navigateToIndividual = useNavigate()
@@ -98,7 +98,7 @@ function IncidentsTable() {
         <Card
           width="100%"
           variant="elevated"
-          minHeight={{ base: "lg", md: "4xl" }}
+          minHeight={{ base: 'lg', md: '4xl' }}
         >
           <StructuredList>
             {incidents?.data.length ? (
@@ -109,8 +109,8 @@ function IncidentsTable() {
                       key={idx}
                       onClick={() => handleRowClick(incident.slug!)}
                       _hover={{
-                        transform: "scale(1.009)",
-                        transition: ".25s ease-in-out",
+                        transform: 'scale(1.009)',
+                        transition: '.25s ease-in-out',
                       }}
                     >
                       <StructuredListCell>
@@ -120,16 +120,16 @@ function IncidentsTable() {
                         <Text fontSize="sm" color="muted">
                           {incident.description
                             ? incident.description
-                            : "No description provided."}
+                            : 'No description provided.'}
                         </Text>
                         <HStack wrap="wrap" mt={2}>
                           <Badge
                             px="1"
                             variant="solid"
                             colorScheme={
-                              incident.status?.includes("resolved")
-                                ? "green"
-                                : "yellow"
+                              incident.status?.includes('resolved')
+                                ? 'green'
+                                : 'yellow'
                             }
                           >
                             {incident.status}
@@ -138,14 +138,14 @@ function IncidentsTable() {
                             px="1"
                             variant="solid"
                             colorScheme={
-                              incident?.severity?.includes("0") ||
-                              incident?.severity?.includes("1")
-                                ? "red"
-                                : incident?.severity?.includes("2")
-                                  ? "orange"
-                                  : incident?.severity?.includes("3")
-                                    ? "yellow"
-                                    : "green"
+                              incident?.severity?.includes('0') ||
+                              incident?.severity?.includes('1')
+                                ? 'red'
+                                : incident?.severity?.includes('2')
+                                  ? 'orange'
+                                  : incident?.severity?.includes('3')
+                                    ? 'yellow'
+                                    : 'green'
                             }
                           >
                             {incident?.severity?.toUpperCase()}
@@ -153,8 +153,8 @@ function IncidentsTable() {
                           <Badge px="1" variant="outline">
                             {format(
                               formatDate(incident.created_at),
-                              "dd MMMM yyyy",
-                            )}{" "}
+                              'dd MMMM yyyy',
+                            )}{' '}
                             (
                             <TimeAgo date={incident.created_at} />)
                           </Badge>

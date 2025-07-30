@@ -5,13 +5,13 @@ import {
   MenuItem,
   MenuList,
   useDisclosure,
-} from "@chakra-ui/react"
-import { BsThreeDotsVertical } from "react-icons/bs"
-import { FiEdit, FiTrash } from "react-icons/fi"
+} from '@chakra-ui/react'
+import { BsThreeDotsVertical } from 'react-icons/bs'
+import { FiEdit, FiTrash } from 'react-icons/fi'
 
-import type { IncidentEvent, IncidentEventBase } from "../../client"
-import Delete from "../Common/DeleteAlert"
-import EditIncidentEvent from "./EditIncidentEvent"
+import type { IncidentEvent, IncidentEventBase } from '../../client'
+import Delete from '../Common/DeleteAlert'
+import EditIncidentEvent from './EditIncidentEvent'
 
 interface EventActionsMenuProps {
   type: string

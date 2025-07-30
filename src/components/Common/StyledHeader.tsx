@@ -5,8 +5,8 @@ import {
   Text,
   chakra,
   useColorModeValue,
-} from "@chakra-ui/react"
-import type { IconType } from "react-icons/lib"
+} from '@chakra-ui/react'
+import type { IconType } from 'react-icons/lib'
 
 interface StyledHeaderProps {
   title: string
@@ -23,7 +23,7 @@ const StyledHeader = ({
   admin,
   center,
 }: StyledHeaderProps) => {
-  const textColor = useColorModeValue("ui.dark", "ui.light")
+  const textColor = useColorModeValue('ui.dark', 'ui.light')
 
   return (
     <Box
@@ -33,22 +33,22 @@ const StyledHeader = ({
         md: 3,
       }}
       display={{
-        base: "flex",
-        md: "flex",
+        base: 'flex',
+        md: 'flex',
       }}
       alignItems={{
-        base: "center",
-        md: "center",
+        base: 'center',
+        md: 'center',
       }}
       justifyContent={{
-        base: "center",
-        md: center ? "center" : "space-between",
+        base: 'center',
+        md: center ? 'center' : 'space-between',
       }}
     >
       <chakra.h2
         fontSize={{
-          base: "3xl",
-          md: "4xl",
+          base: '3xl',
+          md: '4xl',
         }}
         lineHeight="shorter"
         color={textColor}
@@ -58,11 +58,11 @@ const StyledHeader = ({
         {subtitle && (
           <Text
             fontSize={{
-              base: "lg",
-              md: "xl",
+              base: 'lg',
+              md: 'xl',
             }}
             isTruncated
-            maxWidth={{ base: "300px", md: "600px" }}
+            maxWidth={{ base: '300px', md: '600px' }}
           >
             {subtitle}
           </Text>

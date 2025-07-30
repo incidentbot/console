@@ -13,22 +13,22 @@ import {
   Th,
   Thead,
   Tr,
-} from "@chakra-ui/react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { useEffect } from "react"
-import { z } from "zod"
+} from '@chakra-ui/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useEffect } from 'react'
+import { z } from 'zod'
 
-import { type UserPublic, UsersService } from "../../../client"
-import AddUser from "../../../components/Admin/AddUser"
-import ActionsMenu from "../../../components/Common/ActionsMenu"
-import Navbar from "../../../components/Common/NavbarAddItem"
+import { type UserPublic, UsersService } from '../../../client'
+import AddUser from '../../../components/Admin/AddUser'
+import ActionsMenu from '../../../components/Common/ActionsMenu'
+import Navbar from '../../../components/Common/NavbarAddItem'
 
 const usersSearchSchema = z.object({
   page: z.number().catch(1),
 })
 
-export const Route = createFileRoute("/_layout/admin/users")({
+export const Route = createFileRoute('/_layout/admin/users')({
   component: Admin,
   validateSearch: (search) => usersSearchSchema.parse(search),
 })
@@ -42,13 +42,13 @@ function getUsersQueryOptions({ page }: { page: number }) {
         skip: (page - 1) * PER_PAGE,
         limit: PER_PAGE,
       }),
-    queryKey: ["users", { page }],
+    queryKey: ['users', { page }],
   }
 }
 
 function UsersTable() {
   const queryClient = useQueryClient()
-  const currentUser = queryClient.getQueryData<UserPublic>(["currentUser"])
+  const currentUser = queryClient.getQueryData<UserPublic>(['currentUser'])
   const { page } = Route.useSearch()
   const navigate = useNavigate({ from: Route.fullPath })
   const setPage = (page: number) =>
@@ -75,7 +75,7 @@ function UsersTable() {
   return (
     <>
       <TableContainer mt={4}>
-        <Table size={{ base: "sm", md: "sm" }}>
+        <Table size={{ base: 'sm', md: 'sm' }}>
           <Thead>
             <Tr>
               <Th width="20%">Full name</Th>
@@ -100,11 +100,11 @@ function UsersTable() {
               {users?.data.map((user) => (
                 <Tr key={user.id}>
                   <Td
-                    color={!user.full_name ? "ui.dim" : "inherit"}
+                    color={!user.full_name ? 'ui.dim' : 'inherit'}
                     isTruncated
                     maxWidth="150px"
                   >
-                    {user.full_name || "N/A"}
+                    {user.full_name || 'N/A'}
                     {currentUser?.id === user.id && (
                       <Badge ml="1" colorScheme="cyan">
                         You
@@ -114,18 +114,18 @@ function UsersTable() {
                   <Td isTruncated maxWidth="150px">
                     {user.email}
                   </Td>
-                  <Td>{user.is_superuser ? "Superuser" : "User"}</Td>
+                  <Td>{user.is_superuser ? 'Superuser' : 'User'}</Td>
                   <Td>
                     <Flex gap={2}>
                       <Box
                         w="2"
                         h="2"
                         borderRadius="50%"
-                        bg={user.is_active ? "ui.success" : "ui.danger"}
+                        bg={user.is_active ? 'ui.success' : 'ui.danger'}
                         alignSelf="center"
                       />
                       <Badge ml="1" colorScheme="cyan">
-                        {user.is_active ? "Active" : "Inactive"}
+                        {user.is_active ? 'Active' : 'Inactive'}
                       </Badge>
                     </Flex>
                   </Td>
@@ -166,13 +166,13 @@ function Admin() {
     <Container maxW="full">
       <Heading
         size="lg"
-        textAlign={{ base: "center", md: "left" }}
+        textAlign={{ base: 'center', md: 'left' }}
         mt={4}
         mb={6}
       >
         Users Management
       </Heading>
-      <Navbar type={"User"} addModalAs={AddUser} />
+      <Navbar type={'User'} addModalAs={AddUser} />
       <UsersTable />
     </Container>
   )

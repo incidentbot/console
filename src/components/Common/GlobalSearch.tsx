@@ -9,7 +9,7 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
-} from '@chakra-ui/react';
+} from '@chakra-ui/react'
 import {
   CommandBar,
   CommandBarContent,
@@ -19,36 +19,36 @@ import {
   CommandBarItem,
   CommandBarList,
   CommandBarLoading,
-} from '@saas-ui/command-bar';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { IncidentService } from '../../client';
+} from '@saas-ui/command-bar'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { IncidentService } from '../../client'
 
-import { FaSearch } from 'react-icons/fa';
-import { GrServices } from 'react-icons/gr';
+import { FaSearch } from 'react-icons/fa'
+import { GrServices } from 'react-icons/gr'
 
 function getIncidentsQueryOptions() {
   return {
     queryFn: () => IncidentService.getIncidentsApiV1IncidentGet({}),
     queryKey: ['incidents'],
-  };
+  }
 }
 
 export default function GlobalSearch() {
-  const bg = useColorModeValue('ui.light', 'ui.darkSlate');
+  const bg = useColorModeValue('ui.light', 'ui.darkSlate')
 
   // react-query
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
   const { data: incidents, isPending } = useQuery({
     ...getIncidentsQueryOptions(),
     placeholderData: (prevData) => prevData,
-  });
+  })
 
-  const { isOpen, onClose, onToggle } = useDisclosure();
+  const { isOpen, onClose, onToggle } = useDisclosure()
 
   useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ['incident'] });
-  }, [queryClient]);
+    queryClient.invalidateQueries({ queryKey: ['incident'] })
+  }, [queryClient])
 
   return (
     <>
@@ -107,12 +107,12 @@ export default function GlobalSearch() {
                       </Text>
                     </CommandBarItem>
                   </Link>
-                );
+                )
               })}
             </CommandBarList>
           </CommandBarContent>
         </CommandBarDialog>
       </CommandBar>
     </>
-  );
+  )
 }
